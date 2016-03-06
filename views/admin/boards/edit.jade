@@ -1,0 +1,21 @@
+extends ../layout
+
+block content
+	.col-sm-5
+	.col-sm-1
+		form(action="/admin/boards/update/#{board._id}", method="post")
+			.form-group
+				select.form-control(name="region")
+					each region in regions
+						if region.name == board.region.name
+							option(selected="selected", value="#{region._id}")= region.name
+						else
+							option(value="#{region._id}")= region.name
+			.form-group
+				input.form-control(type="text", name="name", placeholder="이름", value="#{board.name}")
+			.form-group
+				input.form-control(type="text", name="categories", placeholder="Categories. seperator ';'", value="#{board.categories.join(';')}")
+			button.btn.btn-default.btn-block(type="submit") Update
+
+
+

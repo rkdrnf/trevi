@@ -1,0 +1,25 @@
+extends ../layout
+
+block content
+	button.btn.btn-primary(type="button", data-toggle="modal", data-target="#newBoardModal") New Board
+
+	table.table
+		tr
+			th ID
+			th Region
+			th Name
+			th Categories
+			th Option
+				if boards
+					each board in boards
+						tr
+							td= board._id
+							td= board.region.name
+							td= board.name
+							td= board.categories
+							td
+								a.btn.btn-default(type="button", href="/admin/boards/edit/#{board._id}") Edit
+								a.btn.btn-default(type="button", href="/admin/boards/delete/#{board._id}") Delete
+
+
+	include new
