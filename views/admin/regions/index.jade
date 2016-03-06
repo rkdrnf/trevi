@@ -1,0 +1,23 @@
+extends ../layout
+
+block content
+	button.btn.btn-primary(type="button", data-toggle="modal", data-target="#newRegionModal") New Region
+
+	table.table
+		tr
+			th ID
+			th Name
+			th Url
+			th Option
+				if regions
+					each region in regions
+						tr
+							td= region._id
+							td= region.name
+							td= region.url
+							td
+								a.btn.btn-default(type="button", href="/admin/regions/edit/#{region._id}") Edit
+								a.btn.btn-default(type="button", href="/admin/regions/delete/#{region._id}") Delete
+
+
+	include new

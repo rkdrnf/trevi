@@ -1,0 +1,110 @@
+doctype html
+html
+	head
+		title= title
+		meta(name='viewport', content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0')
+		link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css", integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7", crossorigin="anonymous")
+		link(rel='stylesheet', href='/stylesheets/style.css')
+		script(src='http://code.jquery.com/jquery.js')
+		block script
+	body
+		block header
+			nav.navbar.navbar-inverse
+				div.container
+					div.navbar-header
+						button.navbar-toggle.collapsed(type="button", data-toggle="collapse", data-target="#navbar", aria-expanded="false", aria-controls="navbar")
+							span.sr-only Toggle navigation
+							span.icon-bar
+							span.icon-bar
+							span.icon-bar
+						a.navbar-brand(href="/") Trevi 
+					div#navbar.navbar-collapse.collapse
+						ul.nav.navbar-nav
+							li.active
+								a(href="/admin/users") Admin
+							li
+								a(href="#about") About
+							li
+								a(href="#contact") Contact
+							li.dropdown
+								a.dropdown-toggle(href="#", data-toggle="dropdown", role="button", aria-haspopup="true", aria-expanded="false") Dropdown
+									span.caret
+										ul.dropdown-menu
+											li 
+												a(href="#") Action
+											li
+												a(href="#") Another action
+											li
+												a(href="#") Something else here
+											li.divider(role="separator")
+											li.dropdown-header Nav header
+											li
+												a(href="#") Separated link
+											li
+												a(href="#") One more separated link
+							//</dropdown>
+							li
+								a(href="#", data-toggle="modal", data-target="#signupModal") 회원가입
+							li
+								if (user)
+									a(href="/logout", type="button") 로그아웃
+								else
+									a(href="#", type="button", data-toggle="modal", data-target="#loginModal") 로그인
+
+
+			////Login Modal
+			div#loginModal.modal.modal-small.fade(tabindex="-1", role="dialog", aria-labelledby="loginModal")
+				.modal-dialog(role="document")
+					.modal-content
+						.modal-header
+							button.close(type="button", data-dismiss="modal", aria-label="Close")
+								span(aria-hidden="true") x
+						//header
+						.modal-body
+							.panel-padding.panel-body
+								.row
+									a.btn
+										span 페이스북 계정으로 로그인
+								.row
+									form(action="/login", method="post")
+										.form-group
+											label.col-sm-2.control-label(for="email")
+											input#email.form-control(type="text", name="email", placeholder="account@example.com")
+										.form-group
+											label.col-sm-2.control-label(for="password")
+											input#password.form-control(type="password", name="password", placeholder="Password")
+										button.btn.btn-default.btn-block(type="submit") 로그인
+
+								.row
+									p 계정이 없으세요?
+										a(href="#", data-dismiss="modal", data-toggle="modal", data-target="#signupModal") 가입하기
+						.modal-footer
+					//</content
+				//</dialog
+			//modal
+
+		div#signupModal.modal.modal-small.fade(tabindex="-1", role="dialog", aria-labelledby="signupModal")
+			.modal-dialog(role="document")
+				.modal-content
+					.modal-header
+						button.close(type="button", data-dismiss="modal", aria-label="Close")
+							span(aria-hidden="true") x
+					.modal-body
+						form(action="/signup", method="post")
+							.form-group
+								input.form-control(type="text", name="name", placeholder="이름")
+							.form-group
+								input.form-control(type="text", name="email", placeholder="이메일 주소")
+							.form-group
+								input.form-control(type="password", name="password", placeholder="비밀번호")
+							button.btn.btn-default.btn-block(type="submit") 회원가입
+					.modal-footer
+				//</content
+			//</dialog
+
+		block content
+		block footer
+			- if (messages.error)
+				span= messages.error
+
+		script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous")

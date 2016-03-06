@@ -1,0 +1,25 @@
+extends ../layout
+
+block content
+	table.table
+		tr
+			th ID
+			th Local.Name
+			th Local.Email
+			th Facebook.Name
+			th Facebook.Email
+			th Option
+				if users
+					each user in users
+						tr
+							td= user._id
+							td= user.local ? user.local.name : ""
+							td= user.local ? user.local.email : ""
+							td= user.facebook ? user.facebook.name : ""
+							td= user.facebook ? user.facebook.email : ""
+							td
+								a.btn.btn-default(type="button", href="/admin/users/delete/#{user._id}") Delete
+								
+
+
+

@@ -1,0 +1,17 @@
+extends layout
+
+block script
+	script(src="//d3js.org/d3.v3.min.js", charset="utf-8")
+	script(src="//d3js.org/topojson.v1.min.js")
+	script(src="/javascripts/travel_map.js")
+
+block content
+	h1= title
+	p Welcome to trevi
+
+
+
+	ul
+		each region in regions
+			li 
+				a.btn.btn-default(href="/regions/#{region.url}")= region.name

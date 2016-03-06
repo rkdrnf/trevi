@@ -1,0 +1,14 @@
+extends ../layout
+
+block content
+	.col-sm-5
+	.col-sm-1
+		form(action="/admin/regions/update/#{region._id}", method="post")
+			.form-group
+				input.form-control(type="text", name="name", placeholder="이름", value="#{region.name}")
+			.form-group
+				input.form-control(type="text", name="url", placeholder="Url", value="#{region.url}")
+			button.btn.btn-default.btn-block(type="submit") Update
+
+
+

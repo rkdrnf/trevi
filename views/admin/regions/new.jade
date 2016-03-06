@@ -1,0 +1,19 @@
+div#newRegionModal.modal.modal-small.fade(tabindex="-1", role="dialog", aria-labelledby="newRegionModal")
+			.modal-dialog(role="document")
+				.modal-content
+					.modal-header
+						button.close(type="button", data-dismiss="modal", aria-label="Close")
+							span(aria-hidden="true") x
+					.modal-body
+						form(action="/admin/regions/create", method="post")
+							.form-group
+								input.form-control(type="text", name="name", placeholder="이름")
+							.form-group
+								input.form-control(type="text", name="url", placeholder="Url")
+							button.btn.btn-default.btn-block(type="submit") Create
+					.modal-footer
+				//</content
+			//</dialog
+
+
+
