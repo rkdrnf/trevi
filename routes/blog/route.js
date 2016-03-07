@@ -6,6 +6,7 @@ var BlogRouter = require('./blogs.js');
 var BoardRouter = require('./boards.js');
 
 router.param('blog_name', function(req, res, next, value) {
+	console.log('blogname: ' + value);
 	UserBlog.findOne({ url: value }).lean().exec(function(err, blog) {
 		if (err) {
 			next(err);
@@ -19,7 +20,7 @@ router.param('blog_name', function(req, res, next, value) {
 			return;
 		}
 
-		next(new Error('failed to load UserBlog'));
+		next();
 	});
 });
 
@@ -43,5 +44,7 @@ router.param('board_id', function(req, res, next, value) {
 
 router.use('/', BlogRouter);
 router.use('/:blog_name', BoardRouter);
+
+
 
 module.exports = router;

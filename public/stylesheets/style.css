@@ -1,2 +1,9 @@
 .modal-small .modal-dialog {
   width: 300px; }
+
+.div-small {
+  width: 300px; }
+
+.align-center {
+  margin-left: auto;
+  margin-right: auto; }

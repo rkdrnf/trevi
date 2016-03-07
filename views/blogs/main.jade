@@ -1,0 +1,14 @@
+extends ../layout.jade
+
+block content
+	if !my_blog
+		form(action="/blogs/create", method="post")
+			button.btn.btn-primary(type="submit") 내 블로그 만들기
+	else
+		a.btn.btn-primary(type="button", href="/blogs/#{my_blog.url}") 내 블로그
+
+	ul
+		each blog in blogs
+			li
+				a.btn.btn-default(type="button", href="/blogs/#{blog.url}")= blog.owner.local.name
+		

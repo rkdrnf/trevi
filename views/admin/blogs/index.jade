@@ -1,0 +1,19 @@
+extends ../layout
+
+block content
+	table.table
+		tr
+			th ID
+			th Owner 
+			th Url
+			th Option
+				if blogs 
+					each blog in blogs 
+						tr
+							td= blog._id
+							td= blog.owner
+							td= blog.url
+							td
+								a.btn.btn-default(type="button", href="/admin/blogs/delete/#{blog._id}") Delete
+
+
