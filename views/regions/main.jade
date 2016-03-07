@@ -3,3 +3,7 @@ extends ../layout
 block content
 	h1= region.name
 
+	ul
+		each board in boards
+			li
+				a.btn.btn-default(href="/regions/#{region.url}/boards/#{board._id}")= board.name

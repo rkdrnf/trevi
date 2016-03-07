@@ -8,7 +8,13 @@ var article = new Schema({
 	category: String,																								//카테고리
 	title: { type: String, minlength: 4, maxlength: 40 },						//제목
 	content: { type: String }, 																			//내용
-	photos: [{ type: Schema.Types.ObjectId, ref: 'Photo' }
+	photos: [{ type: Schema.Types.ObjectId, ref: 'Photo' }]
 });
+
+
+module.exports = mongoose.model('Article', article);
+
+
+
 
 

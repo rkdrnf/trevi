@@ -8,7 +8,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/create', function(req, res, next) {
-	Region.create({ name: req.body.name }, function(err) { 
+	Region.create({ name: req.body.name, url: req.body.url }, function(err) { 
 		if (err) {
 			console.log(err);
 			return handleError(err);
