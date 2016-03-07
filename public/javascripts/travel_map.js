@@ -12,7 +12,9 @@ $(function() {
 
 	var svg = d3.select("body").append("svg")
 	.attr("width", width)
-	.attr("height", height);
+	.attr("height", height)
+	.attr("xmlns", "http://www.w3.org/2000/svg")
+	.attr("xmlns:xlink", "http://www.w3.org/1999/xlink");
 
 	d3.json("/datas/skorea-municipalities-topo.json", function(error, kor) {
 		var featureCollections = topojson.feature(kor, kor.objects["skorea-municipalities-geo"]);
@@ -38,9 +40,19 @@ $(function() {
 		.scale(s)
 		.translate(t);
 
-		svg.selectAll(".city")
+		console.log(featureCollections);
+
+		
+		var links = svg.selectAll(".city-link")
 		.data(featureCollections.features)
-		.enter().append("path")
+		.enter().append("a")
+		.attr("class", function(d) { return "city-link"; })
+		.attr("xlink:href", function(d) { return "/regions/" + d.properties.NAME_2.toLowerCase(); })
+		.attr("title", function(d) { return d.properties.NAME_2; });
+
+		//svg.selectAll(".city")
+		//.data(featureCollections.features)
+		links.append("path")
 		.attr("class", function(d) { return "city " + d.properties.NAME_2; })
 		.attr("d", path);
 
@@ -49,17 +61,12 @@ $(function() {
 		.attr("d", path)
 		.attr("class", "city-boundary");
 
-		svg.selectAll(".city-label")
-		.data(featureCollections.features)
-		.enter().append("text")
+		links.append("text")
 		.attr("class", function(d) { return "city-label " + d.properties.NAME_2; })
 		.attr("transform", function(d) { return "translate(" + path.centroid(d) + ")"; })
 		.attr("dy", ".35em")
 		.text(function(d) { return d.properties.ENGTYPE_2 === "District" ? "" : d.properties.NAME_2; });
-
-
 	});
-
 
 	d3.json("/datas/skorea-municipalities-topo.json", function(err, kor) {
 		console.log(kor);

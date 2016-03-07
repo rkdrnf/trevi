@@ -1,5 +1,6 @@
 .city {
-  fill: #ddd; }
+  fill: #ddd;
+  pointer-events: all; }
 
 .city-boundary {
   fill: none;
@@ -10,3 +11,7 @@
 path.city:hover {
   cursor: pointer;
   fill: #f2c251; }
+
+.city-label {
+  pointer-events: none;
+  text-anchor: middle; }
