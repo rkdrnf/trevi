@@ -4,6 +4,7 @@ var index = require('./index.js');
 var users = require('./users.js');
 var admin = require('./admin/admin.js');
 var regions = require('./regions.js');
+var blogs = require('./blog/blogs.js');
 
 /* GET home page. */
 
@@ -17,6 +18,7 @@ module.exports = function(app, passport) {
 	app.use('/users', users);
 	app.use('/admin', admin);
 	app.use('/regions', regions);
+	app.use('/blogs', blogs);
 
 	app.get('/login', function(req, res) {
 		res.render('login', { message: req.flash('loginMessage') }); 

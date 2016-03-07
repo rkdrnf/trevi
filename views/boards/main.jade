@@ -1,0 +1,15 @@
+extends ../layout
+
+block content
+	h1= board.name
+	h2= board.categories
+
+
+	ul
+		if articles
+			each article in articles
+				li
+					span= article.title
+			
+
+

@@ -1,0 +1,19 @@
+extends layout
+
+block content
+	.panel-padding.panel-body.div-small.align-center
+		.row
+			a.btn
+				span 페이스북 계정으로 로그인
+		.row
+			form(action="/login", method="post")
+				.form-group
+					input#email.form-control(type="text", name="email", placeholder="account@example.com")
+				.form-group
+					input#password.form-control(type="password", name="password", placeholder="Password")
+				button.btn.btn-default.btn-block(type="submit") 로그인
+
+		.row
+			p 계정이 없으세요?
+				a(href="#", data-dismiss="modal", data-toggle="modal", data-target="#signupModal") 가입하기
+
