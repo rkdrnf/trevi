@@ -25,6 +25,12 @@ userSchema.methods.validPassword = function(password) {
  return bcrypt.compareSync(password, this.local.password);
 };
 
+userSchema.methods.getBlogUrlCandidate = function() {
+	console.log(this);
+	if (this.local) { return this.local.email.split("@")[0]; }
+	if (this.facebook) { return this.facebook.email.split("@")[0]; }
+}
+
 userSchema.statics.isValidName = function(name) {
 	var pattern = /^[0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]*$/;
 	return name.length > 1 && !pattern.test(name);

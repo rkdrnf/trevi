@@ -23,7 +23,7 @@ html
 							li.active
 								a(href="/admin/users") Admin
 							li
-								a(href="#about") About
+								a(href="/blogs/main") Blog
 							li
 								a(href="#contact") Contact
 							li.dropdown
@@ -52,56 +52,10 @@ html
 									a(href="#", type="button", data-toggle="modal", data-target="#loginModal") 로그인
 
 
-			////Login Modal
-			div#loginModal.modal.modal-small.fade(tabindex="-1", role="dialog", aria-labelledby="loginModal")
-				.modal-dialog(role="document")
-					.modal-content
-						.modal-header
-							button.close(type="button", data-dismiss="modal", aria-label="Close")
-								span(aria-hidden="true") x
-						//header
-						.modal-body
-							.panel-padding.panel-body
-								.row
-									a.btn
-										span 페이스북 계정으로 로그인
-								.row
-									form(action="/login", method="post")
-										.form-group
-											label.col-sm-2.control-label(for="email")
-											input#email.form-control(type="text", name="email", placeholder="account@example.com")
-										.form-group
-											label.col-sm-2.control-label(for="password")
-											input#password.form-control(type="password", name="password", placeholder="Password")
-										button.btn.btn-default.btn-block(type="submit") 로그인
-
-								.row
-									p 계정이 없으세요?
-										a(href="#", data-dismiss="modal", data-toggle="modal", data-target="#signupModal") 가입하기
-						.modal-footer
-					//</content
-				//</dialog
-			//modal
-
-		div#signupModal.modal.modal-small.fade(tabindex="-1", role="dialog", aria-labelledby="signupModal")
-			.modal-dialog(role="document")
-				.modal-content
-					.modal-header
-						button.close(type="button", data-dismiss="modal", aria-label="Close")
-							span(aria-hidden="true") x
-					.modal-body
-						form(action="/signup", method="post")
-							.form-group
-								input.form-control(type="text", name="name", placeholder="이름")
-							.form-group
-								input.form-control(type="text", name="email", placeholder="이메일 주소")
-							.form-group
-								input.form-control(type="password", name="password", placeholder="비밀번호")
-							button.btn.btn-default.btn-block(type="submit") 회원가입
-					.modal-footer
-				//</content
-			//</dialog
-
+			
+		include ./login_modal.jade
+		include ./signup_modal.jade
+		
 		block content
 		block footer
 			- if (messages.error)
