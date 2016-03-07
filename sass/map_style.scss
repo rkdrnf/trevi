@@ -1,0 +1,20 @@
+.city
+{
+	fill: #ddd;
+}
+
+.city-boundary
+{
+
+	fill: none;
+	stroke: #777;
+	stroke-dasharray: 2,2;
+	stroke-linejoin: round;
+}
+
+path.city:hover
+{
+	cursor: pointer;
+	fill: #f2c251;
+}
+
