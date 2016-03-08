@@ -5,3 +5,5 @@ var photo = new Schema({
 	path: String,
 	author: { type: Schema.Types.ObjectId, ref: 'User' }
 });
+
+module.exports = mongoose.model('Photo', photo);

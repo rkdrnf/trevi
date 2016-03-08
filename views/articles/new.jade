@@ -1,0 +1,25 @@
+extends ../layout
+
+block content
+	form(action="/articles/create", method="post")
+		.form-group
+			select.form-control(name="region")
+				each region in regions
+					if (current_region == region._id)
+						option(selected="selected", value="#{region._id}")= region.name
+					else
+						option(value="#{region._id}")= region.name
+
+		input(type="hidden", name="board", value="#{board._id}")
+			
+		.form-group
+			select.form-control(name="category")
+				each category in board.categories
+					option(value="#{category}")= category
+
+		.form-group
+			input.form-control(type="text", name="title")
+		.form-group
+			textarea.form-control(name="content")
+		
+		button.btn.btn-primary(type="submit") 글쓰기
