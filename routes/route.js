@@ -5,6 +5,7 @@ var users = require('./users.js');
 var admin = require('./admin/admin.js');
 var regions = require('./regions.js');
 var blogs = require('./blog/blogs.js');
+var journal = require('./journal.js');
 
 /* GET home page. */
 
@@ -15,6 +16,7 @@ module.exports = function(app, passport) {
 	});
 
 	app.use('/', index);
+	app.use('/', journal);
 	app.use('/users', users);
 	app.use('/admin', admin);
 	app.use('/regions', regions);

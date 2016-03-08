@@ -2,7 +2,26 @@ var express = require('express');
 var router = express.Router();
 var UserBlog = require('../../models/user_blog.js');
 var routerHelper = require('../../helper/router_helper.js');
+var BoardRouter = require('./boards.js');
 
+router.param('blog_name', function(req, res, next, value) {
+	UserBlog.findOne({ url: value }).lean().exec(function(err, blog) {
+		if (err) {
+			next(err);
+			return;
+		}
+
+		if (blog) {
+			req.blog = blog;
+			res.locals.blog = blog;
+			next();
+			return; }
+
+		next();
+	});
+});
+
+router.use(setMyBlog);
 
 router.post('/create', routerHelper.checkUserLoggedIn, function(req, res, next) {
 	var url = UserBlog.createUrl(req.user);
@@ -46,12 +65,11 @@ function checkBlogExists(req, res, next) {
 		return;
 	} 
 	
-	if (req.user && req.params.blog_name === req.user.local.email.split("@")[0]) {
-		res.redirect('new');
-	} else {
-		res.render('notfound');
-	}
+	res.render('notfound');
 }
+
+
+router.use('/:blog_name', BoardRouter);
 
 
 function setMyBlog(req, res, next) {
@@ -60,7 +78,8 @@ function setMyBlog(req, res, next) {
 		UserBlog.findOne({ owner: req.user._id }).lean().exec(function(err, blog) {
 			req.my_blog = blog;
 			res.locals.my_blog = blog;
-		})
+			next();
+		});
 		return;
 	}
 
