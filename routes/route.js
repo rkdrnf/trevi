@@ -4,6 +4,7 @@ var index = require('./index.js');
 var users = require('./users.js');
 var admin = require('./admin/admin.js');
 var regions = require('./regions.js');
+var articles = require('./articles.js');
 var blogs = require('./blog/blogs.js');
 var journal = require('./journal.js');
 
@@ -20,6 +21,7 @@ module.exports = function(app, passport) {
 	app.use('/users', users);
 	app.use('/admin', admin);
 	app.use('/regions', regions);
+	app.use('/articles', articles);
 	app.use('/blogs', blogs);
 
 	app.get('/login', function(req, res) {

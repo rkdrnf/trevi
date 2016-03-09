@@ -1,0 +1,23 @@
+div#newArticleModal.modal.modal-small.fade(tabindex="-1", role="dialog", aria-labelledby="newArticleModal")
+			.modal-dialog(role="document")
+				.modal-content
+					.modal-header
+						button.close(type="button", data-dismiss="modal", aria-label="Close")
+							span(aria-hidden="true") x
+					.modal-body
+						form(action="/admin/articles/create", method="post")
+							.form-group
+								select.form-control(name="region")
+									each region in regions
+										option(value="#{region._id}")= region.name
+							.form-group
+								input.form-control(type="text", name="name", placeholder="이름")
+							.form-group
+								input.form-control(type="text", name="categories", placeholder="Category. seperator ';' ")
+							button.btn.btn-default.btn-block(type="submit") Create
+					.modal-footer
+				//</content
+			//</dialog
+
+
+
