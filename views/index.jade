@@ -5,7 +5,6 @@ block script
 	script(src="//d3js.org/topojson.v1.min.js")
 	script(src="/javascripts/travel_map.js")
 	link(rel="stylesheet", href='/stylesheets/map_style.css')
-	link
 
 block content
 	#content
@@ -31,6 +30,10 @@ block content
 			each region in regions
 				li 
 					a.btn.btn-default(href="/regions/#{region.url}")= region.name
+
+append bottom_script
+	script(src="/javascripts/bootstrap3-typeahead.min.js")
+	
 
 
 
