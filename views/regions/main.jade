@@ -3,20 +3,20 @@ extends ../layout
 block script
 	link(rel = "stylesheet", href="/stylesheets/regions/main.css")
 
+block header
+	include ../main_nav
+
 block content
 	#content
 		.head-sector
 			.background
-				- background_image_path = "/images/background_images/default.jpg"
-				if (region.background_image_path && region.background_image_path.length > 0)
-					- background_image_path = region.background_image_path
-					j
-				img(src="#{background_image_path}")
+				img(src="#{jadeHelper.tryDefaultImage(background_image_path, '/images/background_images/default.jpg')}")
 
 			.head-content
 				.middle
-					h1= region.name
-					h2= region.promotion_text
+					.promotion-box
+						h1= region.name
+						h2= region.promotion_text
 				.bottom-menu
 					.menu-box
 						each board in boards

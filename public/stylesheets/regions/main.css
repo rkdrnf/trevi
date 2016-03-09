@@ -6,6 +6,14 @@
   height: 600px; }
   .head-content .middle {
     height: 350px; }
+    .head-content .middle .promotion-box {
+      margin: auto;
+      padding-top: 10px;
+      padding-left: 20px;
+      padding-right: 20px;
+      width: 400px;
+      height: 150px;
+      background-color: rgba(0, 0, 0, 0.3); }
     .head-content .middle h1, .head-content .middle h2 {
       text-align: center;
       color: #fff; }
