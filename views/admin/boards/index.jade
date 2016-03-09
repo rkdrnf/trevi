@@ -18,6 +18,7 @@ block content
 							td= board.name
 							td= board.categories
 							td
+								a.btn.btn-default(type="button", href="/admin/articles?board_id=#{board._id}") Articles
 								a.btn.btn-default(type="button", href="/admin/boards/edit/#{board._id}") Edit
 								a.btn.btn-default(type="button", href="/admin/boards/delete/#{board._id}") Delete
 

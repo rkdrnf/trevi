@@ -16,6 +16,13 @@ module.exports = function(app, passport) {
 		next();
 	});
 
+
+	app.use(function(req, res, next) {
+		res.path = req.path;
+		res.url = req.url;
+		next();
+	});
+
 	app.use('/', index);
 	app.use('/', journal);
 	app.use('/users', users);
