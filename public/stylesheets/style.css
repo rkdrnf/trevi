@@ -7,3 +7,79 @@
 .align-center {
   margin-left: auto;
   margin-right: auto; }
+
+#content {
+  background-color: #537480; }
+
+.navbar {
+  position: absolute;
+  top: 0px;
+  width: 100%;
+  z-index: 1000;
+  background-color: rgba(0, 0, 0, 0.05);
+  margin-bottom: 0px; }
+  .navbar .navbar-header {
+    float: left; }
+  .navbar .navbar-collapse {
+    float: right; }
+  .navbar a {
+    color: #fff; }
+
+.btn-search {
+  background-color: #c2eddb; }
+
+.region-select-box {
+  width: 460px;
+  margin: auto;
+  padding: 30px 80px 30px 80px;
+  background-color: rgba(0, 0, 0, 0.2); }
+
+.select-with-button {
+  width: 300px;
+  margin: auto; }
+  .select-with-button .select-box {
+    width: 200px;
+    margin: 0px;
+    display: inline-block; }
+    .select-with-button .select-box select {
+      margin: 0px; }
+  .select-with-button .button-box {
+    width: 100px;
+    margin: 0px;
+    display: inline-block; }
+    .select-with-button .button-box .btn {
+      width: 100px;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      margin: 0px; }
+
+.head-sector {
+  height: 600px;
+  position: relative; }
+  .head-sector .head-content {
+    position: relative;
+    z-index: 2; }
+    .head-sector .head-content .middle {
+      padding-top: 200px; }
+
+.background {
+  bottom: 0;
+  left: 0;
+  overflow: hidden;
+  position: absolute;
+  right: 0;
+  top: 0;
+  display: block; }
+
+.background-video {
+  width: 100%;
+  height: auto;
+  position: absolute;
+  display: inline-block;
+  object-fit: contain; }
+
+.form-control, .btn, .select {
+  border-radius: 0px; }
+
+select {
+  -webkit-appearance: none;
+  display: block; }

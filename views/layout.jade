@@ -9,7 +9,7 @@ html
 		block script
 	body
 		block header
-			nav.navbar.navbar-inverse
+			nav.navbar
 				div.container
 					div.navbar-header
 						button.navbar-toggle.collapsed(type="button", data-toggle="collapse", data-target="#navbar", aria-expanded="false", aria-controls="navbar")
@@ -23,7 +23,7 @@ html
 							li.active
 								a(href="/admin/users") Admin
 							li
-								a(href="/blogs/main") Blog
+								a(href="/blogs/main") 이야기
 							li
 								a(href="#contact") Contact
 							li.dropdown
@@ -50,15 +50,14 @@ html
 									a(href="/logout", type="button") 로그아웃
 								else
 									a(href="#", type="button", data-toggle="modal", data-target="#loginModal") 로그인
-
-
-			
-		include ./login_modal.jade
-		include ./signup_modal.jade
-		
 		block content
 		block footer
 			- if (messages.error)
 				span= messages.error
+
+
+		block modals
+			include ./login_modal.jade
+			include ./signup_modal.jade
 
 		script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous")

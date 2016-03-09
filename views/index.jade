@@ -5,17 +5,32 @@ block script
 	script(src="//d3js.org/topojson.v1.min.js")
 	script(src="/javascripts/travel_map.js")
 	link(rel="stylesheet", href='/stylesheets/map_style.css')
+	link
 
 block content
-	h1= title
-	p Welcome to trevi
+	#content
+		.head-sector
+			.background
+				video.background-video(preload="auto", loop="loop", autoplay="true", poster="https://a0.muscache.com/airbnb/static/landing_pages/pretzel/stills/london-3bd18731b4aacc8413208e5aa1bf13f3.jpg")
+					source(src="https://a0.muscache.com/airbnb/static/London-P1-1.mp4", type="video/mp4")
+					source(src="https://a0.muscache.com/airbnb/static/London-P1-0.webm", type="video/webm")
+
+			.head-content
+				.middle
+					.region-select-box
+						.select-with-button
+							.select-box
+								select.region-select.form-control
+									each region in regions
+										option(value="#{region._id}")= region.name
+							.button-box
+								a.btn.btn-search 찾아가기
 
 
-
-	ul
-		each region in regions
-			li 
-				a.btn.btn-default(href="/regions/#{region.url}")= region.name
+		ul
+			each region in regions
+				li 
+					a.btn.btn-default(href="/regions/#{region.url}")= region.name
 
 
 

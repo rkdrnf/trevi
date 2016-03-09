@@ -8,7 +8,8 @@ block content
 		a.btn.btn-primary(type="button", href="/blogs/#{my_blog.url}") 내 블로그
 
 	ul
-		each blog in blogs
-			li
-				a.btn.btn-default(type="button", href="/blogs/#{blog.url}")= blog.owner.local.name
+		if blogs
+			each blog in blogs
+				li
+					a.btn.btn-default(type="button", href="/blogs/#{blog.url}")= blog.owner.local.name
 		

@@ -2,9 +2,4 @@ extends ../layout
 
 block content
 	a.btn.btn-primary(type="button", href="/new_journal") 지금 여행기를 써보세요
-	ul
-		each board in boards
-			li
-				a.btn.btn-default(type="button", href="/blogs/#{blog.url}/boards/#{board._id}")= board.name
-	
 	
