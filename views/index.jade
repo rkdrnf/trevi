@@ -4,7 +4,9 @@ block script
 	script(src="//d3js.org/d3.v3.min.js", charset="utf-8")
 	script(src="//d3js.org/topojson.v1.min.js")
 	script(src="/javascripts/travel_map.js")
+	script(src="/javascripts/index.js")
 	link(rel="stylesheet", href='/stylesheets/map_style.css')
+	link(rel="stylesheet", href='/stylesheets/index.css')
 
 block content
 	#content
@@ -17,19 +19,12 @@ block content
 			.head-content
 				.middle
 					.region-select-box
-						.select-with-button
-							.select-box
-								select.region-select.form-control
-									each region in regions
-										option(value="#{region._id}")= region.name
-							.button-box
-								a.btn.btn-search 찾아가기
-
-
-		ul
-			each region in regions
-				li 
-					a.btn.btn-default(href="/regions/#{region.url}")= region.name
+						form(action="regions/goto_region", method="get")
+							.select-with-button
+								.select-box
+									input.region_select.form-control(type="text", name="region", data-provide="typeahead")
+								.button-box
+									button.btn.btn-search(type="submit") 찾아가기
 
 append bottom_script
 	script(src="/javascripts/bootstrap3-typeahead.min.js")

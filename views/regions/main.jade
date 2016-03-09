@@ -1,9 +1,28 @@
 extends ../layout
 
-block content
-	h1= region.name
+block script
+	link(rel = "stylesheet", href="/stylesheets/regions/main.css")
 
-	ul
-		each board in boards
-			li
-				a.btn.btn-default(href="/regions/#{region.url}/boards/#{board._id}")= board.name
+block content
+	#content
+		.head-sector
+			.background
+				- background_image_path = "/images/background_images/default.jpg"
+				if (region.background_image_path && region.background_image_path.length > 0)
+					- background_image_path = region.background_image_path
+					j
+				img(src="#{background_image_path}")
+
+			.head-content
+				.middle
+					h1= region.name
+					h2= region.promotion_text
+				.bottom-menu
+					.menu-box
+						each board in boards
+							a.btn.btn-default(href="/regions/#{region.url}/boards/#{board._id}")= board.name
+
+		.body-sector
+
+				
+	

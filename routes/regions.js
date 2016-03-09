@@ -20,11 +20,40 @@ router.param('region_name', function(req, res, next, value) {
 		next(new Error('failed to load Region'));
 	});
 });
+
+router.get('/ajax_regions_for_search', function(req, res, next) {
+	Region.find().lean().exec(function(err, regions) {
+		console.log(regions);
+		
+		res.json(regions.map(function(region) { return { id: region.url, name: region.name }; }));
+	});
+});
+
+router.get('/goto_region', function(req, res, next) {
+	Region.findOne({ name: new RegExp('.*' + req.query.region + '.*', "i") }).lean().exec(function(err, region) {
+		if (err) {
+			res.render(500);
+			return;
+		}
+
+		if (region) {
+			res.redirect(region.url);
+			return;
+		}
+
+		res.render(500);
+		return;
+	});
+
+});
+
 router.get('/:region_name', function(req, res, next) {
 	Board.find({ region: req.region._id }).lean().exec(function(err, boards) {
 		res.render('regions/main', { region: req.region, boards: boards });
 	});
 });
+
+
 
 
 router.use('/:region_name/boards', boardsRouter);

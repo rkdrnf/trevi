@@ -8,6 +8,8 @@ block content
 			th ID
 			th Name
 			th Url
+			th PromotionText
+			th Background
 			th Option
 				if regions
 					each region in regions
@@ -15,6 +17,8 @@ block content
 							td= region._id
 							td= region.name
 							td= region.url
+							td= region.promotion_text
+							td= region.background_image_path
 							td
 								a.btn.btn-default(type="button", href="/admin/regions/edit/#{region._id}") Edit
 								a.btn.btn-default(type="button", href="/admin/regions/delete/#{region._id}") Delete

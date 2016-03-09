@@ -3,7 +3,9 @@ var Schema = mongoose.Schema;
 
 var regionSchema = new Schema({
 	name: { type: String },
-	url: { type: String }
+	url: { type: String },
+	promotion_text: { type: String },
+	background_image_path: { type: String }
 });
 
 

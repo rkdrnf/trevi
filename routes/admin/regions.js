@@ -8,7 +8,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/create', function(req, res, next) {
-	Region.create({ name: req.body.name, url: req.body.url }, function(err) { 
+	Region.create({ name: req.body.name, url: req.body.url, promotion_text: req.body.promotion_text, background_image_path: req.body.background_image_path }, function(err) { 
 		if (err) {
 			console.log(err);
 			return handleError(err);
@@ -31,8 +31,8 @@ router.get('/edit/:id', function(req, res, next) {
 });
 
 router.post('/update/:id', function(req, res, next) {
-	console.log('received');
-	Region.update({ _id: req.params.id }, { name: req.body.name, url: req.body.url }, function(err) { 
+	console.log(req.body.promotion_text);
+	Region.update({ _id: req.params.id }, { name: req.body.name, url: req.body.url, promotion_text: req.body.promotion_text, background_image_path: req.body.background_image_path }, function(err) { 
 		if (err) { 
 			console.log(err);
 			return handleError(err);

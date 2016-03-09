@@ -1,0 +1,48 @@
+.background img {
+	width: 100%;
+	object-fit: fill;
+}
+
+.head-content {
+	height: 600px;
+	.middle {
+		height: 350px;
+		h1, h2 {
+			text-align: center;
+			color: #fff;
+		}
+	}
+}
+
+.bottom-menu {
+	padding-top: 190px;
+	width: 100%;
+	height: auto;
+
+	.menu-box {
+		bottom: 0px;
+		background-color: rgba(0, 0, 0, 0.7);
+		padding-top: 15px;
+		padding-bottom: 15px;
+		padding-left: 30px;
+		padding-right: 30px;
+		height: 60px;
+		box-sizing: border-box;
+
+		a { 
+			width: 100px;
+			margin-left: 10px;
+			margin-right: 10px;
+			display: inline-block;
+			float: left;
+		}
+	}
+}
+
+
+
+
+
+
+
+
