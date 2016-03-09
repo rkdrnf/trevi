@@ -8,12 +8,10 @@ var regionSchema = new Schema({
 	background_image_path: { type: String }
 });
 
-
 regionSchema.statics.isValidName = function(name) {
 	var pattern = /^[0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]*$/;
 	return name.length > 0 && !pattern.test(name);
 };
-
 
 module.exports = mongoose.model('Region', regionSchema);
 

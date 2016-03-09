@@ -25,6 +25,6 @@ block content
 							td= article.content
 							td= article.photos 
 							td
-								a.btn.btn-default(type="button", href="/admin/articles/edit/#{article._id}?redirect_url=#{encodeURIComponent(url)}") Edit
+								a.btn.btn-default(type="button", href="/admin/articles/edit/#{article._id}?redirect_url=#{jadeHelper.encodeURI(url)}") Edit
 								a.btn.btn-default(type="button", href="/admin/articles/delete/#{article._id}") Delete
 

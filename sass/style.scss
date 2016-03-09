@@ -2,7 +2,7 @@
 	background-color: #537480;
 }
 
-.navbar {
+.index-nav {
 	position: absolute;
 	top: 0px;
 	width: 100%;
@@ -19,9 +19,29 @@
 	}
 
 	a {
-		 color: #fff;
+		color: #fff;
 	}
 }
+
+.main-nav {
+	width: 100%;
+	z-index: 1000;
+	background-color: rgb(255, 255, 255);
+	margin-bottom: 0px;
+
+	.navbar-header {
+		float: left;
+	}
+
+	.navbar-collapse {
+		float: right;
+	}
+
+	a {
+		color: #000;
+	}
+}
+
 
 .btn-search {
 	background-color: #c2eddb;
@@ -85,7 +105,7 @@
 	top: 0;
 
 	display: block;
-	
+
 }
 
 .form-control, .btn, .select {

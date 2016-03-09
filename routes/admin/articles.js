@@ -44,13 +44,14 @@ router.get('/edit/:id', function(req, res, next) {
 				return handleError(err);
 			}
 
-			res.render('admin/articles/edit', { article: article, regions: regions, redirect_url: req.query.redirect_url });
+
+			res.render('admin/articles/edit', { article: article, regions: regions, redirect_url: encodeURIComponent(req.query.redirect_url) });
 		});
 	});
 });
 
 router.post('/update/:id', function(req, res, next) {
-//	var categories = req.body.categories.split(';').map(function(cat) { return cat.trim(); }).filter(function(cat) { return cat.length > 0 });
+	console.log(req.query);
 	var photos = req.body.photos ? req.body.photos.split(';').map(function(photo) { return photo.trim(); }).filter(function(photo) { return photo.length > 0 }) : [];
 
 	Article.update({ _id: req.params.id }, { category: req.body.category, title: req.body.title, content: req.body.content, photos: photos }, function(err) { 
@@ -60,7 +61,7 @@ router.post('/update/:id', function(req, res, next) {
 		}
 
 		if (req.query.redirect_url)
-			res.redirect(decodeURIComponent(res.query.redirect_url));
+			res.redirect(req.query.redirect_url);
 		else 
 			res.redirect('../');
 	});

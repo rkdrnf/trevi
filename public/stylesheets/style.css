@@ -1,19 +1,31 @@
 #content {
   background-color: #537480; }
 
-.navbar {
+.index-nav {
   position: absolute;
   top: 0px;
   width: 100%;
   z-index: 1000;
   background-color: rgba(0, 0, 0, 0.05);
   margin-bottom: 0px; }
-  .navbar .navbar-header {
+  .index-nav .navbar-header {
     float: left; }
-  .navbar .navbar-collapse {
+  .index-nav .navbar-collapse {
     float: right; }
-  .navbar a {
+  .index-nav a {
     color: #fff; }
+
+.main-nav {
+  width: 100%;
+  z-index: 1000;
+  background-color: white;
+  margin-bottom: 0px; }
+  .main-nav .navbar-header {
+    float: left; }
+  .main-nav .navbar-collapse {
+    float: right; }
+  .main-nav a {
+    color: #000; }
 
 .btn-search {
   background-color: #c2eddb; }

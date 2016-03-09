@@ -1,5 +1,12 @@
 extends ../layout
 
+block script
+	script(src="//cdn.tinymce.com/4/tinymce.min.js")
+	script(src="/javascripts/articles/new.js")
+
+block header
+	include ../main_nav
+
 block content
 	form(action="/articles/create", method="post")
 		.form-group
@@ -20,6 +27,7 @@ block content
 		.form-group
 			input.form-control(type="text", name="title")
 		.form-group
-			textarea.form-control(name="content")
+			textarea.tinymce.form-control(name="content")
 		
 		button.btn.btn-primary(type="submit") 글쓰기
+

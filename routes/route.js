@@ -8,6 +8,8 @@ var articles = require('./articles.js');
 var blogs = require('./blog/blogs.js');
 var journal = require('./journal.js');
 
+var jadeHelper = require('../helper/jade_helper.js');
+
 /* GET home page. */
 
 module.exports = function(app, passport) {
@@ -16,10 +18,14 @@ module.exports = function(app, passport) {
 		next();
 	});
 
+	app.use(function(req, res, next) {
+		res.locals.path = req.path;
+		res.locals.url = req.url;
+		next();
+	});
 
 	app.use(function(req, res, next) {
-		res.path = req.path;
-		res.url = req.url;
+		res.locals.jadeHelper = jadeHelper;
 		next();
 	});
 
