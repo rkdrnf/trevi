@@ -39,14 +39,18 @@ module.exports = function(app, passport) {
 	app.use('/blogs', blogs);
 
 	app.get('/login', function(req, res) {
-		res.render('login', { message: req.flash('loginMessage'), redirect_url: encodeURIComponent(req.query.redirect_url) }); 
+		res.render('login', { message: req.flash('loginMessage'), after_login: encodeURIComponent(req.query.after_login) }); 
 	});
 
 	app.post('/login', passport.authenticate('local-login', {
 		failureRedirect : '/', // redirect back to the signup page if there is an error
 		failureFlash : true // allow flash messages
 	}), function(req, res) {
-		res.redirect(routerHelper.tryUseRedirectUrl(req, '/'));
+		
+		if (req.query.after_login && routerHelper.isValidURLPath(req.query.after_login))
+			res.redirect(req.query.after_login);
+		else 
+			res.redirect('/');
 	});
 
 

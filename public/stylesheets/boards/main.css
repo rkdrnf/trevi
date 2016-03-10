@@ -36,3 +36,8 @@
       display: inline-block;
       vertical-align: middle;
       line-height: 20px; }
+
+#content .articles-container {
+  padding: 30px; }
+  #content .articles-container .articles-list {
+    margin-top: 30px; }

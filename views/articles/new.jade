@@ -8,7 +8,7 @@ block header
 	include ../main_nav
 
 block content
-	form(action="/articles/create", method="post")
+	form(action="/articles/create?redirect_url=#{redirect_url}", method="post")
 		.form-group
 			select.form-control(name="region")
 				each region in regions

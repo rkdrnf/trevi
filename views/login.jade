@@ -6,7 +6,7 @@ block content
 			a.btn
 				span 페이스북 계정으로 로그인
 		.row
-			form(action="/login?redirect_url=#{redirect_url}", method="post")
+			form(action="/login?after_login=#{after_login}", method="post")
 				.form-group
 					input#email.form-control(type="text", name="email", autofocus="true", placeholder="account@example.com")
 				.form-group

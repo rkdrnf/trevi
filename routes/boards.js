@@ -21,7 +21,7 @@ router.param('board_id', function(req, res, next, value) {
 });
 
 router.get('/:board_id', function(req, res, next) {
-	Article.find().lean().exec(function(err, articles) {
+	Article.find().populate('author').lean().exec(function(err, articles) {
 		res.render('boards/main', { region: req.board.region, board: req.board, articles: articles });
 	});
 });

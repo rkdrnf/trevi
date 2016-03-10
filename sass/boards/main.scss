@@ -50,9 +50,13 @@
 				line-height: 20px;
 			}
 		}
+	}
 
+	.articles-container {
+		padding: 30px;
 
-
-		
+		.articles-list {
+			margin-top: 30px;
+		}
 	}
 }

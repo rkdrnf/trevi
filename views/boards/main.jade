@@ -18,15 +18,15 @@ block content
 				.banner-text-container
 					span= board.name
 		.articles-container
-			a.btn.btn-primary(type="button", href="/articles/new?region=#{region._id}&board=#{board._id}") 새 글 쓰기 
+			a.btn.btn-primary(type="button", href="/articles/new?redirect_url=#{jadeHelper.encodeURI(path)}&region=#{region._id}&board=#{board._id}") 새 글 쓰기 
 			.articles-list
-				table
+				table.table
 					if (articles)
 						each article in articles
 							tr
 								td
 									a(href="/articles/#{article._id}")= article.title
-								td= article.author
+								td= article.author.local.name
 
 
 
