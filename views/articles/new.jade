@@ -1,8 +1,12 @@
-extends ../layout
-
+extends ../layout 
 block script
 	script(src="//cdn.tinymce.com/4/tinymce.min.js")
+	script(src="/stylesheets/tinymce.css")
+	script(src="/javascripts/tinymce_page.js")
 	script(src="/javascripts/articles/new.js")
+	script(src="/plugins/jquery-file-upload/js/vendor/jquery.ui.widget.js")
+	script(src="/plugins/jquery-file-upload/js/jquery.iframe-transport.js")
+	script(src="/plugins/jquery-file-upload/js/jquery.fileupload.js")
 
 block header
 	include ../main_nav
@@ -28,6 +32,8 @@ block content
 			input.form-control(type="text", name="title")
 		.form-group
 			textarea.tinymce.form-control(name="content")
-		
+				
 		button.btn.btn-primary(type="submit") 글쓰기
+
+		input.tinymce-image-input(type="file", name="files[]", data-url="/upload", mutiple="true")
 

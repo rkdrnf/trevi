@@ -34,3 +34,5 @@ node_modules
 
 .tern_project
 *.swp
+
+public/images/user_images/*

@@ -32,6 +32,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
+require('./config/file_upload.js')(app);
 require('./config/passport.js')(passport);
 
 app.use(

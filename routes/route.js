@@ -7,6 +7,7 @@ var regions = require('./regions.js');
 var articles = require('./articles.js');
 var blogs = require('./blog/blogs.js');
 var journal = require('./journal.js');
+var images = require('./images');
 
 var jadeHelper = require('../helper/jade_helper.js');
 var routerHelper = require('../helper/router_helper.js');
@@ -37,6 +38,8 @@ module.exports = function(app, passport) {
 	app.use('/regions', regions);
 	app.use('/articles', articles);
 	app.use('/blogs', blogs);
+	app.use('/images', images);
+
 
 	app.get('/login', function(req, res) {
 		res.render('login', { message: req.flash('loginMessage'), after_login: encodeURIComponent(req.query.after_login) }); 
