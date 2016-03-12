@@ -36,3 +36,4 @@ node_modules
 *.swp
 
 public/images/user_images/*
+config/server_config.js

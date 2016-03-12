@@ -18,7 +18,7 @@ $(function () {
     $('#fileupload').fileupload({
         // Uncomment the following to send cross-domain cookies:
         //xhrFields: {withCredentials: true},
-			url: 'http://localhost:3000'
+			url: '/upload'
     });
 
     // Enable iframe cross-domain access via redirect option:
@@ -67,8 +67,12 @@ $(function () {
         }).always(function () {
             $(this).removeClass('fileupload-processing');
         }).done(function (result) {
-            $(this).fileupload('option', 'done')
-                .call(this, $.Event('done'), {result: result});
+					console.log(result);
+					console.log($(this));
+					
+            var test = $(this).fileupload('option', 'done');
+						console.log(test);
+                test.call(this, $.Event('done'), {result: result});
         });
     }
 

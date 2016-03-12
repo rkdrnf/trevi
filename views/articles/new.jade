@@ -1,39 +1,64 @@
 extends ../layout 
 block script
-	script(src="//cdn.tinymce.com/4/tinymce.min.js")
-	script(src="/stylesheets/tinymce.css")
+	script(src="/plugins/tinymce/tinymce.min.js")
+	link(rel="stylesheet", href="/stylesheets/tinymce.css")
+	link(rel="stylesheet", href="/stylesheets/articles/new.css")
+	link(rel="stylesheet", href="/plugins/jquery-file-upload/css/jquery.fileupload.css")
 	script(src="/javascripts/tinymce_page.js")
 	script(src="/javascripts/articles/new.js")
+	script(src="/plugins/javascript-load-image/js/load-image.all.min.js")
 	script(src="/plugins/jquery-file-upload/js/vendor/jquery.ui.widget.js")
 	script(src="/plugins/jquery-file-upload/js/jquery.iframe-transport.js")
 	script(src="/plugins/jquery-file-upload/js/jquery.fileupload.js")
+	script(src="/plugins/jquery-file-upload/js/jquery.fileupload-process.js")
+	script(src="/plugins/jquery-file-upload/js/jquery.fileupload-image.js")
+	script(src="/plugins/jquery-file-upload/js/jquery.fileupload-audio.js")
+	script(src="/plugins/jquery-file-upload/js/jquery.fileupload-video.js")
+	script(src="/plugins/jquery-file-upload/js/jquery.fileupload-validate.js")
 
 block header
 	include ../main_nav
 
 block content
-	form(action="/articles/create?redirect_url=#{redirect_url}", method="post")
-		.form-group
-			select.form-control(name="region")
-				each region in regions
-					if (current_region == region._id)
-						option(selected="selected", value="#{region._id}")= region.name
-					else
-						option(value="#{region._id}")= region.name
+	#content
+		.content-body
+			.write-form-wrapper
+				form(action="/articles/create?redirect_url=#{redirect_url}", method="post", enctype="multipart/form-data")
+					.form-group
+						select.form-control(name="region")
+							each region in regions
+								if (current_region == region._id)
+									option(selected="selected", value="#{region._id}")= region.name
+								else
+									option(value="#{region._id}")= region.name
 
-		input(type="hidden", name="board", value="#{board._id}")
-			
-		.form-group
-			select.form-control(name="category")
-				each category in board.categories
-					option(value="#{category}")= category
+					input(type="hidden", name="board", value="#{board._id}")
+						
+					.form-group
+						select.form-control(name="category")
+							each category in board.categories
+								option(value="#{category}")= category
 
-		.form-group
-			input.form-control(type="text", name="title")
-		.form-group
-			textarea.tinymce.form-control(name="content")
-				
-		button.btn.btn-primary(type="submit") 글쓰기
+					.form-group
+						input.form-control(type="text", name="title", placeholder="제목")
 
-		input.tinymce-image-input(type="file", name="files[]", data-url="/upload", mutiple="true")
+					.form-group
+						.tinymce-toolbar
+						.tinymce(name="content")
+
+					.form-group
+						#fileupload
+						span.btn.btn-success.fileinput-button
+							i.glyphicon.glyphicon-plus
+							span Add files
+							input#allFileInput(type="file", name="files[]", multiple="")
+						#progress.progress
+							.progress-bar.progress-bar-success
+						#files.files
+
+							input#singleImageInput.tinymce-single-image-input(type="file", name="files2[]", data-url="/upload", accept="image/*")
+							
+					button.btn.btn-primary(type="submit") 글쓰기
+
+
 

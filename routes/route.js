@@ -7,7 +7,8 @@ var regions = require('./regions.js');
 var articles = require('./articles.js');
 var blogs = require('./blog/blogs.js');
 var journal = require('./journal.js');
-var images = require('./images');
+var images = require('./images.js');
+var uploads = require('./uploads.js');
 
 var jadeHelper = require('../helper/jade_helper.js');
 var routerHelper = require('../helper/router_helper.js');
@@ -39,6 +40,7 @@ module.exports = function(app, passport) {
 	app.use('/articles', articles);
 	app.use('/blogs', blogs);
 	app.use('/images', images);
+	app.use('/uploads', uploads);
 
 
 	app.get('/login', function(req, res) {
@@ -79,6 +81,10 @@ module.exports = function(app, passport) {
 	app.get('/logout', function(req, res) {
 		req.logout();
 		res.redirect(routerHelper.tryUseRedirectUrl(req, 'back'));
+	});
+
+	app.get('/test', function(req, res) {
+		res.render('test');
 	});
 };
 
