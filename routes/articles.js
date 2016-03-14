@@ -5,6 +5,7 @@ var Article = require('../models/article.js');
 var Region = require('../models/region.js');
 var Board = require('../models/board.js');
 var RouterHelper = require('../helper/router_helper.js');
+var Photo = require('../models/photo.js');
 
 router.get('/new', RouterHelper.checkUserLoggedIn, function(req, res, next) {
 	Region.find().lean().exec(function(err, regions) {
@@ -27,13 +28,18 @@ router.get('/new', RouterHelper.checkUserLoggedIn, function(req, res, next) {
 });
 
 router.post('/create', RouterHelper.checkUserLoggedIn, function(req, res, next) {
-	Article.create({ author: req.user._id, region: req.body.region, board: req.body.board, category: req.body.category, title: req.body.title, content: req.body.content}, function(err) {
+	var photo_ids = req.body.image_ids.split(';');
+	Article.create({ author: req.user._id, region: req.body.region, board: req.body.board, category: req.body.category, title: req.body.title, content: req.body.content, photos: photo_ids}, function(err) {
 		if (err) {
 			console.log(err);
 			res.render(500);
 		}
 		else {
 			res.redirect(RouterHelper.tryUseRedirectUrl(req, '/'));
+
+			Photo.update({ _id: { $in: photo_ids }}, { $push: { 'references.articles' : article._id }}, function (err) {
+				if (err) return;
+			});
 		}
 	});
 });
