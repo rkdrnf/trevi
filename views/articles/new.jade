@@ -17,12 +17,17 @@ block content
 					else
 						option(value="#{region._id}")= region.name
 
-		input(type="hidden", name="board", value="#{board._id}")
-			
+		.form-group
+			select.form-control(name="board")
+				each board in boards
+					if (current_board == board._id)
+						option(selected="selected", value="#{board._id}")= board.name
+					else 
+						option(value="#{board._id}")= board.name
+								
 		.form-group
 			select.form-control(name="category")
-				each category in board.categories
-					option(value="#{category}")= category
+				option(value="#{category}")= category
 
 		.form-group
 			input.form-control(type="text", name="title")

@@ -69,7 +69,15 @@ router.post('/update/:id', function(req, res, next) {
 
 router.get('/delete/:id', function(req, res, next) {
 	Article.remove({ _id: req.params.id }, function(err) {
-		res.redirect('../');
+		if (err) {
+			console.log(err);
+			return handleError(err);
+		}
+
+		if (req.query.redirect_url)
+			res.redirect(req.query.redirect_url);
+		else
+			res.redirect('../');
 	});
 });
 

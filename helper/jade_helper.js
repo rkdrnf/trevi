@@ -17,5 +17,10 @@ jadeHelper.addRedirection = function(url, redirect_url) {
 	return url + '?' + querystring.stringify({redirect_url: redirect_url});
 };
 
+jadeHelper.buildQuery = function(queryObj) {
+	return querystring.stringify(queryObj);
+};
+
+
 
 module.exports = jadeHelper;

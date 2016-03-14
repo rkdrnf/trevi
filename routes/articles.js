@@ -9,13 +9,15 @@ var RouterHelper = require('../helper/router_helper.js');
 router.get('/new', RouterHelper.checkUserLoggedIn, function(req, res, next) {
 	Region.find().lean().exec(function(err, regions) {
 		if (err) res.render(500);
-		Board.findOne({ _id: req.query.board }).lean().exec(function(err, board) {
+		Board.find({_id: req.query.board}).populate('categories').lean().exec(function(err, boards) {
 			if (err) res.render(500);
-
+			
 			var renderParams = {
 				current_region: req.query.region,
+				current_board: req.query.board,
 				regions: regions, 
-				board: board, 
+				boards: boards, 
+				categories: boards.categories,
 				redirect_url: req.query.redirect_url ? encodeURIComponent(req.query.redirect_url) : ""
 			};
 
@@ -36,6 +38,21 @@ router.post('/create', RouterHelper.checkUserLoggedIn, function(req, res, next) 
 	});
 });
 
+router.get('/', function(req, res, next) {
+	var region_ids = JSON.parse(req.query.regions);
+	var board_ids = JSON.parse(req.query.boards);
+
+	Region.find().lean().exec(function(err, regions) {
+		if (err) res.render(500);
+		Board.find().lean().exec(function(err, boards) {
+			if (err) res.render(500);
+
+			Article.find({ board: { $in: board_ids}}).lean().exec(function(err, articles) {
+				res.render('articles/main', { articles: articles, regions: regions, checked_regions: region_ids, boards: boards, checked_boards: board_ids });
+			});
+		}); 
+	});
+});
 
 router.get('/:article_id', function(req, res, next) {
 	Article.findOne({ _id: req.params.article_id }).populate('author region board photos').lean().exec(function (err, article) {

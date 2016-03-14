@@ -11,7 +11,6 @@ block content
 		.head-sector
 			.background
 				img(src="#{jadeHelper.tryDefaultImage(background_image_path, '/images/background_images/default.jpg')}")
-
 			.head-content
 				.middle
 					.promotion-box
@@ -20,9 +19,8 @@ block content
 				.bottom-menu
 					.menu-box
 						each board in boards
-							a.btn.btn-default(href="/regions/#{region.url}/boards/#{board._id}")= board.name
-
+							- query = jadeHelper.buildQuery({ regions: JSON.stringify([region._id]), boards: JSON.stringify([board._id]) })
+							a.btn.btn-default(href="/articles?#{query}")= board.name
 		.body-sector
+#						a.btn.btn-default(href="/regions/#{region.url}/boards/#{board._id}")= board.name
 
-				
-	

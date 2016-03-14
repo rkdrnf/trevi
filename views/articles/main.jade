@@ -1,15 +1,27 @@
 extends ../layout
 
+block script
+	link(rel ="stylesheet", href="/stylesheets/articles/index.css")
+
+block header
+	include ../main_nav
+
 block content
-	h1= board.name
-	h2= board.categories
+	#content
+		.head-banner
+			label 
+				input.form-control(type="checkbox", name="mycheck")
+				span hello
 
+		.articles-container
+			.menu-box
 
-	ul
-		if articles
-			each article in articles
-				li
-					span= article.title
-			
+				a.btn.btn-default(type="button", href="/articles/new?redirect_url=#{jadeHelper.encodeURI(url)}&") 새글쓰기
 
-
+		table.table
+			if (articles)
+				each article in articles
+					tr
+						td
+							a(href="/articles/#{article._id}")= article.title
+							
