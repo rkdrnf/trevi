@@ -8,17 +8,18 @@ var RouterHelper = require('../helper/router_helper.js');
 var Photo = require('../models/photo.js');
 
 router.get('/new', RouterHelper.checkUserLoggedIn, function(req, res, next) {
+//	var region_ids = JSON.parse(req.query.regions);
+//	var board_ids = JSON.parse(req.query.boards);
 	Region.find().lean().exec(function(err, regions) {
 		if (err) res.render(500);
-		Board.find({_id: req.query.board}).populate('categories').lean().exec(function(err, boards) {
+		Board.find().lean().exec(function(err, boards) {
 			if (err) res.render(500);
 			
 			var renderParams = {
-				current_region: req.query.region,
-				current_board: req.query.board,
+//				current_region: region_ids,
+//				current_board: board_ids,
 				regions: regions, 
 				boards: boards, 
-				categories: boards.categories,
 				redirect_url: req.query.redirect_url ? encodeURIComponent(req.query.redirect_url) : ""
 			};
 
@@ -29,7 +30,7 @@ router.get('/new', RouterHelper.checkUserLoggedIn, function(req, res, next) {
 
 router.post('/create', RouterHelper.checkUserLoggedIn, function(req, res, next) {
 	var photo_ids = req.body.image_ids.split(';');
-	Article.create({ author: req.user._id, region: req.body.region, board: req.body.board, category: req.body.category, title: req.body.title, content: req.body.content, photos: photo_ids}, function(err) {
+	Article.create({ author: req.user._id, region: req.body.region, board: req.body.board, title: req.body.title, content: req.body.content, photos: photo_ids}, function(err) {
 		if (err) {
 			console.log(err);
 			res.render(500);
@@ -45,8 +46,8 @@ router.post('/create', RouterHelper.checkUserLoggedIn, function(req, res, next) 
 });
 
 router.get('/', function(req, res, next) {
-	var region_ids = JSON.parse(req.query.regions);
-	var board_ids = JSON.parse(req.query.boards);
+	var region_ids = req.query.regions;
+	var board_ids = req.query.boards;
 
 	Region.find().lean().exec(function(err, regions) {
 		if (err) res.render(500);

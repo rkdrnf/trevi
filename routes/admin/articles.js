@@ -17,10 +17,9 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/create', function(req, res, next) {
-//	var categories = req.body.categories.split(";").map(function(category) { return category.trim(); }).filter(function(category) { return category.length > 0 });
 	var photos = req.body.photos.split(";").map(function(photo) { return photo.trim(); }).filter(function(photo) { return photo.length > 0 });
 
-	Article.create({ author: req.body.author, region: req.body.region, board: req.body.board, category: req.body.category, title: req.body.title, content: req.body.content, photos: photos }, function(err) { 
+	Article.create({ author: req.body.author, region: req.body.region, board: req.body.board, title: req.body.title, content: req.body.content, photos: photos }, function(err) { 
 		if (err) {
 			console.log(err);
 			return handleError(err);
@@ -54,7 +53,7 @@ router.post('/update/:id', function(req, res, next) {
 	console.log(req.query);
 	var photos = req.body.photos ? req.body.photos.split(';').map(function(photo) { return photo.trim(); }).filter(function(photo) { return photo.length > 0 }) : [];
 
-	Article.update({ _id: req.params.id }, { category: req.body.category, title: req.body.title, content: req.body.content, photos: photos }, function(err) { 
+	Article.update({ _id: req.params.id }, { title: req.body.title, content: req.body.content, photos: photos }, function(err) { 
 		if (err) { 
 			console.log(err);
 			return handleError(err);

@@ -8,20 +8,36 @@ block header
 
 block content
 	#content
-		.head-banner
-			label 
-				input.form-control(type="checkbox", name="mycheck")
-				span hello
+		.content-body 
+			.search-box
+				form(action="/articles", method="get")
+					.regions-filter
+						.filter-head
+							label.region-head-label 지역
+						.filter-body
+							each region in regions
+								.filter-node
+									label.region-label= region.name
+									input.filter-checkbox.region-checkbox(type="checkbox", name="regions[]", value="#{region._id}", checked=checked_regions.indexOf(region._id.toString())!=-1 )
+					.boards-filter
+						.filter-head
+							label.board-head-label 게시판
+						.filter-body
+							each board in boards
+								.filter-node
+									label.board-label= board.name
+									input.filter-checkbox.board-checkbox(type="checkbox", name="boards[]", value="#{board._id}", checked=checked_boards.indexOf(board._id.toString())!=-1 )
+					.search-button-box
+						button.btn.btn-primary(type="submit") 검색
 
-		.articles-container
-			.menu-box
+			.articles-container
+				.menu-box
+					a.btn.btn-default(type="button", href="/articles/new?redirect_url=#{jadeHelper.encodeURI(url)}") 새글쓰기
 
-				a.btn.btn-default(type="button", href="/articles/new?redirect_url=#{jadeHelper.encodeURI(url)}&") 새글쓰기
-
-		table.table
-			if (articles)
-				each article in articles
-					tr
-						td
-							a(href="/articles/#{article._id}")= article.title
-							
+				table.table
+					if (articles)
+						each article in articles
+							tr
+								td
+									a(href="/articles/#{article._id}")= article.title
+									

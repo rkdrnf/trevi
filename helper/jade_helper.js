@@ -1,4 +1,5 @@
 var querystring = require('querystring');
+var qs = require('qs');
 var jadeHelper = {};
 
 jadeHelper.tryDefaultImage = function (imagePath, defaultImagePath) {
@@ -21,6 +22,11 @@ jadeHelper.buildQuery = function(queryObj) {
 	return querystring.stringify(queryObj);
 };
 
+jadeHelper.buildGetQuery = function(queryObj) {
+	return qs.stringify(queryObj);
+};
 
+
+//{ key: val, key, val }
 
 module.exports = jadeHelper;

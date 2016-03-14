@@ -13,7 +13,5 @@ block content
 							option(value="#{region._id}")= region.name
 			.form-group
 				input.form-control(type="text", name="name", placeholder="이름", value="#{board.name}")
-			.form-group
-				input.form-control(type="text", name="categories", placeholder="Categories. seperator ';'", value="#{board.categories.join(';')}")
 			button.btn.btn-default.btn-block(type="submit", href="#{redirect_url}") Update
 

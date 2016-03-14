@@ -40,11 +40,6 @@ block content
 									option(value="#{board._id}")= board.name
 
 					.form-group
-						select.form-control(name="category")
-							each category in board.categories
-								option(value="#{category}")= category
-
-					.form-group
 						input.form-control(type="text", name="title", placeholder="제목")
 
 					.form-group

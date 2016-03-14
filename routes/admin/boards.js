@@ -16,9 +16,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/create', function(req, res, next) {
-	var categories = req.body.categories.split(";").map(function(category) { return category.trim(); }).filter(function(category) { return category.length > 0 });
-
-	Board.create({ region: req.body.region, name: req.body.name, categories: categories }, function(err) { 
+	Board.create({ region: req.body.region, name: req.body.name }, function(err) { 
 		if (err) {
 			console.log(err);
 			return handleError(err);
@@ -44,8 +42,7 @@ router.get('/edit/:id', function(req, res, next) {
 });
 
 router.post('/update/:id', function(req, res, next) {
-	var categories = req.body.categories.split(';').map(function(cat) { return cat.trim(); }).filter(function(cat) { return cat.length > 0 });
-	Board.update({ _id: req.params.id }, { region: req.body.region, name: req.body.name, categories: categories }, function(err) { 
+	Board.update({ _id: req.params.id }, { region: req.body.region, name: req.body.name }, function(err) { 
 		if (err) { 
 			console.log(err);
 			return handleError(err);

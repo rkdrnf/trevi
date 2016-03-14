@@ -1,24 +1,22 @@
-#content .head-banner {
-	width: 100%;
-	height: 150px; }
-	#content .head-banner .region-banner {
-		width: 200px;
-		float: left;
-		position: relative; }
-		#content .head-banner .region-banner .region-banner-text {
-			z-index: 100;
-			position: relative;
-			line-height: 150px;
-			text-align: center; }
-			#content .head-banner .region-banner .region-banner-text h1 {
-				color: black;
-				display: inline-block;
-				vertical-align: middle;
-				font-size: 30px;
-				line-height: 14px; }
-
-#content .articles-container {
-	padding: 30px; }
-	#content .articles-container .articles-list {
-		margin-top: 30px; }
-
+#content .content-body {
+  padding: 50px; }
+  #content .content-body .regions-filter, #content .content-body .boards-filter {
+    padding: 20px;
+    border-bottom: 1px solid #ccc; }
+    #content .content-body .regions-filter .filter-head, #content .content-body .boards-filter .filter-head {
+      width: 100px;
+      display: inline-block; }
+    #content .content-body .regions-filter .filter-body, #content .content-body .boards-filter .filter-body {
+      display: inline-block; }
+  #content .content-body .filter-node {
+    padding: 10px;
+    display: inline-block; }
+  #content .content-body .search-button-box {
+    height: 60px;
+    line-height: 60px;
+    padding: 10px;
+    text-align: center; }
+    #content .content-body .search-button-box button {
+      width: 200px; }
+  #content .content-body .articles-container {
+    margin-top: 30px; }
