@@ -23,7 +23,7 @@ block content
 	#content
 		.content-body
 			.write-form-wrapper
-				form(action="/articles/create?redirect_url=#{redirect_url}", method="post", enctype="multipart/form-data")
+				form(action="/articles/create?redirect_url=#{redirect_url}", method="post")
 					.form-group
 						select.form-control(name="region")
 							each region in regions
@@ -44,7 +44,7 @@ block content
 
 					.form-group
 						.tinymce-toolbar
-						.tinymce(name="content")
+						#article_content.tinymce(name="content")
 
 					.form-group
 						#fileupload

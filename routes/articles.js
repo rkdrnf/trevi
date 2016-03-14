@@ -29,8 +29,8 @@ router.get('/new', RouterHelper.checkUserLoggedIn, function(req, res, next) {
 });
 
 router.post('/create', RouterHelper.checkUserLoggedIn, function(req, res, next) {
-	var photo_ids = req.body.image_ids.split(';');
-	Article.create({ author: req.user._id, region: req.body.region, board: req.body.board, title: req.body.title, content: req.body.content, photos: photo_ids}, function(err) {
+	var photo_ids = req.body.image_ids ? req.body.image_ids.split(';') : [];
+	Article.create({ author: req.user._id, region: req.body.region, board: req.body.board, title: req.body.title, content: req.body.article_content, photos: photo_ids}, function(err, article) {
 		if (err) {
 			console.log(err);
 			res.render(500);
