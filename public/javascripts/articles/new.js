@@ -5,7 +5,7 @@ $(function() {
 		selector: '.tinymce',
 		elementpath: false,
 		plugins: [
-			'advlist autolink link image imagetools lists charmap print preview hr anchor pagebreak spellchecker',
+			'advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker',
 			'searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking',
 			'save table contextmenu directionality emoticons template paste textcolor'
 		],
@@ -29,16 +29,11 @@ $(function() {
 				e.preventDefault();
 			});
 		},
-		
-		images_upload_url: '/uploads',
-		images_upload_base_path: '/',
-		images_upload_credentials: true
 	});
 
 	$(document).on('change', '#allFileInput', function() {
 		$('#fileupload').fileupload('add', {
-			fileInput: $(this)
-		});
+			fileInput: $(this) });
 	});
 
 	$(document).on('change', '#singleImageInput', function() {
@@ -52,12 +47,12 @@ $(function() {
 		});
 	});
 
-	var url = '/upload';
+	var url = '/uploads';
 
 	$('#fileupload').fileupload({
 		url: url,
 		dataType: 'json',
-		autoUpload: false,
+		autoUpload: true,
 		acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
 		maxFileSize: 999000,
 		// Enable image resizing, except for Android and Opera,
@@ -88,25 +83,23 @@ $(function() {
 			.append('<br>')
 			.append($('<span class="text-danger"/>').text(file.error));
 		}
-		else {
-			var blobUrl = URL.createObjectURL(file);
-			node.append('<img class="preview" src="' + blobUrl + '" />');
-
-			if(data.doneCallback) {
-				data.doneCallback(blobUrl);
-			}
-		}
-
 	}).on('fileuploaddone', function (e, data) {
 		$.each(data.result.files, function (index, file) {
 			var node = data.context[index];
 			if (file.url) {
+				node.append('<img class="preview" src="' + file.url + '" />');
+
 				var link = $('<a>')
 				.attr('target', '_blank')
 				.prop('href', file.url);
 
 				node.wrap(link);
 
+				if (data.doneCallback) {
+					data.doneCallback(file.url);
+				}
+
+				addImageId(file.id);
 			} else if (file.error) {
 				var error = $('<span class="text-danger"/>').text(file.error);
 				node
@@ -123,4 +116,12 @@ $(function() {
 		});
 	}).prop('disabled', !$.support.fileInput)
 	.parent().addClass($.support.fileInput ? undefined : 'disabled');
+
+	function addImageId(id) {
+		var ids = $('#imageIds').val().split(';');
+		ids = ids.map(function(id) { return id.trim(); }).filter(function(id) { return id.length > 0; });
+		ids.push(id);
+
+		$('#imageIds').val(ids.join(';'));
+	}
 });

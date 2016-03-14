@@ -51,12 +51,12 @@ block content
 						span.btn.btn-success.fileinput-button
 							i.glyphicon.glyphicon-plus
 							span Add files
-							input#allFileInput(type="file", name="files[]", multiple="")
+							input#allFileInput(type="file", name="images[]", multiple)
 						#progress.progress
 							.progress-bar.progress-bar-success
 						#files.files
-
-							input#singleImageInput.tinymce-single-image-input(type="file", name="files2[]", data-url="/upload", accept="image/*")
+						input#singleImageInput.tinymce-single-image-input(type="file", name="image", data-url="/upload", accept="image/*")
+						input#imageIds(type="hidden", name="image_ids")
 							
 					button.btn.btn-primary(type="submit") 글쓰기
 
