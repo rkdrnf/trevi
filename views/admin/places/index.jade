@@ -1,0 +1,21 @@
+extends ../layout
+
+block content
+	a.btn.btn-primary(type="button", href="/admin/places/new") New Place 
+
+	table.table
+		tr
+			th ID
+			th Name
+			th Option
+				if places
+					each place in places 
+						tr
+							td= place._id
+							td= place.name
+							td
+								a.btn.btn-default(type="button", href="/admin/boards/edit/#{board._id}?redirect_url=#{jadeHelper.encodeURI(url)}") Edit
+								a.btn.btn-default(type="button", href="/admin/boards/delete/#{board._id}?redirect_url=#{jadeHelper.encodeURI(url)}") Delete
+
+
+
