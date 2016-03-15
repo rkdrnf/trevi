@@ -18,7 +18,7 @@ block content
 						h2= region.promotion_text
 				.bottom-menu
 					.menu-box
-						each board in boards
+						each board in region.boards
 							- query = jadeHelper.buildGetQuery({ regions: [region._id.toString()], boards: [board._id.toString()] })
 							a.btn.btn-default(href="/articles?#{query}")= board.name
 		.body-sector

@@ -26,6 +26,20 @@ jadeHelper.buildGetQuery = function(queryObj) {
 	return qs.stringify(queryObj);
 };
 
+jadeHelper.includesIdIn = function(ids, id) {
+	var idStr = id.toString();
+	for (var i = 0; i < ids.length; i++) {
+		if (ids[i].toString() === idStr) {
+			return true;
+		}
+	}
+	return false;
+};
+
+jadeHelper.compareId = function(id_a, id_b) {
+	return id_a.toString() === id_b.toString();
+};
+
 
 //{ key: val, key, val }
 

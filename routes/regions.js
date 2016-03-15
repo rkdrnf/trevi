@@ -5,7 +5,7 @@ var Board = require('../models/board.js');
 var boardsRouter = require('./boards.js');
 
 router.param('region_name', function(req, res, next, value) {
-	Region.findOne({ url: value }).lean().exec(function(err, region) {
+	Region.findOne({ url: value }).populate('boards').lean().exec(function(err, region) {
 		if (err) {
 			next(err);
 			return;
@@ -49,7 +49,7 @@ router.get('/goto_region', function(req, res, next) {
 
 router.get('/:region_name', function(req, res, next) {
 	Board.find({ region: req.region._id }).lean().exec(function(err, boards) {
-		res.render('regions/main', { region: req.region, boards: boards });
+		res.render('regions/main', { region: req.region });
 	});
 });
 

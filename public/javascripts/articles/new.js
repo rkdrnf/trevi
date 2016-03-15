@@ -124,4 +124,6 @@ $(function() {
 
 		$('#imageIds').val(ids.join(';'));
 	}
+
+	$('.region-select').makeRegionSelector();
 });

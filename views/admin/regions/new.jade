@@ -12,8 +12,9 @@ div#newRegionModal.modal.modal-small.fade(tabindex="-1", role="dialog", aria-lab
 								input.form-control(type="text", name="url", placeholder="Url")
 							.form-group 
 								each board in boards
-									label= "#{board.name}"
-									input.form-control(type="checkbox", name="boards[]", value="#{board._id}")
+									.board-check-box
+										label= board.name
+										input.board-check.form-control(type="checkbox", name="boards[]", value="#{board._id}")
 							.form-group
 								input.form-control(type="text", name="promotion_text", placeholder="홍보 문구")
 							.form-group

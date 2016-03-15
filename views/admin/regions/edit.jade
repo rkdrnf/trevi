@@ -1,8 +1,8 @@
 extends ../layout
 
 block content
-	.col-sm-5
-	.col-sm-1
+	.col-sm-4
+	.col-sm-3
 		form(action="/admin/regions/update/#{region._id}", method="post")
 			.form-group
 				input.form-control(type="text", name="name", placeholder="이름", value="#{region.name}")
@@ -10,8 +10,9 @@ block content
 				input.form-control(type="text", name="url", placeholder="Url", value="#{region.url}")
 			.form-group
 				each board in boards
-					label= "#{board.name}"
-					input.form-control(type="checkbox", name="boards[]", value="#{board._id}", checked=(checked_boards.indexOf(board._id) !== -1))
+					.board-check-box
+						label= board.name
+						input.board-check.form-control(type="checkbox", name="boards[]", value="#{board._id}", checked=jadeHelper.includesIdIn(region.boards, board._id))
 			.form-group
 				input.form-control(type="text", name="promotion_text", placeholder="홍보 문구", value="#{region.promotion_text}")
 			.form-group

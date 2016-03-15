@@ -1,0 +1,5 @@
+.board-check-box {
+  display: inline-block;
+  margin: 10px; }
+  .board-check-box .board-check {
+    display: inline-block; }

@@ -11,7 +11,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/create', function(req, res, next) {
-	Region.create({ name: req.body.name, url: req.body.url, boards: req.body.boards, promotion_text: req.body.promotion_text, background_image_path: req.body.background_image_path }, function(err) { 
+	Region.create({ name: req.body.name, url: req.body.url, boards: req.body["boards[]"], promotion_text: req.body.promotion_text, background_image_path: req.body.background_image_path }, function(err) { 
 		if (err) {
 			console.log(err);
 			return handleError(err);
@@ -22,21 +22,20 @@ router.post('/create', function(req, res, next) {
 
 
 router.get('/edit/:id', function(req, res, next) {
-	Region.findOne({ _id: req.params.id }).populate('boards').lean().exec(function(err, region) {
+	Region.findOne({ _id: req.params.id }).lean().exec(function(err, region) {
 		if (err) {
 			console.log(err);
 			return handleError(err);
 		}
 
 		Board.find().lean().exec(function(err, boards) {
-			console.log(typeof boards[0]._id);
 			res.render('admin/regions/edit', { region: region, boards: boards });
 		});
 	});
 });
 
 router.post('/update/:id', function(req, res, next) {
-	Region.update({ _id: req.params.id }, { name: req.body.name, url: req.body.url, promotion_text: req.body.promotion_text, boards: req.body.boards, background_image_path: req.body.background_image_path }, function(err) { 
+	Region.update({ _id: req.params.id }, { name: req.body.name, url: req.body.url, promotion_text: req.body.promotion_text, boards: req.body["boards[]"], background_image_path: req.body.background_image_path }, function(err) { 
 		if (err) { 
 			console.log(err);
 			return handleError(err);
@@ -47,9 +46,7 @@ router.post('/update/:id', function(req, res, next) {
 
 router.get('/delete/:id', function(req, res, next) {
 	Region.remove({ _id: req.params.id }, function(err) {
-		Board.update({ regions: req.params._id }, { $pull: { regions: req.params.id }}, function (err) {
-			res.redirect('../');
-		});
+		res.redirect('../');
 	});
 });
 

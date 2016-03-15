@@ -16,6 +16,9 @@ block script
 	script(src="/plugins/jquery-file-upload/js/jquery.fileupload-video.js")
 	script(src="/plugins/jquery-file-upload/js/jquery.fileupload-validate.js")
 
+	script(src="/javascripts/RegionSelector.js")
+
+
 block header
 	include ../main_nav
 
@@ -25,12 +28,7 @@ block content
 			.write-form-wrapper
 				form(action="/articles/create?redirect_url=#{redirect_url}", method="post")
 					.form-group
-						select.form-control(name="region")
-							each region in regions
-								if (current_region == region._id)
-									option(selected="selected", value="#{region._id}")= region.name
-								else
-									option(value="#{region._id}")= region.name
+						input.region-select.form-control(type="text", name="region-select", placeholder="서울")
 					.form-group
 						select.form-control(name="board")
 							each board in boards
@@ -59,3 +57,5 @@ block content
 						input#imageIds(type="hidden", name="image_ids")
 							
 					button.btn.btn-primary(type="submit") 글쓰기
+append bottom_script
+	script(src="/javascripts/bootstrap3-typeahead.min.js")

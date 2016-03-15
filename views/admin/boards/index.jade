@@ -6,17 +6,13 @@ block content
 	table.table
 		tr
 			th ID
-			th Region
 			th Name
-			th Categories
 			th Option
 				if boards
 					each board in boards
 						tr
 							td= board._id
-							td= board.region.name
 							td= board.name
-							td= board.categories
 							td
 								a.btn.btn-default(type="button", href="/admin/articles?board_id=#{board._id}") Articles
 								a.btn.btn-default(type="button", href="/admin/boards/edit/#{board._id}?redirect_url=#{jadeHelper.encodeURI(url)}") Edit

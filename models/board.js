@@ -2,8 +2,9 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var boardSchema = new Schema({
-	regions: [{ type: Schema.Types.ObjectId, ref: 'Region' }],
 	name: String
+}, {
+	minimize: false
 });
 
 

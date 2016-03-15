@@ -7,12 +7,16 @@ var regionSchema = new Schema({
 	boards: [{ type: Schema.Types.ObjectId, ref: 'Board' }],
 	promotion_text: { type: String },
 	background_image_path: { type: String }
+}, {
+	minimize: false
 });
 
 regionSchema.statics.isValidName = function(name) {
 	var pattern = /^[0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]*$/;
 	return name.length > 0 && !pattern.test(name);
 };
+
+
 
 module.exports = mongoose.model('Region', regionSchema);
 
