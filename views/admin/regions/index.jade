@@ -20,6 +20,7 @@ block content
 							td= region.promotion_text
 							td= region.background_image_path
 							td
+								a.btn.btn-default(type="button", href="/admin/regions/map/#{region._id}") Map
 								a.btn.btn-default(type="button", href="/admin/boards?region_id=#{region._id}") Boards
 								a.btn.btn-default(type="button", href="/admin/regions/edit/#{region._id}") Edit
 								a.btn.btn-default(type="button", href="/admin/regions/delete/#{region._id}") Delete

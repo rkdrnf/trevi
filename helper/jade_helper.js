@@ -26,7 +26,6 @@ jadeHelper.buildGetQuery = function(queryObj) {
 	return qs.stringify(queryObj);
 };
 
-
 //{ key: val, key, val }
 
 module.exports = jadeHelper;
