@@ -8,6 +8,7 @@ block content
 			th ID
 			th Name
 			th Url
+			th Boards
 			th PromotionText
 			th Background
 			th Option
@@ -17,6 +18,11 @@ block content
 							td= region._id
 							td= region.name
 							td= region.url
+							td
+								if (region.boards)
+									each board in region.boards
+										span= board.name
+										br
 							td= region.promotion_text
 							td= region.background_image_path
 							td

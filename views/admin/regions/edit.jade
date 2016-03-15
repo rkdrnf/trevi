@@ -9,6 +9,10 @@ block content
 			.form-group
 				input.form-control(type="text", name="url", placeholder="Url", value="#{region.url}")
 			.form-group
+				each board in boards
+					label= "#{board.name}"
+					input.form-control(type="checkbox", name="boards[]", value="#{board._id}", checked=(checked_boards.indexOf(board._id) !== -1))
+			.form-group
 				input.form-control(type="text", name="promotion_text", placeholder="홍보 문구", value="#{region.promotion_text}")
 			.form-group
 				input.form-control(type="text", name="background_image_path", placeholder="/background_images/region_name.png", value="#{region.background_image_path}")

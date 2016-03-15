@@ -4,6 +4,7 @@ var Schema = mongoose.Schema;
 var regionSchema = new Schema({
 	name: { type: String },
 	url: { type: String },
+	boards: [{ type: Schema.Types.ObjectId, ref: 'Board' }],
 	promotion_text: { type: String },
 	background_image_path: { type: String }
 });
