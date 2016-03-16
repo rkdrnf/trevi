@@ -1,7 +1,7 @@
 $(function() {
 
 	$.ajax({
-		url: "/regions/ajax_regions_for_search",
+		url: "/ajax/regions_for_search",
 		type: "GET",
 		success: function(res) {
 			makeTypeAhead(res);

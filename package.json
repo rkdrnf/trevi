@@ -27,5 +27,8 @@
     "passport-local": "^1.0.0",
     "qs": "^6.1.0",
     "serve-favicon": "~2.3.0"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5"
   }
 }

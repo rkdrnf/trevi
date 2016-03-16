@@ -27,6 +27,8 @@ jadeHelper.buildGetQuery = function(queryObj) {
 };
 
 jadeHelper.includesIdIn = function(ids, id) {
+	if (!ids) return false;
+
 	var idStr = id.toString();
 	for (var i = 0; i < ids.length; i++) {
 		if (ids[i].toString() === idStr) {

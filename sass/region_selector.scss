@@ -1,0 +1,22 @@
+.region-selector-wrapper {
+	.region-select {
+		width: 100px;
+		display: inline-block;
+	}
+
+	.regions-box {
+		margin-left: 20px;
+		display: inline-block;
+
+		.selected-region {
+			margin-left: 5px;
+			margin-right: 5px;
+
+			.x-icon {
+				margin-left: 5px;
+				font-weight: bold;
+				color: #777;
+			}
+		}
+	}
+}

@@ -125,5 +125,15 @@ $(function() {
 		$('#imageIds').val(ids.join(';'));
 	}
 
-	$('.region-select').makeRegionSelector();
+	var boardSelector = $('.board-select').makeBoardSelector();
+	var regionSelector = $('.region-select').makeRegionSelector({
+		onAddRegion: function(region) {
+			boardSelector.addRegion(region.id);
+		},
+		onRemoveRegion: function(region) {
+			boardSelector.removeRegion(region.id);
+		}
+	});
+
+
 });

@@ -1,0 +1,22 @@
+{
+  "name": "trevi",
+  "description": "",
+  "main": "",
+  "authors": [
+    "rkdrnf <rkdrnf@gmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/rkdrnf/trevi",
+  "moduleType": [],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "typeahead.js": "^0.11.1"
+  }
+}

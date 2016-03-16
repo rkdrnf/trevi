@@ -16,7 +16,9 @@ block script
 	script(src="/plugins/jquery-file-upload/js/jquery.fileupload-video.js")
 	script(src="/plugins/jquery-file-upload/js/jquery.fileupload-validate.js")
 
-	script(src="/javascripts/RegionSelector.js")
+	link(rel="stylesheet", href="/stylesheets/region_selector.css")
+	script(src="/javascripts/region_selector.js")
+	script(src="/javascripts/board_selector.js")
 
 
 block header
@@ -30,12 +32,7 @@ block content
 					.form-group
 						input.region-select.form-control(type="text", name="region-select", placeholder="서울")
 					.form-group
-						select.form-control(name="board")
-							each board in boards
-								if (current_board == board._id)
-									option(selected="selected", value="#{board._id}")= board.name
-								else 
-									option(value="#{board._id}")= board.name
+						select.board-select.form-control(name="board")
 
 					.form-group
 						input.form-control(type="text", name="title", placeholder="제목")

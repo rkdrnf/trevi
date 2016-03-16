@@ -1,9 +1,15 @@
 .board-check-box {
 	display: inline-block;
 	margin: 10px;
+	text-align: center;
 
+	label {
+		display: block;
+	}
 	.board-check {
 		display: inline-block;
+		width: 20px;
+
 	}
 }
 

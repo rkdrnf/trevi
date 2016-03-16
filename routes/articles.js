@@ -30,7 +30,9 @@ router.get('/new', RouterHelper.checkUserLoggedIn, function(req, res, next) {
 
 router.post('/create', RouterHelper.checkUserLoggedIn, function(req, res, next) {
 	var photo_ids = req.body.image_ids ? req.body.image_ids.split(';') : [];
-	Article.create({ author: req.user._id, region: req.body.region, board: req.body.board, title: req.body.title, content: req.body.article_content, photos: photo_ids}, function(err, article) {
+	var region_ids = req.body.regions ? req.body.regions.split(';') : [];
+	console.log(region_ids);
+	Article.create({ author: req.user._id, regions: region_ids, board: req.body.board, title: req.body.title, content: req.body.article_content, photos: photo_ids}, function(err, article) {
 		if (err) {
 			console.log(err);
 			res.render(500);
@@ -46,15 +48,23 @@ router.post('/create', RouterHelper.checkUserLoggedIn, function(req, res, next) 
 });
 
 router.get('/', function(req, res, next) {
-	var region_ids = req.query.regions;
-	var board_ids = req.query.boards;
+	var region_ids = req.query.regions ? req.query.regions : [];
+	var board_ids = req.query.boards ? req.query.boards : [];
+
+	var query = {};
+	if (region_ids.length > 0) {
+		query.regions = { $in : region_ids };
+	}
+	if (board_ids.length > 0) {
+		query.board = { $in : board_ids };
+	}
 
 	Region.find().lean().exec(function(err, regions) {
 		if (err) res.render(500);
 		Board.find().lean().exec(function(err, boards) {
 			if (err) res.render(500);
 
-			Article.find({ board: { $in: board_ids}}).lean().exec(function(err, articles) {
+			Article.find(query).lean().exec(function(err, articles) {
 				res.render('articles/main', { articles: articles, regions: regions, checked_regions: region_ids, boards: boards, checked_boards: board_ids });
 			});
 		}); 

@@ -17,7 +17,10 @@ block content
 						tr
 							td= article._id
 							td= article.author ? article.author.local.name : ""
-							td= article.region.name
+							td
+								if (article.regions)
+									each region in article.regions
+										span=region.name
 							td= article.board.name
 							td= article.title
 							td= article.content

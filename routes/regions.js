@@ -21,14 +21,6 @@ router.param('region_name', function(req, res, next, value) {
 	});
 });
 
-router.get('/ajax_regions_for_search', function(req, res, next) {
-	Region.find().lean().exec(function(err, regions) {
-		console.log(regions);
-		
-		res.json(regions.map(function(region) { return { id: region.url, name: region.name }; }));
-	});
-});
-
 router.get('/goto_region', function(req, res, next) {
 	Region.findOne({ name: new RegExp('.*' + req.query.region + '.*', "i") }).lean().exec(function(err, region) {
 		if (err) {

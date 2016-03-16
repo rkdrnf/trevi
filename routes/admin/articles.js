@@ -11,13 +11,13 @@ router.get('/', function(req, res, next) {
 		query_condition.board = req.query.board_id;
 	}
 
-	Article.find(query_condition).populate('author region board photos').lean().exec(function (err, articles) {
+	Article.find(query_condition).populate('author regions board photos').lean().exec(function (err, articles) {
 		res.render('admin/articles/index', { articles: articles });
 	});
 });
 
 router.post('/create', function(req, res, next) {
-	var photos = req.body.photos.split(";").map(function(photo) { return photo.trim(); }).filter(function(photo) { return photo.length > 0 });
+	var photos = req.body.photos.split(";").map(function(photo) { return photo.trim(); }).filter(function(photo) { return photo.length > 0; });
 
 	Article.create({ author: req.body.author, region: req.body.region, board: req.body.board, title: req.body.title, content: req.body.content, photos: photos }, function(err) { 
 		if (err) {
@@ -51,7 +51,7 @@ router.get('/edit/:id', function(req, res, next) {
 
 router.post('/update/:id', function(req, res, next) {
 	console.log(req.query);
-	var photos = req.body.photos ? req.body.photos.split(';').map(function(photo) { return photo.trim(); }).filter(function(photo) { return photo.length > 0 }) : [];
+	var photos = req.body.photos ? req.body.photos.split(';').map(function(photo) { return photo.trim(); }).filter(function(photo) { return photo.length > 0; }) : [];
 
 	Article.update({ _id: req.params.id }, { title: req.body.title, content: req.body.content, photos: photos }, function(err) { 
 		if (err) { 
