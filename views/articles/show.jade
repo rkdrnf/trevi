@@ -43,7 +43,10 @@ block content
 										span.updated-at #{comment.updatedAt.prettify()}에 수정됨
 							.row.body-row
 								.col-xs-12
-									.comment-content= comment.content
+									.comment-content
+										each line in jadeHelper.getTextLines(comment.content)
+											span= line
+											br
 							.row.option-row
 								.col-xs-6.reply-button-row
 									a.reply-button.btn.btn-warning(type="button", href="#replyForm") 댓글달기

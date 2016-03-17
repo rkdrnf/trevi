@@ -9,12 +9,7 @@
 	}
 }
 
-img.preview {
-	width: 100px;
-	height: 100px;
-	display: inline-block;
-	box-sizing: border-box;
-}
+
 
 #files {
 	background-color: #E8CF0E;
@@ -25,6 +20,13 @@ img.preview {
 		margin-right: 10px;
 		display: inline-block;
 		width: 100px;
+	}
+
+	img.preview {
+		width: 100px;
+		height: 100px;
+		display: inline-block;
+		box-sizing: border-box;
 	}
 }
 

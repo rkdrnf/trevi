@@ -58,6 +58,10 @@ jadeHelper.compareId = function(id_a, id_b) {
 	return id_a.toString() === id_b.toString();
 };
 
+jadeHelper.getTextLines = function(body) {
+	return body.split('\n');
+};
+
 
 //{ key: val, key, val }
 
