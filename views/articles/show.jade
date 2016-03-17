@@ -1,0 +1,82 @@
+extends ../layout
+
+block script
+	link(rel="stylesheet", href="/stylesheets/articles/show.css")
+
+block header
+	include ../main_nav
+
+block content
+	#content 
+		.content-body
+			.article-wrapper
+				.container
+					.row.title-row
+						.col-xs-12
+							span.title= article.title
+					.row.date-row
+						.col-xs-12
+							span.created-at= article.createdAt.prettify()
+							if (article.updatedAt) 
+								span.updated-at #{article.updatedAt.prettify()}에 수정됨
+					.row.body-row
+						.col-xs-12
+							.article-content!= article.content
+					.row.option-row
+						.col-xs-6.reply-button-row
+							a.reply-button.btn.btn-warning(type="button", href="#replyForm") 댓글달기
+						.col-xs-6.report-button-row
+							a.report-button(href="#report") 부적절한 게시물인가요?
+
+				if (article.comments)
+					each comment in article.comments
+						.container.comment-container(id="#{comment._id}")
+							.row.comment-header
+								.col-xs-12
+									span.author-info= comment.author.local.name
+									span.author-name-postfix 님의 말
+
+							.row.date-row
+								.col-xs-12
+									span.created-at= comment.createdAt.prettify()
+									if (comment.updatedAt)
+										span.updated-at #{comment.updatedAt.prettify()}에 수정됨
+							.row.body-row
+								.col-xs-12
+									.comment-content= comment.content
+							.row.option-row
+								.col-xs-6.reply-button-row
+									a.reply-button.btn.btn-warning(type="button", href="#replyForm") 댓글달기
+								.col-xs-6.report-button-row
+									a.report-button(href="#report") 부적절한 게시물인가요?
+
+
+				.container.reply-form-container
+					form#replyForm.reply-form(action="/comments/create", method="post")
+						.row
+							.col-xs-12 
+								span.reply-header 남기고 싶은 말
+						.row
+							.col-xs-12
+									.form-group
+										textarea.form-control(name="content")
+										input(type="hidden", name="article", value="#{article._id}")
+						.row
+							.col-xs-12
+								button.btn.btn-warning(type="submit") 남기기
+							
+
+							
+					
+					
+
+			
+				
+				
+			//</aritlce-wrapper
+
+
+
+
+
+

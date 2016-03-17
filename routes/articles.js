@@ -72,7 +72,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/:article_id', function(req, res, next) {
-	Article.findOne({ _id: req.params.article_id }).populate('author region board photos').lean().exec(function (err, article) {
+	Article.findOne({ _id: req.params.article_id }).populate('author regions board photos comments.author').lean().exec(function (err, article) {
 		res.render('articles/show', { article: article});
 	});
 });

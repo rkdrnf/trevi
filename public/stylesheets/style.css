@@ -1,3 +1,6 @@
+#content .content-body {
+  padding: 50px; }
+
 .index-nav {
   position: absolute;
   top: 0px;
