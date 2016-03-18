@@ -20,7 +20,6 @@ router.post('/create', function(req, res, next) {
 	});
 });
 
-
 router.get('/edit/:id', function(req, res, next) {
 	Region.findOne({ _id: req.params.id }).lean().exec(function(err, region) {
 		if (err) {

@@ -62,7 +62,4 @@ jadeHelper.getTextLines = function(body) {
 	return body.split('\n');
 };
 
-
-//{ key: val, key, val }
-
 module.exports = jadeHelper;
