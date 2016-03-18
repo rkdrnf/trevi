@@ -6,3 +6,25 @@ html, body {
 
 }
 
+
+.map-form-wrapper {
+	width: 700px;
+	height: 100%;
+	padding: 20px;
+
+	margin: auto;
+
+	.form-group input {
+		width: 400px;
+
+	}
+
+	.submit-button {
+		display: block;
+		width: 200px;
+		margin: auto;
+		margin-bottom: 20px;
+	}
+}
+
+
