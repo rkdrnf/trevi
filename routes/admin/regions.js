@@ -11,7 +11,8 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/create', function(req, res, next) {
-	Region.create({ name: req.body.name, url: req.body.url, boards: req.body["boards[]"], promotion_text: req.body.promotion_text, background_image_path: req.body.background_image_path }, function(err) { 
+	var board_ids = typeof req.body["boards[]"] === "string" ? [req.body["boards[]"]] : req.body["boards[]"]; 
+	Region.create({ name: req.body.name, url: req.body.url, boards: board_ids, promotion_text: req.body.promotion_text, background_image_path: req.body.background_image_path }, function(err) { 
 		if (err) {
 			console.log(err);
 			return handleError(err);
@@ -34,7 +35,8 @@ router.get('/edit/:id', function(req, res, next) {
 });
 
 router.post('/update/:id', function(req, res, next) {
-	Region.update({ _id: req.params.id }, { name: req.body.name, url: req.body.url, promotion_text: req.body.promotion_text, boards: req.body["boards[]"], background_image_path: req.body.background_image_path }, function(err) { 
+	var board_ids = typeof req.body["boards[]"] === "string" ? [req.body["boards[]"]] : req.body["boards[]"]; 
+	Region.update({ _id: req.params.id }, { name: req.body.name, url: req.body.url, promotion_text: req.body.promotion_text, boards: board_ids, background_image_path: req.body.background_image_path }, function(err) { 
 		if (err) { 
 			console.log(err);
 			return handleError(err);
