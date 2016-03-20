@@ -17,6 +17,8 @@ var routerHelper = require('../helper/router_helper.js');
 
 module.exports = function(app, passport) {
 	app.use(function(req, res, next) {
+		if (req.user)
+			console.log(req.user.profile_photo.path);
 		res.locals.user = req.user;
 		next();
 	});
@@ -53,6 +55,7 @@ module.exports = function(app, passport) {
 		failureRedirect : '/', // redirect back to the signup page if there is an error
 		failureFlash : true // allow flash messages
 	}), function(req, res) {
+		console.log(req.user);
 		
 		if (req.query.after_login && routerHelper.isValidURLPath(req.query.after_login))
 			res.redirect(req.query.after_login);

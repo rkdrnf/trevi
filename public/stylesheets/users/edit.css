@@ -1,0 +1,49 @@
+.date-fields select {
+  display: inline-block;
+  margin: 2px;
+  width: 100px; }
+
+.sex-fields input, .sex-fields label {
+  display: inline-block; }
+
+.sex-fields label {
+  width: 100px; }
+
+.sex-fields input {
+  width: 20px; }
+
+.user-edit-wrapper .container {
+  width: 100%; }
+  .user-edit-wrapper .container input[type="text"] {
+    width: 200px; }
+  .user-edit-wrapper .container .row {
+    line-height: 34px;
+    padding: 10px; }
+
+.label-col {
+  text-align: right; }
+
+.submit-col {
+  text-align: center; }
+
+.photo-col .photo-preview {
+  width: 100px;
+  height: 100px;
+  display: inline-block; }
+  .photo-col .photo-preview .profile-preview {
+    max-width: 100px;
+    max-height: 100px; }
+
+.photo-col .photo-input-box {
+  width: 200px;
+  height: 100px;
+  overflow: visible;
+  display: inline-block;
+  vertical-align: top; }
+  .photo-col .photo-input-box #profilePhoto {
+    position: relative;
+    top: 50%;
+    width: 200px;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%); }

@@ -11,10 +11,11 @@ routerHelper.checkUserLoggedIn = function (req, res, next) {
 	}
 
 	if (serverConfig.debug_mode) {
-		User.findOne({ 'local.email': serverConfig.debug.test_account }, function(err, user) {
+		User.findOne({ 'local.email': serverConfig.debug.test_account }).populate('profile_photo').exec(function(err, user) {
 			if (user) {
 				req.login(user, function(err) {
 					if (!err) {
+						res.locals.user = req.user;
 						next();
 						return;
 					}

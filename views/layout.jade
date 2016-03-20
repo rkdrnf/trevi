@@ -1,3 +1,7 @@
+block variables
+	- var page_style = 'default'
+	- var nav_style = 'default'
+
 doctype html
 html
 	head
@@ -9,12 +13,21 @@ html
 		script(src='http://code.jquery.com/jquery.js')
 		block script
 	body
-		block header
-			include index_nav
-		block content
-		block footer
-			- if (messages.error)
-				span= messages.error
+		div(class="page_wrapper #{page_style}")
+			block header
+				include nav
+			block content
+				#content
+					.left-sidebar
+						block left_sidebar
+					.center-content
+						block center_content
+					.right-sidebar
+						block right_sidebar
+
+			block footer
+				- if (messages.error)
+					span= messages.error
 
 
 		block modals

@@ -1,0 +1,51 @@
+extends ../layout
+
+block script
+	link(rel="stylesheet", href="/stylesheets/users/edit.css")
+	script(src="/javascripts/users/edit.js")
+
+block center_content
+	.user-edit-wrapper
+		form(action="/users/update", method="post", enctype="multipart/form-data")
+			.container
+				.row
+					.label-col.col-xs-3 
+						span 사진
+					.photo-col.col-xs-9 
+						.photo-preview
+							if (user.profile_photo)
+								img.profile-preview(src="#{user.profile_photo.path}")
+						.photo-input-box
+							input#profilePhoto.form-control(type="file", name="profile_photo")
+				.row
+					.label-col.col-xs-3
+						span 이름
+					.col-xs-9
+						input.form-control(type="text", name="name", value="#{user.local.name}")
+				.row
+					.label-col.col-xs-3
+						span 이메일
+					.col-xs-9
+						input.form-control(type="text", name="email", value="#{user.local.email}")
+				.row
+					.label-col.col-xs-3
+						span 성별
+					.col-xs-9.sex-fields
+						label
+							input.form-control(type="radio", name="sex", value="Male", checked=user.sex === 'Male')
+							| 남자
+						label
+							input.form-control(type="radio", name="sex", value="Femail", checked=user.sex ==='Femail')
+							| 여자
+				.row
+					.label-col.col-xs-3
+						span 생일
+					.col-xs-9
+						.date-fields
+							input#birthValue(type="hidden", value="#{user.birth.getMonth()}-#{user.birth.getDate()}-#{user.birth.getFullYear()}")
+							select.form-control(name="birth_month")
+							select.form-control(name="birth_date")
+							select.form-control(name="birth_year")
+				.row
+					.submit-col.col-xs-12
+						button.btn.btn-primary(type="submit") 저장하기

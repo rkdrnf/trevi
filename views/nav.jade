@@ -1,4 +1,4 @@
-nav.navbar.index-nav
+nav(class="navbar #{nav_style}")
 	div.container
 		div.navbar-header
 			button.navbar-toggle.collapsed(type="button", data-toggle="collapse", data-target="#navbar", aria-expanded="false", aria-controls="navbar")
@@ -9,13 +9,13 @@ nav.navbar.index-nav
 			a.navbar-brand(href="/") Trevi 
 		div#navbar.navbar-collapse.collapse
 			ul.nav.navbar-nav
-				li.active
+				li.nav-item
 					a(href="/admin/users") Admin
-				li
+				li.nav-item
 					a(href="/blogs/main") 이야기
-				li
+				li.nav-item
 					a(href="#contact") Contact
-				li.dropdown
+				li.nav-item.dropdown
 					a.dropdown-toggle(href="#", data-toggle="dropdown", role="button", aria-haspopup="true", aria-expanded="false") Dropdown
 						span.caret
 							ul.dropdown-menu
@@ -32,11 +32,19 @@ nav.navbar.index-nav
 								li
 									a(href="#") One more separated link
 				//</dropdown>
-				li
+				li.nav-item
 					a(href="#", data-toggle="modal", data-target="#signupModal") 회원가입
-				li
-					if (user)
-						a(href="/logout", type="button") 로그아웃
-					else
+				if (user)
+					li.nav-item.dropdown
+						a#userDropdown.dropdown-toggle(role="button", href="#", data-toggle="dropdown", aria-haspopup="true", aria-expanded="true")= user.local.name
+							span.caret
+						ul.dropdown-menu(aria-labelledby="userDropdown")
+							li
+								a(href="/users/edit") 정보 수정
+							li.divider(role="separator")
+							li
+								a(href="/logout") 로그아웃
+				else
+					li.nav-item
 						a(href="#", type="button", data-toggle="modal", data-target="#loginModal") 로그인
 

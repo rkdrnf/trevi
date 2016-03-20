@@ -13,7 +13,11 @@ var userSchema = new Schema({
 		token: String,
 		email: String,
 		name: String
-	}
+	},
+	profile_photo: { type: Schema.Types.ObjectId, ref: 'ProfilePhoto' },
+	sex: { type: String, enum: ['Male', 'Female']},
+	birth: { type: Date },
+	phone: { type: String }
 });
 
 userSchema.methods.generateHash = function(password) {
@@ -29,7 +33,7 @@ userSchema.methods.getBlogUrlCandidate = function() {
 	console.log(this);
 	if (this.local) { return this.local.email.split("@")[0]; }
 	if (this.facebook) { return this.facebook.email.split("@")[0]; }
-}
+};
 
 userSchema.statics.isValidName = function(name) {
 	var pattern = /^[0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]*$/;

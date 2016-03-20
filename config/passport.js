@@ -7,7 +7,7 @@ module.exports = function(passport) {
 	});
 
 	passport.deserializeUser(function(id, done) {
-		User.findById(id, function(err, user) {
+		User.findById(id).populate('profile_photo').exec(function(err, user) {
 			done(err, user);
 		});
 	});
@@ -55,7 +55,7 @@ module.exports = function(passport) {
 		passwordField : 'password',
 		passReqToCallback : true // allows us to pass back the entire request to the callback
 	}, function(req, email, password, done) { // callback with email and password from our form
-		User.findOne({ 'local.email' :  email }, function(err, user) {
+		User.findOne({ 'local.email' :  email }).exec(function(err, user) {
 			if (err)
 				return done(err);
 			if (!user)
@@ -64,6 +64,7 @@ module.exports = function(passport) {
 			if (!user.validPassword(password))
 				return done(null, false, req.flash('error', 'Oops! Wrong password.')); // create the loginMessage and save it to session as flashdata
 
+			console.log(user.profile_photo.path);
 			return done(null, user);
 		});
 	}));

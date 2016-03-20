@@ -1,10 +1,30 @@
 var gm = require('gm').subClass({ imageMagick: true });
 
-function ModifyAndUpload(images, callback){
+function ModifyAndUpload(images, options, callback){
 	this.images = images;
 	this.callback = callback;
 	this.result = { files: [] };
-	this.init(); }
+	
+	this.options = {
+		save_path: 'public/images/user_images/',
+		thumbnail_path: 'thumbnail/',
+		thumbnail_size: { x: 175, y: 175 }
+	};
+
+	this.originalImagePath = process.cwd();
+	this.newThumbPath = process.cwd() + '/' + this.options.save_path + this.options.thumbnail_path;
+
+
+	this.init(); 
+}
+
+function extend(a, b){
+	for(var key in b)
+		if(b.hasOwnProperty(key))
+			a[key] = b[key];
+	return a;
+}
+
 
 /*
 	 {"files": [
@@ -35,9 +55,9 @@ ModifyAndUpload.prototype = {
 		this.images.forEach(function(image) {
 			var thumbPath = that.newThumbPath + image.originalname;
 			gm(that.originalImagePath + '/' + image.path)
-			.resize(175, 175 + '^')
+			.resize(that.options.thumbnail_size.x, that.options.thumbnail_size.y + '^')
 			.gravity('center')
-			.extent(175, 175)
+			.extent(that.options.thumbnail_size.x, that.options.thumbnail_size.y)
 			.write(thumbPath, function (err){
 				var fileInfo = {
 					name: image.originalname,
@@ -60,9 +80,6 @@ ModifyAndUpload.prototype = {
 	},
 
 	init: function(){
-		var saveFolder = process.cwd() + '/public/images/user_images/';
-		this.originalImagePath = process.cwd();
-		this.newThumbPath = saveFolder + 'thumbnail/';
 		this.modifyImages();
 	}
 };
