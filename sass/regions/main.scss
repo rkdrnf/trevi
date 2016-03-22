@@ -3,10 +3,17 @@
 	object-fit: fill;
 }
 
+.head-sector {
+	position: relative;
+}
+
 .head-content {
-	height: 600px;
+	position: relative;
+	z-index: 2;
+
 	.middle {
-		height: 350px;
+		padding-top: 50px;
+		height: 150px;
 
 		.promotion-box {
 			margin: auto;
@@ -26,7 +33,7 @@
 }
 
 .bottom-menu {
-	padding-top: 190px;
+	padding-top: 150px;
 	width: 100%;
 	height: auto;
 

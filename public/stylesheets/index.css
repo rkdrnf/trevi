@@ -4,3 +4,12 @@
   position: absolute;
   display: inline-block;
   object-fit: contain; }
+
+.head-sector {
+  height: 600px;
+  position: relative; }
+  .head-sector .head-content {
+    position: relative;
+    z-index: 2; }
+    .head-sector .head-content .middle {
+      padding-top: 200px; }

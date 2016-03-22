@@ -2,10 +2,15 @@
   width: 100%;
   object-fit: fill; }
 
+.head-sector {
+  position: relative; }
+
 .head-content {
-  height: 600px; }
+  position: relative;
+  z-index: 2; }
   .head-content .middle {
-    height: 350px; }
+    padding-top: 50px;
+    height: 150px; }
     .head-content .middle .promotion-box {
       margin: auto;
       padding-top: 10px;
@@ -19,7 +24,7 @@
       color: #fff; }
 
 .bottom-menu {
-  padding-top: 190px;
+  padding-top: 150px;
   width: 100%;
   height: auto; }
   .bottom-menu .menu-box {

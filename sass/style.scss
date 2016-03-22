@@ -91,21 +91,6 @@ nav.default {
 	}
 }
 
-.head-sector
-{
-	height: 600px;
-	position: relative;
-
-	.head-content {
-		position:relative;
-		z-index: 2;
-
-		.middle {
-			padding-top: 200px;
-		}
-	}
-}
-
 .background {
 	bottom: 0;
 	left: 0;
@@ -115,7 +100,6 @@ nav.default {
 	top: 0;
 
 	display: block;
-
 }
 
 .form-control, .btn, .select {
@@ -128,16 +112,19 @@ select {
 }
 
 .left-sidebar {
+	vertical-align: top;
 	display: inline-block;
 	width: 25%;
 }
 
 .right-sidebar {
+	vertical-align: top;
 	display: inline-block;
 	width: 25%;
 }
 
 .center-content {
+	vertical-align: top;
 	display: inline-block;
 	width: 50%;
 }
