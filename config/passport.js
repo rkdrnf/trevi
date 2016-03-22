@@ -64,7 +64,6 @@ module.exports = function(passport) {
 			if (!user.validPassword(password))
 				return done(null, false, req.flash('error', 'Oops! Wrong password.')); // create the loginMessage and save it to session as flashdata
 
-			console.log(user.profile_photo.path);
 			return done(null, user);
 		});
 	}));

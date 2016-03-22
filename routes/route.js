@@ -17,8 +17,6 @@ var routerHelper = require('../helper/router_helper.js');
 
 module.exports = function(app, passport) {
 	app.use(function(req, res, next) {
-		if (req.user)
-			console.log(req.user.profile_photo.path);
 		res.locals.user = req.user;
 		next();
 	});
