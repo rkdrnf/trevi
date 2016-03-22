@@ -42,3 +42,27 @@
       margin-right: 10px;
       display: inline-block;
       float: left; }
+
+.hot-articles {
+  height: 300px;
+  background-color: #ddd; }
+
+.hot-courses {
+  height: 400px; }
+  .hot-courses .region-map {
+    vertical-align: top;
+    width: 500px;
+    height: 100%;
+    display: inline-block; }
+    .hot-courses .region-map #map {
+      height: 100%; }
+  .hot-courses .places {
+    width: 220px;
+    vertical-align: top;
+    height: 100%;
+    display: inline-block; }
+    .hot-courses .places .place-item {
+      width: 100%; }
+      .hot-courses .places .place-item button {
+        width: 100%;
+        height: 50px; }

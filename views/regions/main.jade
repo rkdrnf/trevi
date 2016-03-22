@@ -1,7 +1,13 @@
 extends ../layout
 
+
 block script
 	link(rel = "stylesheet", href="/stylesheets/regions/main.css")
+	script(src="/javascripts/regions/main.js")
+
+block script_variables 
+	| var local_data = !{JSON.stringify(local_data)};   
+	
 
 block center_content 
 	.head-sector
@@ -24,7 +30,20 @@ block center_content
 			h2 인기 여행기
 			h2 질문글들
 		.hot-courses
-			h2 지도와 추천 코스들
+			.region-map
+				#map
+			.places
+				if (region.places)
+					each place in region.places
+						.place-item
+							button.place-button.btn.btn-default(type="button", data-id="#{place._id}") 
+								span= place.name
+								span= place.description
+
+
+					
+
 
 	
 
+	script(src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCdZTd-irAaxjv6JcGvXSH-NBWC-8Gq-6g&callback=initMap", async, defer)

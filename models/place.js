@@ -3,9 +3,12 @@ var Schema = mongoose.Schema;
 
 var placeSchema = new Schema({
 	name: { type: String },
+	description: String,
 	region: { type: Schema.Types.ObjectId, ref: 'Region' },
 	latitude: { type: Number },
 	longitude: { type: Number }
+}, {
+	minimize: false
 });	
 
 placeSchema.statics.isValidName = function(name) {

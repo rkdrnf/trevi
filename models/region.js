@@ -6,7 +6,13 @@ var regionSchema = new Schema({
 	url: { type: String },
 	boards: [{ type: Schema.Types.ObjectId, ref: 'Board' }],
 	promotion_text: { type: String },
-	background_image_path: { type: String }
+	background_image_path: { type: String },
+	location: {
+		latitude: Number,
+		longitude: Number,
+		zoomLevel: Number
+	},
+	places: [{ type: Schema.Types.ObjectId, ref: 'Place' }]
 }, {
 	minimize: false
 });

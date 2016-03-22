@@ -1,0 +1,16 @@
+extends ../layout
+
+
+block script
+	link(rel="stylesheet", href="/stylesheets/admin/places.css")
+	script(src="/javascripts/admin/places/map.js")
+
+block content
+	.map-form-wrapper
+		.form-group
+		#map
+
+	script(src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCdZTd-irAaxjv6JcGvXSH-NBWC-8Gq-6g&callback=initMap", async, defer)
+	
+
+

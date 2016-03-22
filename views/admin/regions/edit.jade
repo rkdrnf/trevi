@@ -1,5 +1,9 @@
 extends ../layout
 
+block header
+	link(rel="stylesheet", href="/stylesheets/admin/regions.css")
+	script(src="/javascripts/admin/regions/edit.js")
+
 block content
 	.col-sm-4
 	.col-sm-3
@@ -17,8 +21,17 @@ block content
 				input.form-control(type="text", name="promotion_text", placeholder="홍보 문구", value="#{region.promotion_text}")
 			.form-group
 				input.form-control(type="text", name="background_image_path", placeholder="/background_images/region_name.png", value="#{region.background_image_path}")
+			.form-group.location-fields
+				input#lngValue.form-control(type="text", name="longitude")
+				input#latValue.form-control(type="text", name="latitude")
+				input#zoomLevel.form-control(type="text", name="zoomLevel")
+			.map-wrapper
+				#map
+
+
 
 			button.btn.btn-default.btn-block(type="submit") Update
 
 
 
+	script(src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCdZTd-irAaxjv6JcGvXSH-NBWC-8Gq-6g&callback=initMap", async, defer)

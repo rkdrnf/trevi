@@ -19,27 +19,45 @@ router.get('/new', function(req, res) {
 	});
 });
 
+router.get('/edit', function(req, res) {
+	Place.find().populate('region').lean().exec(function(err, places) {
+		if (err) {
+			console.log(err);
+		}
+		res.render('admin/places/edit', { places: places });
+	});
+});
+
 router.post('/create', function(req, res, next) {	
-	Place.create({ name: req.body.name , region: req.body.region , latitude: req.body.latitude , longitude: req.body.longitude }, function(err) {
+	Place.create({ name: req.body.name , region: req.body.region , latitude: req.body.latitude , longitude: req.body.longitude }, function(err, place) {
 		if (err) {	 
 			console.log(err);
 			return handleError(err);
 		}
+
+		Region.update({ _id: req.body.region}, { $addToSet: { places: place._id }}, function(err) {
+			if (err) console.log(err);
+		});
 		res.redirect('./');
 	});
 });
 
 router.get('/delete/:id', function(req, res, next) {
+	var id = req.params.id;
 	Place.remove({ _id: req.params.id }, function(err) {
 		if (err) {
 			console.log(err);
 			return handleError(err);
-		}
+		} else {
+			Region.update({ places: id }, { $pull: { places: id }}, function(err) {
+				if (err) console.log(err);
+			});
 
-		if (req.query.redirect_url)
-			res.redirect(req.query.redirect_url);
-		else
-			res.redirect('../');
+			if (req.query.redirect_url)
+				res.redirect(req.query.redirect_url);
+			else
+				res.redirect('../');
+		}
 	});
 });
 

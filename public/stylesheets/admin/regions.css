@@ -1,0 +1,10 @@
+.map-wrapper {
+  height: 400px;
+  width: 500px; }
+
+#map {
+  height: 100%; }
+
+.location-fields input {
+  width: 200px;
+  display: inline-block; }

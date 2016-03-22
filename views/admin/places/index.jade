@@ -2,6 +2,7 @@ extends ../layout
 
 block content
 	a.btn.btn-primary(type="button", href="/admin/places/new") New Place 
+	a.btn.btn-primary(type="button", href="/admin/places/edit") View Map
 
 	table.table
 		tr
@@ -18,5 +19,5 @@ block content
 							td= place.name
 							td #{place.latitude}, #{place.longitude}
 							td
-								a.btn.btn-default(type="button", href="/admin/places/edit/#{place._id}?redirect_url=#{jadeHelper.encodeURI(url)}") Edit
+								a.btn.btn-default(type="button", href="/admin/places/edit/#{place.name}?redirect_url=#{jadeHelper.encodeURI(url)}") Edit
 								a.btn.btn-default(type="button", href="/admin/places/delete/#{place._id}?redirect_url=#{jadeHelper.encodeURI(url)}") Delete

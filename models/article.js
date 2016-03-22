@@ -9,7 +9,8 @@ var article = new Schema({
 	title: { type: String, minlength: 2, maxlength: 40, required: true },						//제목
 	content: { type: String, required: true }, 																			//내용
 	photos: [{ type: Schema.Types.ObjectId, ref: 'Photo' }],
-	comments: [Comment.schema]
+	comments: [Comment.schema],
+	tags: { type: Schema.Types.ObjectId, ref: 'Tag' }
 }, {
 	minimize: false,
 	timestamps: true

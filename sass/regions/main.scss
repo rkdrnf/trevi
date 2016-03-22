@@ -57,6 +57,45 @@
 	}
 }
 
+.hot-articles {
+	height: 300px;
+	background-color: #ddd;
+}
+
+.hot-courses {
+	height: 400px;
+
+	.region-map {
+		vertical-align: top;
+		width: 500px;
+		height: 100%;
+		display: inline-block;
+		
+		#map {
+			height: 100%;
+		}
+
+	}
+
+	.places {
+		width: 220px;
+		vertical-align: top;
+		height: 100%;
+		display: inline-block;
+
+		.place-item {
+			width: 100%;
+
+			button {
+				width: 100%;
+				height: 50px;
+			}
+		}
+
+	}
+}
+
+
 
 
 

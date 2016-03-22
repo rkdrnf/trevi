@@ -9,8 +9,10 @@ block content
 			th Name
 			th Url
 			th Boards
+			th Places
 			th PromotionText
 			th Background
+			th Location
 			th Option
 				if regions
 					each region in regions
@@ -23,8 +25,17 @@ block content
 									each board in region.boards
 										span= board.name
 										br
+							td
+								if (region.places)
+									each place in region.places
+										span= place.name
+										br
 							td= region.promotion_text
 							td= region.background_image_path
+							if (region.location) 
+								td #{region.location.latitude.toFixed(2)}/#{region.location.longitude.toFixed(2)}/#{region.location.zoomLevel}
+							else 
+								td
 							td
 								a.btn.btn-default(type="button", href="/admin/regions/map/#{region._id}") Map
 								a.btn.btn-default(type="button", href="/admin/boards?region_id=#{region._id}") Boards
