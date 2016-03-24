@@ -1,34 +1,6 @@
 #content .content-body {
   padding: 50px; }
 
-nav.navbar {
-  margin-bottom: 0px; }
-  nav.navbar .navbar-header {
-    float: left; }
-  nav.navbar .navbar-collapse {
-    float: right; }
-  nav.navbar .nav-item a:hover, nav.navbar .nav-item a:focus, nav.navbar nav-item a:active {
-    background-color: transparent; }
-  nav.navbar .nav-item.dropdown > a, nav.navbar .nav-item.dropdown > a:hover, nav.navbar .nav-item.dropdown > a:focus {
-    background-color: transparent; }
-
-nav.home {
-  position: absolute;
-  top: 0px;
-  width: 100%;
-  z-index: 1000;
-  background-color: rgba(0, 0, 0, 0.05); }
-  nav.home a {
-    color: #fff; }
-  nav.home .dropdown li a {
-    color: black; }
-
-nav.default {
-  width: 100%;
-  background-color: white; }
-  nav.default a {
-    color: #000; }
-
 .btn-search {
   background-color: #c2eddb; }
 

@@ -62,4 +62,6 @@ jadeHelper.getTextLines = function(body) {
 	return body.split('\n');
 };
 
+jadeHelper.dummyText = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec lectus ligula, egestas vel finibus non, hendrerit at metus. Proin ut est urna. In imperdiet mauris at accumsan condimentum. Vestibulum elementum ultrices commodo. Nullam consequat id purus in blandit. Mauris tincidunt, sem vel placerat fermentum, nunc urna dignissim enim, bibendum hendrerit purus tortor sit amet mi. Vivamus vel nunc nec nulla aliquet viverra. Fusce viverra velit eu sem aliquam, et feugiat enim luctus. Sed in fermentum purus. Aliquam eget enim eu ligula aliquam fringilla at at nulla. Phasellus interdum, enim nec lacinia pulvinar, dolor purus aliquam arcu, id efficitur tellus libero sed augue. Mauris a felis ac ante euismod elementum ut a sapien.'
+
 module.exports = jadeHelper;

@@ -9,8 +9,15 @@ html
 		meta(name='viewport', content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0')
 		link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css", integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7", crossorigin="anonymous")
 		link(rel='stylesheet', href='/stylesheets/style.css')
+		link(rel='stylesheet', href='/stylesheets/nav_style.css')
 		link(rel='stylesheet', href='/stylesheets/common.css')
 		script(src='http://code.jquery.com/jquery.js')
+
+		if (recommended_places)
+			link(rel='stylesheet', href='/stylesheets/recommended_places.css')
+		if (recommended_articles)
+			link(rel='stylesheet', href='/stylesheets/recommended_articles.css')
+
 		block script
 	body
 		| <script type='text/javascript'>
@@ -24,18 +31,14 @@ html
 				#content
 					.left-sidebar
 						block left_sidebar
-							h2 추천 장소, 여행지
-							h3 장소1
-							h3 장소2 사진1
+							if (recommended_places)
+								include recommended_places
 					.center-content
 						block center_content
 					.right-sidebar
 						block right_sidebar
-							h2 읽어보세요
-							h3 추천글1
-							h3 추천글1
-							h3 추천글1
-							h3 추천글1
+							if (recommended_articles)
+								include recommended_articles
 
 							h2 최근 질문들
 							h3 질문글1

@@ -63,14 +63,14 @@
 }
 
 .hot-courses {
+	width: 100%;
 	height: 400px;
 
 	.region-map {
 		vertical-align: top;
-		width: 500px;
-		height: 100%;
 		display: inline-block;
-		
+		height: 100%;
+		width: 70%;
 		#map {
 			height: 100%;
 		}
@@ -78,10 +78,10 @@
 	}
 
 	.places {
-		width: 220px;
 		vertical-align: top;
-		height: 100%;
 		display: inline-block;
+		width: 30%;
+		height: 100%;
 
 		.place-item {
 			width: 100%;
