@@ -39,6 +39,10 @@ router.get('/goto_region', function(req, res, next) {
 
 });
 
+router.get('/goto_recommands', function(req, res, next) {
+	
+});
+
 router.get('/:region_name', function(req, res, next) {
 	res.render('regions/main', { region: req.region, local_data: { location: req.region.location, places: req.region.places } });
 });

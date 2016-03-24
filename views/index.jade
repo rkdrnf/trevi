@@ -28,8 +28,10 @@ block content
 									input.region_select.form-control(type="text", name="region", data-provide="typeahead")
 								.button-box
 									button.btn.btn-search(type="submit") 찾아가기
-					.temp
-						h2(style="text-align:center") 어디로 갈 지 못 정하셨나요?
+					.region-recommand-box
+						form(action="regions/goto_recommands", method="get")
+							.button-box
+								button.btn.btn-search(type="submit") 어디로 갈 지 못 정하셨나요?
 		.travel-map
 
 		h1 이벤트 정보
