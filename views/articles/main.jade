@@ -28,10 +28,14 @@ block center_content
 		.menu-box
 			a.btn.btn-default(type="button", href="/articles/new?redirect_url=#{jadeHelper.encodeURI(url)}") 새글쓰기
 
-		table.table
+		table.table.articles
 			if (articles)
 				each article in articles
-					tr
-						td
+					tr.article-row
+						td.title
 							a(href="/articles/#{article._id}")= article.title
+						td.date
+							span= article.createdAt.prettify()
+						td.author
+							a(href="#")= article.author.local.name
 							

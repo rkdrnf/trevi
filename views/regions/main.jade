@@ -26,9 +26,19 @@ block center_content
 							a.btn.btn-default(href="/articles?#{query}")= board.name
 	.body-sector
 		.hot-articles
-			h2 최신 게시글
-			h2 인기 여행기
-			h2 질문글들
+			.recent-articles
+				h4.category-header 새로운 글들
+				each article in recent_articles
+					include ../partials/article_brief.jade
+			.hot-travels
+				h4.category-header 인기있는 여행기 
+				each article in recent_articles
+					include ../partials/article_brief.jade
+			.questions
+				h4.category-header 도움이 필요해요
+				each article in recent_questions
+					include ../partials/article_brief.jade
+
 		.hot-courses
 			.region-map
 				#map

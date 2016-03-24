@@ -65,9 +65,9 @@ router.get('/', function(req, res, next) {
 		Board.find().lean().exec(function(err, boards) {
 			if (err) res.render(500);
 			Place.find({ region: { $in: region_ids }}).lean().exec(function(err, rec_places) {
-				Article.find().limit(5).lean().exec(function(err, rec_articles) {
-					Article.find(query).lean().exec(function(err, articles) {
-						res.render('articles/main', { articles: articles, regions: regions, checked_regions: region_ids, boards: boards, checked_boards: board_ids, recommended_places: rec_places, recommended_articles: rec_articles });
+				Article.find().limit(3).lean().exec(function(err, rec_articles) {
+					Article.find(query).populate('author').lean().exec(function(err, articles) {
+						res.render('articles/main', { articles: articles, regions: regions, checked_regions: region_ids, boards: boards, checked_boards: board_ids, recommended_places: rec_places, recommended_articles: rec_articles, recommended_questions: rec_articles });
 					});
 				});
 			});

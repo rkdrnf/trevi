@@ -12,11 +12,15 @@ html
 		link(rel='stylesheet', href='/stylesheets/nav_style.css')
 		link(rel='stylesheet', href='/stylesheets/common.css')
 		script(src='http://code.jquery.com/jquery.js')
+		link(rel='stylesheet', href='/stylesheets/partials/article_brief.css')
 
 		if (recommended_places)
-			link(rel='stylesheet', href='/stylesheets/recommended_places.css')
+			link(rel='stylesheet', href='/stylesheets/partials/recommended_places.css')
 		if (recommended_articles)
-			link(rel='stylesheet', href='/stylesheets/recommended_articles.css')
+			link(rel='stylesheet', href='/stylesheets/partials/recommended_articles.css')
+		if (recommended_questions)
+			link(rel='stylesheet', href='/stylesheets/partials/recommended_questions.css')
+
 
 		block script
 	body
@@ -32,19 +36,15 @@ html
 					.left-sidebar
 						block left_sidebar
 							if (recommended_places)
-								include recommended_places
+								include partials/recommended_places
 					.center-content
 						block center_content
 					.right-sidebar
 						block right_sidebar
 							if (recommended_articles)
-								include recommended_articles
-
-							h2 최근 질문들
-							h3 질문글1
-							h3 질문글1
-							h3 질문글1
-
+								include partials/recommended_articles
+							if (recommended_questions)
+								include partials/recommended_questions
 
 			block footer
 				- if (messages.error)

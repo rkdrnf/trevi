@@ -42,8 +42,8 @@ router.get('/goto_region', function(req, res, next) {
 
 router.get('/:region_name', function(req, res, next) {
 
-	Article.find().limit(5).lean().exec(function(err, rec_articles) {
-		res.render('regions/main', { region: req.region, recommended_places: req.region.places.slice(0, 4), recommended_articles: rec_articles, local_data: { location: req.region.location, places: req.region.places } });
+	Article.find().limit(3).lean().exec(function(err, rec_articles) {
+		res.render('regions/main', { region: req.region, recommended_places: req.region.places.slice(0, 4), recommended_articles: rec_articles, recommended_questions: rec_articles, recent_articles: rec_articles, recent_questions: rec_articles, local_data: { location: req.region.location, places: req.region.places } });
 	})
 });
 
