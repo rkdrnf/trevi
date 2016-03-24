@@ -1,0 +1,17 @@
+.recommended-places
+	h4.side-header-text 이런 장소는 어떤가요?
+	each place in recommended_places
+		.recommended-place-preview
+			.place-texts
+				.place-name
+					span= place.name
+				.place-description
+					span= place.description ? place.description : jadeHelper.dummyText
+			.place-photos
+				.place-photo-item
+					img.place-preview-image(src="/images/sample.png")
+				.place-photo-item
+					img.place-preview-image(src="/images/sample.png")
+
+
+			

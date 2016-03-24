@@ -1,0 +1,70 @@
+nav.navbar {
+	position: relative;
+	.container {
+		position: relative;
+	}
+	margin-bottom: 0px;
+
+	.navbar-header {
+		float: left;
+	}
+
+	.navbar-collapse {
+		float: right;
+	}
+
+
+	.nav-item a:hover, .nav-item a:focus, nav-item a:active {
+		background-color: rgba(0,0,0,0);
+	}
+
+	.nav-item.dropdown>a, .nav-item.dropdown>a:hover, .nav-item.dropdown>a:focus {
+		background-color: rgba(0,0,0,0);
+	}
+
+}
+
+nav.home {
+	position: absolute;
+	top: 0px;
+	width: 100%;
+	z-index: 1000;
+	background-color: rgba(0, 0, 0, 0.05);
+
+	a {
+		color: #fff;
+	}
+
+	.dropdown li a {
+		color: black;
+	}
+}
+
+
+nav.default {
+	width: 100%;
+	background-color: rgb(255, 255, 255);
+
+	a {
+		color: #000;
+	}
+
+	.search-bar-wrapper {
+		position:absolute;
+		top: 0;
+		bottom: 0;
+		left: 33%;
+		right: 33%;
+
+		.search-bar {
+			padding-top: 10px;
+			position: relative;
+			width: 200px;
+			margin: auto;
+			z-index: 3;
+		}
+
+	}
+}
+
+

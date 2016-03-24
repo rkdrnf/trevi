@@ -3,6 +3,7 @@ var router = express.Router();
 var Region = require('../models/region.js');
 var Board = require('../models/board.js');
 var boardsRouter = require('./boards.js');
+var Article = require('../models/article.js');
 
 router.param('region_name', function(req, res, next, value) {
 	Region.findOne({ url: value }).populate('boards places').lean().exec(function(err, region) {
@@ -40,7 +41,10 @@ router.get('/goto_region', function(req, res, next) {
 });
 
 router.get('/:region_name', function(req, res, next) {
-	res.render('regions/main', { region: req.region, local_data: { location: req.region.location, places: req.region.places } });
+
+	Article.find().limit(5).lean().exec(function(err, rec_articles) {
+		res.render('regions/main', { region: req.region, recommended_places: req.region.places.slice(0, 4), recommended_articles: rec_articles, local_data: { location: req.region.location, places: req.region.places } });
+	})
 });
 
 
