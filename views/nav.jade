@@ -10,8 +10,8 @@ nav(class="navbar #{nav_style}")
 		if (nav_style !== 'home')
 			.search-bar-wrapper
 				.search-bar
-					form
-						input.form-control(type="text", name="region_name", placeholder="서울")
+					form(action="/regions/goto_region", method="get")
+						input.nav-search.form-control(type="text", name="region", data-provide="typeahead", placeholder="서울")
 		div#navbar.navbar-collapse.collapse
 			ul.nav.navbar-nav
 				li.nav-item
@@ -24,7 +24,7 @@ nav(class="navbar #{nav_style}")
 					a(href="#", data-toggle="modal", data-target="#signupModal") 회원가입
 				if (user)
 					li.nav-item.dropdown
-						a#userDropdown.dropdown-toggle(role="button", href="#", data-toggle="dropdown", aria-haspopup="true", aria-expanded="true")= user.local.name
+						a#userDropdown.dropdown-toggle(role="button", href="#", data-toggle="dropdown", aria-haspopup="true", aria-expanded="true")= user.name
 							span.caret
 						ul.dropdown-menu(aria-labelledby="userDropdown")
 							li

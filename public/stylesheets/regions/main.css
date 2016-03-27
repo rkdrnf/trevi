@@ -44,8 +44,18 @@
       float: left; }
 
 .hot-articles {
-  height: 300px;
-  background-color: #ddd; }
+  padding-top: 20px;
+  padding-bottom: 20px; }
+  .hot-articles .category-header {
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold; }
+  .hot-articles .recent-articles, .hot-articles .hot-travels, .hot-articles .questions {
+    width: 33.33%;
+    display: inline-block;
+    vertical-align: top; }
+  .hot-articles .recent-articles, .hot-articles .hot-travels {
+    border-right: 1px solid #ccc; }
 
 .hot-courses {
   width: 100%;

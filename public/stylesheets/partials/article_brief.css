@@ -1,0 +1,14 @@
+.article-brief {
+  max-height: 200px;
+  padding: 15px; }
+  .article-brief .article-texts {
+    box-sizing: border-box;
+    width: 100%;
+    max-height: 150px;
+    padding: 15px;
+    overflow: hidden; }
+    .article-brief .article-texts .article-name {
+      font-size: 13px;
+      font-weight: bold;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #ccc; }

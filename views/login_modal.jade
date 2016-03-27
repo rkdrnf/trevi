@@ -8,7 +8,10 @@ div#loginModal.modal.modal-small.fade(tabindex="-1", role="dialog", aria-labelle
 			.modal-body
 				.panel-padding.panel-body
 					.row
-						a.btn
+						a.btn(href="/auth/google")
+							span 구글 계정으로 로그인
+					.row
+						a.btn(href="/auth/facebook")
 							span 페이스북 계정으로 로그인
 					.row
 						form(action="/login", method="post")

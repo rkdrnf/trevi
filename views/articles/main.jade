@@ -28,10 +28,17 @@ block center_content
 		.menu-box
 			a.btn.btn-default(type="button", href="/articles/new?redirect_url=#{jadeHelper.encodeURI(url)}") 새글쓰기
 
-		table.table
+		table.table.articles
 			if (articles)
 				each article in articles
-					tr
-						td
-							a(href="/articles/#{article._id}")= article.title
+					tr.article-row
+						td.title
+							a(href="/articles/#{article._id}")
+								span= article.title
+								&nbsp;
+								span.comments-count [#{_.isEmpty(article.comments) ? '' : article.comments.length}]
+						td.date
+							span= article.createdAt.prettify()
+						td.author
+							a(href="#")= jadeHelper.user.getName(article.author)
 							
