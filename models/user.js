@@ -14,10 +14,17 @@ var userSchema = new Schema({
 		email: String,
 		name: String
 	},
+	google           : {
+		id           : String,
+		token        : String,
+		email        : String,
+		name         : String },
+
 	profile_photo: { type: Schema.Types.ObjectId, ref: 'ProfilePhoto' },
 	sex: { type: String, enum: ['Male', 'Female']},
 	birth: { type: Date },
 	phone: { type: String }
+}, {
 });
 
 userSchema.methods.generateHash = function(password) {
@@ -30,7 +37,6 @@ userSchema.methods.validPassword = function(password) {
 };
 
 userSchema.methods.getBlogUrlCandidate = function() {
-	console.log(this);
 	if (this.local) { return this.local.email.split("@")[0]; }
 	if (this.facebook) { return this.facebook.email.split("@")[0]; }
 };
@@ -38,6 +44,27 @@ userSchema.methods.getBlogUrlCandidate = function() {
 userSchema.statics.isValidName = function(name) {
 	var pattern = /^[0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]*$/;
 	return name.length > 1 && !pattern.test(name);
+};
+
+userSchema.virtual('name').get(function() {
+	return userSchema.statics.getName(this);
+	});
+
+userSchema.virtual('email').get(function() {
+	return userSchema.statics.getEmail(this);
+});
+
+userSchema.statics.getName = function(user) {
+	if (!_.isEmpty(user.local) && user.local.name.length > 0) return user.local.name;
+	if (!_.isEmpty(user.facebook) && user.facebook.name.length > 0) return user.facebook.name;
+	if (!_.isEmpty(user.google) && user.google.name.length > 0) return user.google.name;
+};
+
+userSchema.statics.getEmail = function(user) {
+	if (!_.isEmpty(user.local) && user.local.email.length > 0) return user.local.email;
+	if (!_.isEmpty(user.facebook) && user.facebook.email.length > 0) return user.facebook.email;
+	if (!_.isEmpty(user.google) && user.google.email.length > 0) return user.google.email;
+
 };
 
 

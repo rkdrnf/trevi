@@ -9,7 +9,7 @@ var tag = new Schema({
 	minimize: false
 });
 
-tag.virtual('email').get(function() {
+tag.virtual('name').get(function() {
 	    return this._id;
 });
 

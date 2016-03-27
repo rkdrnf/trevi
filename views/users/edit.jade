@@ -42,7 +42,10 @@ block center_content
 						span 생일
 					.col-xs-9
 						.date-fields
-							input#birthValue(type="hidden", value="#{user.birth.getMonth()}-#{user.birth.getDate()}-#{user.birth.getFullYear()}")
+							- var birthValue = "0-1-1991"
+							if (user.birth) 
+								- birthValue = "#{user.birth.getMonth()}-#{user.birth.getDate()}-#{user.birth.getFullYear()}";
+							input#birthValue(type="hidden", value="#{birthValue}")
 							select.form-control(name="birth_month")
 							select.form-control(name="birth_date")
 							select.form-control(name="birth_year")

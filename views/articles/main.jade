@@ -33,9 +33,12 @@ block center_content
 				each article in articles
 					tr.article-row
 						td.title
-							a(href="/articles/#{article._id}")= article.title
+							a(href="/articles/#{article._id}")
+								span= article.title
+								&nbsp;
+								span.comments-count [#{_.isEmpty(article.comments) ? '' : article.comments.length}]
 						td.date
 							span= article.createdAt.prettify()
 						td.author
-							a(href="#")= article.author.local.name
+							a(href="#")= jadeHelper.user.getName(article.author)
 							

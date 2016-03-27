@@ -12,6 +12,9 @@ var uploads = require('./uploads.js');
 
 var jadeHelper = require('../helper/jade_helper.js');
 var routerHelper = require('../helper/router_helper.js');
+var globalHelper = require('../helper/global_helper.js');
+
+_ = require('lodash');
 
 /* GET home page. */
 
@@ -24,9 +27,7 @@ module.exports = function(app, passport) {
 	app.use(function(req, res, next) {
 		res.locals.path = req.path;
 		res.locals.url = req.url;
-		next();
-	});
-
+		next(); }); 
 	app.use(function(req, res, next) {
 		res.locals.jadeHelper = jadeHelper;
 		next();
@@ -53,14 +54,37 @@ module.exports = function(app, passport) {
 		failureRedirect : '/', // redirect back to the signup page if there is an error
 		failureFlash : true // allow flash messages
 	}), function(req, res) {
-		console.log(req.user);
-		
 		if (req.query.after_login && routerHelper.isValidURLPath(req.query.after_login))
 			res.redirect(req.query.after_login);
 		else 
 			res.redirect('/');
 	});
 
+	// =====================================
+	// FACEBOOK ROUTES =====================
+	// =====================================
+	// route for facebook authentication and login
+	app.get('/auth/facebook', passport.authenticate('facebook', { scope : 'email' }));
+
+	// handle the callback after facebook has authenticated the user
+	app.get('/auth/facebook/callback', passport.authenticate('facebook', {
+		successRedirect : '/',
+		failureRedirect : '/'
+	}));
+
+	// =====================================
+	// GOOGLE ROUTES =======================
+	// =====================================
+	// send to google to do the authentication
+	// profile gets us their basic information including their name
+	// email gets their emails
+	app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] }));
+
+	// the callback after google has authenticated the user
+	app.get('/auth/google/callback', passport.authenticate('google', {
+		successRedirect : '/',
+		failureRedirect : '/'
+	}));
 
 	app.get('/signup', function(req, res) {
 		res.render('index', { message: req.flash('signupMessage') });

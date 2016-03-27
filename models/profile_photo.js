@@ -4,6 +4,7 @@ var Schema = mongoose.Schema;
 var profilePhoto = new Schema({
 	path: String,				// /images/profile_photos/file_name
 	thumbnail: String,	// /images/profile_photos/thumbnail/file_name
+	is_remote:{ type: Boolean, default: false },
 	owner: { type: Schema.Types.ObjectId, ref: 'User' }
 });
 

@@ -3,6 +3,8 @@ var serverConfig = require('../config/server_config.js');
 
 var routerHelper = {};
 var User = require('../models/user.js');
+var Place = require('../models/place.js');
+var Article = require('../models/article.js');
 
 routerHelper.checkUserLoggedIn = function (req, res, next) {
 	if (req.user) {
@@ -59,6 +61,37 @@ routerHelper.tryUseRedirectUrl = function (req, default_redirect_url) {
 routerHelper.isValidURLPath = function(redirect_url) {
 	var pattern = /\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
 	return redirect_url.length > 0 && pattern.test(redirect_url);
+};
+
+routerHelper.setRecPlaces = function(options) {
+		return function (req, res, next) { 
+			var query = {};
+				if (!_.isEmpty(req.query.regions)) {
+					query.region = { $in: req.query.regions };
+				}
+
+			Place.find(query).lean().exec(function(err, rec_places) {
+				if (err) {
+					throw err;
+				}
+				req.rec_places = rec_places;
+				next();
+			});
+	};
+};
+
+routerHelper.setRecArticles = function(options) {
+	var query = {};
+
+	return function(req, res, next) {
+		Article.find(query).lean().limit(3).exec(function(err, rec_articles) {
+			if (err) {
+				throw err;
+			}
+			req.rec_articles = rec_articles;
+			next();
+		});
+	};
 };
 
 module.exports = routerHelper;

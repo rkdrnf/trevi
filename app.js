@@ -14,6 +14,10 @@ var app = express();
 
 var dbConfig = require('./config/database.js');
 
+_ = require('lodash');
+require('./helper/global_helper.js');
+
+
 mongoose.connect(dbConfig.url);
 
 // view engine setup
