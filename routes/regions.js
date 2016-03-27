@@ -40,10 +40,6 @@ router.get('/goto_region', function(req, res, next) {
 
 });
 
-router.get('/goto_recommands', function(req, res, next) {
-	
-});
-
 router.get('/:region_name', function(req, res, next) {
 
 	Article.find().limit(5).lean().exec(function(err, rec_articles) {
