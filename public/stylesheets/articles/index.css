@@ -1,35 +1,4 @@
-.regions-filter, .boards-filter {
-  padding: 20px;
-  border-bottom: 1px solid #ccc; }
-  .regions-filter .filter-head, .boards-filter .filter-head {
-    width: 100px;
-    display: inline-block; }
-  .regions-filter .filter-body, .boards-filter .filter-body {
-    display: inline-block; }
-
-.filter-node {
-  padding: 10px;
-  display: inline-block; }
-
-.search-button-box {
-  height: 60px;
-  line-height: 60px;
-  padding: 10px;
-  text-align: center; }
-  .search-button-box button {
-    width: 200px; }
-
 .articles-container {
   margin-top: 30px; }
   .articles-container .articles {
     margin-top: 10px; }
-    .articles-container .articles .date {
-      width: 150px;
-      font-size: 12px;
-      color: #777; }
-    .articles-container .articles .title {
-      padding-left: 20px; }
-    .articles-container .articles .author {
-      width: 120px; }
-    .articles-container .articles .article-row td {
-      padding: 10px; }

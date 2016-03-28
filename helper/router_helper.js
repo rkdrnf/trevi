@@ -5,6 +5,8 @@ var routerHelper = {};
 var User = require('../models/user.js');
 var Place = require('../models/place.js');
 var Article = require('../models/article.js');
+var Board = require('../models/board.js');
+var Region = require('../models/region.js');
 
 routerHelper.checkUserLoggedIn = function (req, res, next) {
 	if (req.user) {
@@ -36,8 +38,20 @@ routerHelper.checkUserLoggedIn = function (req, res, next) {
 	}
 
 	sendUserLoginPage(req, res);
-
 };
+
+routerHelper.checkUserLoggedInAjax = function (errorCallback) {
+	return function(req, res, next) {
+		if (req.user) {
+			next();
+			return;
+		}
+		else {
+			errorCallback(req, res);
+		}
+	};
+};
+
 
 function sendUserLoginPage(req, res) {
 	if (req.method !== 'GET') {
@@ -70,11 +84,12 @@ routerHelper.setRecPlaces = function(options) {
 					query.region = { $in: req.query.regions };
 				}
 
-			Place.find(query).lean().exec(function(err, rec_places) {
+			Place.find(query).lean().limit(3).exec(function(err, rec_places) {
 				if (err) {
 					throw err;
 				}
-				req.rec_places = rec_places;
+
+				res.locals.recommended_places = rec_places;
 				next();
 			});
 	};
@@ -88,7 +103,45 @@ routerHelper.setRecArticles = function(options) {
 			if (err) {
 				throw err;
 			}
-			req.rec_articles = rec_articles;
+
+			res.locals.recommended_articles = rec_articles;
+			next();
+		});
+	};
+};
+
+routerHelper.setRecQuestions = function(options) {
+	var query = {};
+
+	return function(req, res, next) {
+		Article.find(query).lean().limit(3).exec(function(err, rec_questions) {
+			if (err) throw err;
+
+			res.locals.recommended_questions = rec_questions;
+			next();
+		});
+	};
+}
+
+routerHelper.getAllRegions = function(selects) {
+	return function(req, res, next) {
+		Region.find().select(selects).lean().exec(function(err, regions) {
+			if(err)
+				throw err;
+
+			res.locals.all_regions = regions;
+			next();
+		});
+	};
+};
+
+routerHelper.getAllBoards = function(selects) {
+	return function(req, res, next) {
+		Board.find().select(selects).lean().exec(function(err, boards) {
+			if (err)
+				throw err;
+
+			res.locals.all_boards = boards;
 			next();
 		});
 	};

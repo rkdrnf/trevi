@@ -1,0 +1,27 @@
+mixin article_search(regions, boards, checked_regions, checked_boards, open)
+	.article-search
+		.search-detail
+			a.btn.btn-primary(role="button", data-toggle="collapse", href="#searchBox", aria-expanded="#{open}", aria-controls="searchBox") 상세 검색
+
+		#searchBox.search-box.collapse
+			.well
+				form(action="/articles", method="get")
+					.regions-filter
+						.filter-head
+							label.region-head-label 지역
+						.filter-body
+							each region in regions
+								.filter-node
+									label.region-label= region.name
+									input.filter-checkbox.region-checkbox(type="checkbox", name="regions[]", value="#{region._id}", checked=checked_regions.indexOf(region._id.toString())!=-1 )
+					.boards-filter
+						.filter-head
+							label.board-head-label 게시판
+						.filter-body
+							each board in boards
+								.filter-node
+									label.board-label= board.name
+									input.filter-checkbox.board-checkbox(type="checkbox", name="boards[]", value="#{board._id}", checked=checked_boards.indexOf(board._id.toString())!=-1 )
+					.search-button-box
+						button.btn.btn-primary(type="submit") 검색
+

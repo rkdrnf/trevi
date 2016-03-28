@@ -1,0 +1,23 @@
+.article-search .search-detail {
+  text-align: center; }
+
+.article-search .search-button-box {
+  height: 60px;
+  line-height: 60px;
+  padding: 10px;
+  text-align: center; }
+  .article-search .search-button-box button {
+    width: 200px; }
+
+.article-search .regions-filter, .article-search .boards-filter {
+  padding: 20px;
+  border-bottom: 1px solid #ccc; }
+  .article-search .regions-filter .filter-head, .article-search .boards-filter .filter-head {
+    width: 100px;
+    display: inline-block; }
+  .article-search .regions-filter .filter-body, .article-search .boards-filter .filter-body {
+    display: inline-block; }
+
+.article-search .filter-node {
+  padding: 10px;
+  display: inline-block; }

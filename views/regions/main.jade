@@ -22,7 +22,7 @@ block center_content
 				.menu-box
 					if (region.boards)
 						each board in region.boards
-							- query = jadeHelper.buildGetQuery({ regions: [region._id.toString()], boards: [board._id.toString()] })
+							- query = jadeHelper.buildGetQuery({ region: region._id.toString(), regions: [region._id.toString()], boards: [board._id.toString()] })
 							a.btn.btn-default(href="/articles?#{query}")= board.name
 	.body-sector
 		.hot-articles

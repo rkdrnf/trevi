@@ -40,41 +40,67 @@ router.post('/create', RouterHelper.checkUserLoggedIn, function(req, res, next) 
 		else {
 			res.redirect(RouterHelper.tryUseRedirectUrl(req, '/'));
 
-			Photo.update({ _id: { $in: photo_ids }}, { $push: { 'references.articles' : article._id }}, function (err) {
+			Photo.update({ _id: { $in: photo_ids }}, { $addToSet: { 'references.articles' : article._id }}, function (err) {
 				if (err) return;
 			});
 		}
 	});
 });
 
-router.get('/', RouterHelper.setRecPlaces(), RouterHelper.setRecArticles(), function(req, res, next) {
-	var region_ids = req.query.regions ? req.query.regions : [];
+router.get('/', setRegion, RouterHelper.setRecPlaces(), RouterHelper.setRecArticles(), RouterHelper.setRecQuestions(), RouterHelper.getAllRegions('_id name boards'), RouterHelper.getAllBoards('_id name'), function(req, res, next) {
+	var query = findArticlesQuery(req.query.regions, req.query.boards);
 	var board_ids = req.query.boards ? req.query.boards : [];
+	var region_ids = req.query.regions ? req.query.regions : [];
+	Article.find(query).populate('author').lean().exec(function(err, articles) {
+		res.render('articles/main', { articles: articles, checked_regions: region_ids, checked_boards: board_ids, region: req.region });
+	});
+});
 
+router.post('/addStar', RouterHelper.checkUserLoggedInAjax(function(req, res) {
+	res.json({ error: "먼저 로그인해주세요" });
+}), function(req, res, next) {
+	Article.addStar(req.user, req.body.id, function(err) {
+		if (err) 
+			res.json({ error: "이미 추천한 게시물입니다."});
+		else {
+			res.json({});
+		}
+	});
+});
+
+router.get('/:article_id', setRegion, RouterHelper.setRecPlaces(), RouterHelper.setRecArticles(), RouterHelper.setRecQuestions(), function(req, res, next) {
+	var query = findArticlesQuery(req.query.regions, req.query.boards);
+	Article.find(query).populate('author').lean().exec(function(err, other_articles) {
+		Article.findOne({ _id: req.params.article_id }).populate('author regions board photos comments.author').lean().exec(function (err, article) {
+			res.render('articles/show', { article: article, region: req.region, other_articles: other_articles, regions: req.query.regions, boards: req.query.boards });
+		});
+
+	});
+});
+
+
+function findArticlesQuery(regions, boards) {
 	var query = {};
-	if (region_ids.length > 0) {
-		query.regions = { $in : region_ids };
+	if (!_.isEmpty(regions)) {
+		query.regions = { $in : regions };
 	}
-	if (board_ids.length > 0) {
-		query.board = { $in : board_ids };
+	if (!_.isEmpty(boards)) {
+		query.board = { $in : boards };
 	}
 
-	Region.find().lean().exec(function(err, regions) {
-		if (err) res.render(500);
-		Board.find().lean().exec(function(err, boards) {
-			if (err) res.render(500);
-			Article.find(query).populate('author comments').lean().exec(function(err, articles) {
-				res.render('articles/main', { articles: articles, regions: regions, checked_regions: region_ids, boards: boards, checked_boards: board_ids, recommended_places: req.rec_places, recommended_articles: req.rec_articles, recommended_questions: req.rec_articles });
-			});
-		}); 
-	});
-});
+	return query;
+}
 
-router.get('/:article_id', RouterHelper.setRecPlaces({}), RouterHelper.setRecArticles({}), function(req, res, next) {
-	Article.findOne({ _id: req.params.article_id }).populate('author regions board photos comments.author').lean().exec(function (err, article) {
-		res.render('articles/show', { article: article, recommended_articles: req.rec_articles, recommended_questions: req.rec_articles, recommended_places: req.rec_places});
+
+function setRegion(req, res, next) {
+	Region.findById(req.query.region).populate('boards').lean().exec(function(err, region) {
+		if (err) 
+			throw err;
+
+		req.region = region;
+		next();
 	});
-});
+}
 
 
 module.exports = router;
