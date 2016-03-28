@@ -71,7 +71,7 @@ router.post('/addStar', RouterHelper.checkUserLoggedInAjax(function(req, res) {
 router.get('/:article_id', setRegion, RouterHelper.setRecPlaces(), RouterHelper.setRecArticles(), RouterHelper.setRecQuestions(), function(req, res, next) {
 	var query = findArticlesQuery(req.query.regions, req.query.boards);
 	Article.find(query).populate('author').lean().exec(function(err, other_articles) {
-		Article.findOne({ _id: req.params.article_id }).populate('author regions board photos comments.author').lean().exec(function (err, article) {
+		Article.findOne({ _id: req.params.article_id }).populate('author regions board photos').populate({ path: 'comments', populate: { path: 'author' }}).lean().exec(function (err, article) {
 			res.render('articles/show', { article: article, region: req.region, other_articles: other_articles, regions: req.query.regions, boards: req.query.boards });
 		});
 

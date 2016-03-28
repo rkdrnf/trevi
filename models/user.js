@@ -24,8 +24,6 @@ var userSchema = new Schema({
 	sex: { type: String, enum: ['Male', 'Female']},
 	birth: { type: Date, default: new Date() },
 	phone: { type: String, default: "010-1234-5678" },
-	starred_articles: { type: [{ type: Schema.Types.ObjectId, ref: 'Article' }], default: [] },
-	starred_comments: { type: [{ type: Schema.Types.ObjectId, ref: 'Comment' }], default: [] }
 }, {
 });
 
@@ -68,19 +66,6 @@ userSchema.statics.getEmail = function(user) {
 	if (!_.isEmpty(user.google) && user.google.email.length > 0) return user.google.email;
 
 };
-
-userSchema.methods.canAddStar = function(type, id) {
-	switch(type) {
-		case "Article": 
-			return this.starred_articles.indexOf(id) === -1;
-			break;
-		case "Comment":
-			return this.starred_comments.indexOf(id) === -1;
-			break;
-	}
-
-	return false;
-}
 
 
 // create the model for users and expose it to our app

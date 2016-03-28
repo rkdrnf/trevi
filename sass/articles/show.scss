@@ -15,10 +15,16 @@
 	border-bottom: 1px solid #ccc;
 	padding: 10px;
 
+	.star-box {
+		margin-right: 10px;
+	}
+
 	.title {
 		font-size: 20px;
 		font-weight: bold;
+		vertical-align: middle;
 	}
+
 }
 
 .body-row {
@@ -28,10 +34,7 @@
 	img {
 		max-width: 100%;
 	}
-
-
 }
-
 
 .date-row {
 	.updated-at {
@@ -60,6 +63,14 @@
 	}
 }
 
+.recommend-row {
+	.star-box {
+		margin-bottom: 10px;
+	}
+
+	text-align: center;
+}
+
 .comment-container {
 	margin-top: 50px;
 	border: 1px solid #ccc;
@@ -84,11 +95,10 @@
 		display: block;
 		margin: 10px;
 	}
-
-	
-
 }
 
 .other-articles {
 	margin-top: 50px;
 }
+
+

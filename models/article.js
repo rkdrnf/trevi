@@ -9,10 +9,11 @@ var article = new Schema({
 	board: { type: Schema.Types.ObjectId, ref: 'Board' },														//속한 지역에 무슨 게시판인지
 	title: { type: String, minlength: 2, maxlength: 40, required: true },						//제목
 	content: { type: String, required: true}, 																			//내용
-	photos: [{ type: Schema.Types.ObjectId, ref: 'Photo', default: [] }],
-	comments: { type: [Comment.schema], default: [] },
-	tags: { type: Schema.Types.ObjectId, ref: 'Tag', default: [] },
-	star: { type: Number, default: 0}
+	photos: { type: [{ type: Schema.Types.ObjectId, ref: 'Photo' }], default: [] },
+	comments: { type: [{ type: Schema.Types.ObjectId, ref: 'Comment' }], default: [] },
+	tags: { type: [{ type: Schema.Types.ObjectId, ref: 'Tag' }], default: [] },
+	star: { type: Number, default: 0},
+	starred_by: { type: [{ type: Schema.Types.ObjectId, ref: 'User' }], default: [] }
 }, {
 	minimize: false,
 	timestamps: true
@@ -20,11 +21,10 @@ var article = new Schema({
 
 article.statics.addStar = function (user, article_id, callback) {
 	var self = this;
-	User.update({_id: user._id}, { $addToSet: { starred_articles: article_id }}, function(err, affected) {
-		if (err || affected === 0) {
+	this.update({_id: article_id, starred_by: { $ne: user._id }}, { $inc: { star: 10 }, $addToSet: { starred_by: user._id }}, function(err, affected) {
+		if (err || affected.nModified === 0) {
 			callback(true);
 		} else {
-			self.update({ _id: article_id}, { $inc: { star: 10 }}, function (err) {});
 			callback(undefined);
 		}
 	});

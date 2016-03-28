@@ -12,3 +12,13 @@ mixin article_link(article, region, search_regions, search_boards, options)
 mixin user_link(user)
 	a(href="#")= jadeHelper.user.getName(user)
 
+
+mixin star-box(star, size)
+	.star-box(class="#{size}")
+		span.star-text= star
+		img.star-image(src="/images/star.png")
+
+mixin star-button(action, id)
+	button.star-button.btn.btn-primary(type="button", data-action="#{action}", data-id="#{id}")
+		img.star-medium(src="/images/star.png")
+		span 추천하기

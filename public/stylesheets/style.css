@@ -58,3 +58,34 @@ select {
   vertical-align: top;
   display: inline-block;
   width: 50%; }
+
+.star-medium {
+  width: 20px; }
+
+.star-large {
+  width: 30px; }
+
+.star-box {
+  font-size: 20px;
+  display: inline-block; }
+  .star-box .star-text {
+    color: #777;
+    vertical-align: middle;
+    height: 100%; }
+  .star-box img {
+    vertical-align: middle; }
+
+.star-box.large {
+  font-size: 20px; }
+  .star-box.large img {
+    width: 30px; }
+
+.star-box.medium {
+  font-size: 15px; }
+  .star-box.medium img {
+    width: 20px; }
+
+.star-box.small {
+  font-size: 12px; }
+  .star-box.small img {
+    width: 15px; }

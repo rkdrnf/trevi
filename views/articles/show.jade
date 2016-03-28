@@ -17,6 +17,7 @@ block center_content
 			.container
 				.row.title-row
 					.col-xs-12
+						+star-box(article.star, "large")
 						span.title= article.title
 				.row.date-row
 					.col-xs-12
@@ -28,9 +29,9 @@ block center_content
 						.article-content!= article.content
 				.row.recommend-row
 					.col-xs-12
-						button.star-button.btn.btn-primary(type="button", data-action="/articles/addStar", data-id="#{article._id}")
-							img.star-medium(src="/images/star.png")
-							span 추천하기
+						.star-row
+							+star-box(article.star, "large")
+						+star-button("/articles/addStar", article._id)
 				.row.option-row
 					.col-xs-6.reply-button-row
 						a.reply-button.btn.btn-warning(type="button", href="#replyForm") 댓글달기
@@ -56,6 +57,12 @@ block center_content
 									each line in jadeHelper.getTextLines(comment.content)
 										span= line
 										br
+						.row.recommend-row
+							.col-xs-12
+								.star-row
+									+star-box(comment.star, "large")
+								+star-button("/comments/addStar", comment._id)
+
 						.row.option-row
 							.col-xs-6.reply-button-row
 								a.reply-button.btn.btn-warning(type="button", href="#replyForm") 댓글달기
