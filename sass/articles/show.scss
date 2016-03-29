@@ -26,7 +26,6 @@
 	}
 
 }
-
 .body-row {
 	padding: 10px;
 	margin-top: 30px;
@@ -99,6 +98,18 @@
 
 .other-articles {
 	margin-top: 50px;
+}
+
+.tags-row {
+	.tag-item {
+		padding: 10px;
+		background-color: #f5dfe8;
+		display: inline-block;
+		margin: 5px;
+		font-size: 12px;
+		color: #e685bc;
+		box-shadow: 5px 5px 1px #bbb;
+	}
 }
 
 

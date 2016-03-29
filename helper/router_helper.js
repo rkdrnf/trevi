@@ -7,6 +7,7 @@ var Place = require('../models/place.js');
 var Article = require('../models/article.js');
 var Board = require('../models/board.js');
 var Region = require('../models/region.js');
+var Tag = require('../models/tag.js');
 
 routerHelper.checkUserLoggedIn = function (req, res, next) {
 	if (req.user) {
@@ -121,7 +122,7 @@ routerHelper.setRecQuestions = function(options) {
 			next();
 		});
 	};
-}
+};
 
 routerHelper.getAllRegions = function(selects) {
 	return function(req, res, next) {
@@ -144,6 +145,14 @@ routerHelper.getAllBoards = function(selects) {
 			res.locals.all_boards = boards;
 			next();
 		});
+	};
+};
+
+routerHelper.processTags = function(tagGetter) {
+	return function(req, res, next) {
+		var tags = tagGetter(req).map(function(tag) { return tag.trim(); }).filter(function(tag) { return tag.length > 0; });
+		req.tags = Tag.createOrUpdate(tags);
+		next();
 	};
 };
 

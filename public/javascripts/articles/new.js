@@ -20,8 +20,7 @@ $(function() {
 			}
 		},
 		file_browser_callback_types: 'image',
-		init_instance_callback: function () {
-			tinymce.activeEditor.focus();
+		init_instance_callback: function () { tinymce.activeEditor.focus();
 		},
 		setup: function (editor) {
 			editor.on('blur', function (e) {
@@ -136,4 +135,12 @@ $(function() {
 	});
 
 	var tagSelector = $('.tag-select').makeTagSelector();
+
+	$('input[type="text"]').keydown(function(e) {
+		if (e.keyCode == 13)
+			{
+				e.preventDefault();
+				$(this).trigger("enterKey");
+			}
+	});
 });

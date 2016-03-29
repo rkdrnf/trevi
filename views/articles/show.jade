@@ -8,7 +8,6 @@ block script
 
 	script(rel="javascript", src="/javascripts/star_button.js")
 	script(rel="javascript", src="/javascripts/articles/show.js")
-
 block center_content
 		if (region)
 			include ../partials/region_header.jade
@@ -27,6 +26,11 @@ block center_content
 				.row.body-row
 					.col-xs-12
 						.article-content!= article.content
+				.row.tags-row
+					.col-xs-12
+						each tag in article.tags
+							.tag-item
+								span= tag
 				.row.recommend-row
 					.col-xs-12
 						.star-row

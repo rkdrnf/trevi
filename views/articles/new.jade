@@ -16,11 +16,12 @@ block script
 	script(src="/plugins/jquery-file-upload/js/jquery.fileupload-video.js")
 	script(src="/plugins/jquery-file-upload/js/jquery.fileupload-validate.js")
 
+	link(rel="stylesheet", href="/stylesheets/plugins/typeahead.css")
 	link(rel="stylesheet", href="/stylesheets/region_selector.css")
+	link(rel="stylesheet", href="/stylesheets/tag_selector.css")
 	script(src="/javascripts/region_selector.js")
 	script(src="/javascripts/board_selector.js")
 	script(src="/javascripts/tag_selector.js")
-
 
 block content
 	#content
@@ -41,9 +42,8 @@ block content
 
 					.form-group
 						.tags
-							input.tag-select.form-control(type="text", name="tag_autocomplete", placeholder="태그(스페이스나 쉼표로 구분)")
+							input.tag-select.form-control(type="text", name="tag_autocomplete", placeholder="태그(스페이스로 구분)")
 							
-
 					.form-group
 						#fileupload
 						span.btn.btn-success.fileinput-button
@@ -58,4 +58,4 @@ block content
 							
 					button.btn.btn-primary(type="submit") 글쓰기
 append bottom_script
-	script(src="/javascripts/bootstrap3-typeahead.min.js")
+	script(src="/plugins/typeahead.js/typeahead.bundle.js")

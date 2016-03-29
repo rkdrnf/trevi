@@ -1,0 +1,19 @@
+extends ../layout
+
+block content
+	table.table
+		tr
+			th ID
+			th UsedCount 
+			th Type 
+			th Option
+				if tags 
+					each tag in tags 
+						tr
+							td= tag._id
+							td= tag.used_count
+							td= tag.type
+							td
+								a.btn.btn-default(type="button", href="/admin/tags/edit/#{tag._id}") Edit
+								a.btn.btn-default(type="button", href="/admin/tags/delete/#{tag._id}") Delete
+

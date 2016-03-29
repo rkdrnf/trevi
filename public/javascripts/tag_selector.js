@@ -4,19 +4,13 @@
 		self.selectedTags = [];
 
 		var defaultOption = {};
-		self.options = $.extend({}, defualtOption, options);
+		self.options = $.extend({}, defaultOption, options);
 	};
 
 	TagSelector.prototype.init = function($elem) {
 		var self = this;
+
 		self.elem = $elem;
-		$.ajax({
-			url: "/ajax/tags_autocomplete",
-			type: "GET",
-			success: function(res) {
-				self.initData(self.elem, res);
-			}
-		});
 
 		self.wrapper = $('<div class=\"tag-selector-wrapper\"></div>');
 		self.elem.wrap(self.wrapper);
@@ -26,31 +20,72 @@
 
 		self.hiddenInput = $('<input type="hidden" name="tags">');
 		self.elem.after(self.hiddenInput);
-	};
 
-	TagSelector.prototype.initData = function($elem, data) {
-		var self = this;
-		$elem.typeahead({
-			source: data,
-			autoSelect: true,
-			afterSelect: function (item) {
-				self.addSelectedTag(item.name);
+		var tagHound = new Bloodhound({
+			name: "tags",
+			prefetch: {
+				url: "/ajax/tags_autocomplete",
+				transform: function(res) {
+					return res.tags;
+				}
+			},
+			identify: function(d) { return d.name; },
+			datumTokenizer: function (d) { return Bloodhound.tokenizers.whitespace(d.name); },
+			queryTokenizer: Bloodhound.tokenizers.whitespace
+		});
+
+		tagHound.initialize(); 
+		var ta = $(".tag-select").typeahead({
+			highlight: true
+		},
+		{
+			displayKey: "name",
+			limit: 10,
+			source: tagHound.ttAdapter(),
+		}).bind('typeahead:select', function(ev, suggestion) {
+			self.addSelectedTag(suggestion);
+			ta.typeahead("close").typeahead('val', '');
+		});
+		
+		ta.bind('typeahead:autocomplete', function(ev, suggestion){
+			self.addSelectedTag(suggestion);
+			ta.typeahead("close").typeahead('val', '');
+		});
+
+		ta.bind('enterKey', function() {
+			self.addSelectedTag({ name: $(this).typeahead("val") });
+			ta.typeahead("val", "");
+		});
+		
+		ta.bind('keypress', function(e) {
+			if(e.keyCode === 32) {
+				e.preventDefault();
+				self.addSelectedTag({ name: $(this).typeahead("val") });
+				ta.typeahead("val", "");
 			}
 		});
 	};
 
-	TagSelector.protoype.addSelectedTag = function(tag) {
+	function isValid(str){
+	 return !/[~`!#$%\^&*+=\-\[\]\\';.,/{}|\\":<>\?]/g.test(str);
+	}
+	
+	TagSelector.prototype.addSelectedTag = function(tag) {
 		var self = this;
 
-		if (self.selectedTags.indexOf(tag) !== -1) return;
+		if (!isValid(tag.name)) {
+			return;
+		}
 
-		self.selectedTags.push(tag);
-		self.hiddenInput.val(self.selectedtags.join(';'));
+		if (self.selectedTags.indexOf(tag.name) !== -1) return;
 
-		var $button = $('<a class="btn btn-default selected-tag">' + tag + '<span class="x-icon">x</span></button>'); 
+		self.selectedTags.push(tag.name);
+		self.hiddenInput.val(self.selectedTags.join(';'));
+
+		var $button = $('<a class="btn btn-default selected-tag">' + tag.name + '<span class="x-icon">x</span></button>'); 
 
 		$button.on('click', function() { self.removeSelectedTag($button, tag); });
-		self.tagsBox.apeend($button);
+		self.tagsBox.append($button);
 
 		if (self.options.onAddTag) {
 			self.options.onAddTag(tag);
@@ -61,7 +96,7 @@
 		var self = this;
 		$button.remove();
 
-		var index = self.selectedTags.indexOf(tag);
+		var index = self.selectedTags.indexOf(tag.name);
 		if (index === -1) return;
 
 		self.selectedTags.splice(index, 1);
@@ -75,5 +110,8 @@
 	$.fn.makeTagSelector = function (options) {
 		var tagSelector = new TagSelector(options);
 		$(this).data('tag_selector', tagSelector);
-	}
+
+		tagSelector.init($(this));
+		return tagSelector;
+	};
 }(jQuery));

@@ -49,7 +49,7 @@
 	position: absolute;
 	right: 0;
 	top: 0;
-display: block;
+	display: block;
 }
 
 .form-control, .btn, .select {
@@ -121,5 +121,11 @@ select {
 	img {
 		width: 15px;
 	}
+}
+
+.x-icon {
+	margin-left: 5px;
+	font-weight: bold;
+	color: #777;
 }
 

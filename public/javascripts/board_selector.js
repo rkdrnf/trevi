@@ -99,7 +99,6 @@
 				removes.push(board);
 			}
 		});
-		console.log(removes);
 
 		var news = [];
 		newBoards.forEach(function(board){
@@ -113,10 +112,8 @@
 
 	BoardSelector.prototype.showAvailableBoards = function (oldandnew) {
 		var self = this;
-		console.log(oldandnew);
 		if (self.selectedRegions.size === 0) {
 			self.clearOption();
-			console.log('add none');
 			self.addOption('-1', "지역을 먼저 선택해주세요");
 		} else {
 			oldandnew.olds.forEach(function(board) {

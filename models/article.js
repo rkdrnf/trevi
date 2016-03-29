@@ -11,7 +11,7 @@ var article = new Schema({
 	content: { type: String, required: true}, 																			//내용
 	photos: { type: [{ type: Schema.Types.ObjectId, ref: 'Photo' }], default: [] },
 	comments: { type: [{ type: Schema.Types.ObjectId, ref: 'Comment' }], default: [] },
-	tags: { type: [{ type: Schema.Types.ObjectId, ref: 'Tag' }], default: [] },
+	tags: { type: [{ type: String, ref: 'Tag' }], default: [] },
 	star: { type: Number, default: 0},
 	starred_by: { type: [{ type: Schema.Types.ObjectId, ref: 'User' }], default: [] }
 }, {

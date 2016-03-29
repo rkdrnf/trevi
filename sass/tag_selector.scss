@@ -1,18 +1,18 @@
-.region-selector-wrapper {
+.tag-selector-wrapper {
 	.twitter-typeahead {
-		width: 100px;
+		width: 200px;
 	}
 
-	.region-select {
-		width: 100px;
+	.tag-select {
+		width: 200px;
 		display: inline-block;
 	}
 
-	.regions-box {
+	.tags-box {
 		margin-left: 20px;
 		display: inline-block;
 
-		.selected-region {
+		.selected-tag {
 			margin-left: 5px;
 			margin-right: 5px;
 

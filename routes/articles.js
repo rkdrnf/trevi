@@ -7,6 +7,7 @@ var Board = require('../models/board.js');
 var RouterHelper = require('../helper/router_helper.js');
 var Photo = require('../models/photo.js');
 var Place = require('../models/place.js');
+var Tag = require('../models/tag.js');
 
 router.get('/new', RouterHelper.checkUserLoggedIn, function(req, res, next) {
 	//	var region_ids = JSON.parse(req.query.regions);
@@ -29,10 +30,12 @@ router.get('/new', RouterHelper.checkUserLoggedIn, function(req, res, next) {
 	});
 });
 
-router.post('/create', RouterHelper.checkUserLoggedIn, function(req, res, next) {
+router.post('/create', RouterHelper.checkUserLoggedIn, RouterHelper.processTags(function(req) {
+	return req.body.tags.split(';');
+}), function(req, res, next) {
 	var photo_ids = req.body.image_ids ? req.body.image_ids.split(';') : [];
 	var region_ids = req.body.regions ? req.body.regions.split(';') : [];
-	Article.create({ author: req.user._id, regions: region_ids, board: req.body.board, title: req.body.title, content: req.body.article_content, photos: photo_ids}, function(err, article) {
+	Article.create({ author: req.user._id, regions: region_ids, board: req.body.board, title: req.body.title, content: req.body.article_content, photos: photo_ids, tags: req.tags}, function(err, article) {
 		if (err) {
 			console.log(err);
 			res.render(500);
