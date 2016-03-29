@@ -19,6 +19,7 @@ block script
 	link(rel="stylesheet", href="/stylesheets/region_selector.css")
 	script(src="/javascripts/region_selector.js")
 	script(src="/javascripts/board_selector.js")
+	script(src="/javascripts/tag_selector.js")
 
 
 block content
@@ -37,6 +38,11 @@ block content
 					.form-group
 						.tinymce-toolbar
 						#article_content.tinymce(name="content")
+
+					.form-group
+						.tags
+							input.tag-select.form-control(type="text", name="tag_autocomplete", placeholder="태그(스페이스나 쉼표로 구분)")
+							
 
 					.form-group
 						#fileupload

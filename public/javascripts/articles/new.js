@@ -135,5 +135,5 @@ $(function() {
 		}
 	});
 
-
+	var tagSelector = $('.tag-select').makeTagSelector();
 });

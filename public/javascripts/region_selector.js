@@ -22,7 +22,7 @@
 		self.wrapper = $('<div class=\"region-selector-wrapper"></div>');
 		self.elem.wrap(self.wrapper);
 
-		self.regionsBox = $('<div class=\"regions-box"></div>');
+		self.regionsBox = $('<div class=\"regions-box\"></div>');
 		self.elem.after(self.regionsBox);
 
 		self.hiddenInput = $('<input type="hidden" name="regions" >');
@@ -38,16 +38,6 @@
 				self.addSelectedRegion(item);
 			}
 		});
-		/*
-			 .bind('change', function(ev, suggestion) {
-			 var current = self.elem.typeahead("getActive");
-			 if (current) {
-			 if (current.name == self.elem.val()) {
-			 self.addSelectedRegion(current);
-			 }
-			 }
-			 });
-			 */
 	};
 
 	RegionSelector.prototype.addSelectedRegion = function(region) {
