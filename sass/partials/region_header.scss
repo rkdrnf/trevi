@@ -1,0 +1,17 @@
+.region-box {
+	width: 100%;
+	.region-name {
+		font-size: 15px;
+		font-weight: bold;
+		text-align: center;
+	}
+
+	.boards {
+		padding: 15px;
+
+		a {
+			display: inline-block;
+			margin: 5px;
+		}
+	}
+}

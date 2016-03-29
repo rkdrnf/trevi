@@ -1,0 +1,13 @@
+.tag-selector-wrapper .twitter-typeahead {
+  width: 200px; }
+
+.tag-selector-wrapper .tag-select {
+  width: 200px;
+  display: inline-block; }
+
+.tag-selector-wrapper .tags-box {
+  margin-left: 20px;
+  display: inline-block; }
+  .tag-selector-wrapper .tags-box .selected-tag {
+    margin-left: 5px;
+    margin-right: 5px; }

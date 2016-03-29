@@ -4,3 +4,6 @@
 #content .write-form-wrapper {
   width: 900px;
   margin: auto; }
+
+#content #article_content {
+  min-height: 200px; }

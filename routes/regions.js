@@ -41,8 +41,10 @@ router.get('/goto_region', function(req, res, next) {
 
 });
 
-router.get('/:region_name', RouterHelper.setRecArticles({}), function(req, res, next) {
-	res.render('regions/main', { region: req.region, recommended_places: req.region.places.slice(0, 4), recommended_articles: req.rec_articles, recommended_questions: req.rec_articles, recent_articles: req.rec_articles, recent_questions: req.rec_articles, local_data: { location: req.region.location, places: req.region.places } });
+router.get('/:region_name', RouterHelper.setRecPlaces(), RouterHelper.setRecArticles(), RouterHelper.setRecQuestions(), function(req, res, next) {
+	Article.find({ regions: req.region._id }).lean().exec(function(err, recent_articles) {
+		res.render('regions/main', { region: req.region, recent_articles: recent_articles, recent_questions: recent_articles, local_data: { location: req.region.location, places: req.region.places } });
+	})
 });
 
 

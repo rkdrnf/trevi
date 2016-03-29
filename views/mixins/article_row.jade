@@ -1,0 +1,9 @@
+mixin article_row(article, region, search_regions, search_boards)
+	tr.article-row
+		td.title
+			+star-box(article.star, "small")
+			+article_link(article, region, search_regions, search_boards)
+		td.date
+			span= article.createdAt.prettify()
+		td.author
+			+user_link(article.author)

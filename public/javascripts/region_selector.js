@@ -11,43 +11,48 @@
 		var self = this;
 
 		self.elem = $elem;
-		$.ajax({
-			url: "/ajax/regions_for_search_dbid",
-			type: "GET",
-			success: function(res) {
-				self.initData(self.elem, res);
-			}
-		});
-
+	
 		self.wrapper = $('<div class=\"region-selector-wrapper"></div>');
 		self.elem.wrap(self.wrapper);
 
-		self.regionsBox = $('<div class=\"regions-box"></div>');
+		self.regionsBox = $('<div class=\"regions-box\"></div>');
 		self.elem.after(self.regionsBox);
 
 		self.hiddenInput = $('<input type="hidden" name="regions" >');
 		self.elem.after(self.hiddenInput);
-	};
 
-	RegionSelector.prototype.initData = function($elem, data) {
-		var self = this;
-		$elem.typeahead({
-			source: data,
-			autoSelect: true,
-			afterSelect: function (item) {
-				self.addSelectedRegion(item);
-			}
+		var regionHound = new Bloodhound({
+			name: "regions",
+			prefetch: {
+				url: "/ajax/regions_for_search_dbid"
+			},
+			identify: function(d) { return d.id; },
+			datumTokenizer: function (d) { return Bloodhound.tokenizers.whitespace(d.name); },
+			queryTokenizer: Bloodhound.tokenizers.whitespace
 		});
-		/*
-			 .bind('change', function(ev, suggestion) {
-			 var current = self.elem.typeahead("getActive");
-			 if (current) {
-			 if (current.name == self.elem.val()) {
-			 self.addSelectedRegion(current);
-			 }
-			 }
-			 });
-			 */
+
+		regionHound.initialize();
+
+		var ta = $('.region-select').typeahead({
+			highlight: true
+		}, {
+			displayKey: "name",
+			limit: 10,
+			source: regionHound.ttAdapter(),
+		}).bind('typeahead:select', function(ev, suggestion) {
+			self.addSelectedRegion(suggestion);
+			ta.typeahead("close").typeahead('val', '');
+		});
+		
+		ta.bind('typeahead:autocomplete', function(ev, suggestion){
+			self.addSelectedRegion(suggestion);
+			ta.typeahead("close").typeahead('val', '');
+		});
+		ta.bind('enterKey', function() {
+			var e = jQuery.Event("keydown");
+			e.which = 9; // # Some key code value
+			$(this).trigger(e);
+		});
 	};
 
 	RegionSelector.prototype.addSelectedRegion = function(region) {

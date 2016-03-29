@@ -2,43 +2,26 @@ extends ../layout
 
 block script
 	link(rel ="stylesheet", href="/stylesheets/articles/index.css")
+	if (region)
+		link(rel="stylesheet", href="/stylesheets/partials/region_header.css")
+
+	link(rel="stylesheet", href="/stylesheets/partials/article_search.css")
+	link(rel="stylesheet", href="/stylesheets/partials/article_row.css")
 
 block center_content
-	.search-box
-		form(action="/articles", method="get")
-			.regions-filter
-				.filter-head
-					label.region-head-label 지역
-				.filter-body
-					each region in regions
-						.filter-node
-							label.region-label= region.name
-							input.filter-checkbox.region-checkbox(type="checkbox", name="regions[]", value="#{region._id}", checked=checked_regions.indexOf(region._id.toString())!=-1 )
-			.boards-filter
-				.filter-head
-					label.board-head-label 게시판
-				.filter-body
-					each board in boards
-						.filter-node
-							label.board-label= board.name
-							input.filter-checkbox.board-checkbox(type="checkbox", name="boards[]", value="#{board._id}", checked=checked_boards.indexOf(board._id.toString())!=-1 )
-			.search-button-box
-				button.btn.btn-primary(type="submit") 검색
+	if (region) 
+		include ../partials/region_header.jade
+
+	- var openSearch = !region
+	include ../mixins/article_search.jade
+	+article_search(all_regions, all_boards, checked_regions, checked_boards, openSearch)
+			
 	.articles-container
 		.menu-box
 			a.btn.btn-default(type="button", href="/articles/new?redirect_url=#{jadeHelper.encodeURI(url)}") 새글쓰기
 
+		include ../mixins/article_row.jade
 		table.table.articles
 			if (articles)
 				each article in articles
-					tr.article-row
-						td.title
-							a(href="/articles/#{article._id}")
-								span= article.title
-								&nbsp;
-								span.comments-count [#{_.isEmpty(article.comments) ? '' : article.comments.length}]
-						td.date
-							span= article.createdAt.prettify()
-						td.author
-							a(href="#")= jadeHelper.user.getName(article.author)
-							
+					+article_row(article, region, checked_regions, checked_boards)

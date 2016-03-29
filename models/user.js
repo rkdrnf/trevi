@@ -22,8 +22,8 @@ var userSchema = new Schema({
 
 	profile_photo: { type: Schema.Types.ObjectId, ref: 'ProfilePhoto' },
 	sex: { type: String, enum: ['Male', 'Female']},
-	birth: { type: Date },
-	phone: { type: String }
+	birth: { type: Date, default: new Date() },
+	phone: { type: String, default: "010-1234-5678" },
 }, {
 });
 

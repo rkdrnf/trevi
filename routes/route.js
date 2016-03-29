@@ -54,6 +54,7 @@ module.exports = function(app, passport) {
 		failureRedirect : '/', // redirect back to the signup page if there is an error
 		failureFlash : true // allow flash messages
 	}), function(req, res) {
+		console.log(req.query.after_login);
 		if (req.query.after_login && routerHelper.isValidURLPath(req.query.after_login))
 			res.redirect(req.query.after_login);
 		else 

@@ -64,7 +64,6 @@
 	position: absolute;
 	right: 0;
 	top: 0;
-
 	display: block;
 }
 
@@ -94,3 +93,54 @@ select {
 	display: inline-block;
 	width: 50%;
 }
+
+.star-medium {
+	width: 20px;
+}
+
+.star-large {
+	width: 30px;
+}
+
+.star-box {
+	font-size: 20px;
+	display: inline-block;
+	.star-text {
+		color: #777;
+		vertical-align: middle;
+		height: 100%;
+	}
+
+	img {
+		vertical-align: middle;
+	}
+}
+
+.star-box.large {
+	font-size: 20px;
+
+	img {
+		width: 30px;
+	}
+}
+
+.star-box.medium {
+	font-size: 15px;
+	img {
+		width: 20px;
+	}
+}
+
+.star-box.small {
+	font-size: 12px;
+	img {
+		width: 15px;
+	}
+}
+
+.x-icon {
+	margin-left: 5px;
+	font-weight: bold;
+	color: #777;
+}
+

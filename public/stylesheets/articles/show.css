@@ -9,9 +9,12 @@
 .title-row {
   border-bottom: 1px solid #ccc;
   padding: 10px; }
+  .title-row .star-box {
+    margin-right: 10px; }
   .title-row .title {
     font-size: 20px;
-    font-weight: bold; }
+    font-weight: bold;
+    vertical-align: middle; }
 
 .body-row {
   padding: 10px;
@@ -37,6 +40,11 @@
     .option-row .report-button-row a:hover {
       color: #444; }
 
+.recommend-row {
+  text-align: center; }
+  .recommend-row .star-box {
+    margin-bottom: 10px; }
+
 .comment-container {
   margin-top: 50px;
   border: 1px solid #ccc; }
@@ -53,3 +61,15 @@
     font-weight: bold;
     display: block;
     margin: 10px; }
+
+.other-articles {
+  margin-top: 50px; }
+
+.tags-row .tag-item {
+  padding: 10px;
+  background-color: #f5dfe8;
+  display: inline-block;
+  margin: 5px;
+  font-size: 12px;
+  color: #e685bc;
+  box-shadow: 5px 5px 1px #bbb; }

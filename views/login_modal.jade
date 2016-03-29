@@ -14,7 +14,7 @@ div#loginModal.modal.modal-small.fade(tabindex="-1", role="dialog", aria-labelle
 						a.btn(href="/auth/facebook")
 							span 페이스북 계정으로 로그인
 					.row
-						form(action="/login", method="post")
+						form(action="/login?after_login=#{url}", method="post")
 							.form-group
 								input#email.form-control(type="text", name="email", placeholder="account@example.com")
 							.form-group
