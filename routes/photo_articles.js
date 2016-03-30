@@ -8,7 +8,7 @@ var Photo = require('../models/photo.js');
 var RouterHelper = require('../helper/router_helper.js');
 
 router.get('/', function(req, res) {
-	PhotoArticle.find({ region: req.region._id }).populate('photo').lean().exec(function(err, photoArticles) {
+	PhotoArticle.find({ region: req.region._id }).populate('photo author').lean().exec(function(err, photoArticles) {
 		res.render('photo_articles/index.jade', { region: req.region, photo_articles: photoArticles });
 	});
 });

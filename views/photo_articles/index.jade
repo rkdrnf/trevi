@@ -1,5 +1,8 @@
 extends ../layout.jade
 
+block script
+	link(rel="stylesheet", href="/stylesheets/photo_articles/index.css")
+
 block center_content
 	if (region)
 		include ../partials/region_header.jade
@@ -11,6 +14,7 @@ block center_content
 			each article in photo_articles
 				.photo-article-item
 					.photo-box
-						img(src="#{article.photo.path}")
-					.description-box
-						span= jadeHelper.dummyText
+						a(href="/regions/#{region.url}/photos/#{article._id}")
+							img(src="#{article.photo.thumbnail}")
+					.author
+						span= jadeHelper.user.getName(article.author)

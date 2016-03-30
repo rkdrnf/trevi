@@ -1,0 +1,30 @@
+.photo-article-item {
+	width: 210px;
+	margin: auto;
+	border: 1px solid #ccc;
+	margin-bottom: 15px;
+	margin-top: 15px;
+
+	.photo-box {
+		width: 100%;
+		height: 150px;
+		margin: auto;
+		padding: 10px;
+
+		text-align: center;
+
+		img {
+			max-height: 100%;
+
+		}
+	}
+
+	.author {
+		background-color: #e6e0c8;
+		padding: 10px;
+		border-top: 1px solid #ccc;
+		width: 100%;
+	}
+}
+
+
