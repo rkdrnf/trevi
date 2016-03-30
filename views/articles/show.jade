@@ -74,20 +74,10 @@ block center_content
 								a.report-button(href="#report") 부적절한 게시물인가요?
 
 
-			.container.reply-form-container
-				form#replyForm.reply-form(action="/comments/create", method="post")
-					.row
-						.col-xs-12 
-							span.reply-header 남기고 싶은 말
-					.row
-						.col-xs-12
-								.form-group
-									textarea.form-control(name="content")
-									input(type="hidden", name="article", value="#{article._id}")
-					.row
-						.col-xs-12
-							button.btn.btn-warning(type="submit") 남기기
+			include ../mixins/comment_field.jade
+			+comment_field("/comments/create", "article", article._id, url)
 
+			
 		if (other_articles)
 			include ../mixins/article_row.jade
 			.other-articles

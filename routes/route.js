@@ -45,7 +45,6 @@ module.exports = function(app, passport) {
 	app.use('/ajax', require('./ajax.js'));
 	app.use('/comments', require('./comments.js'));
 
-
 	app.get('/login', function(req, res) {
 		res.render('login', { message: req.flash('loginMessage'), after_login: encodeURIComponent(req.query.after_login) }); 
 	});

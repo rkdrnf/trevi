@@ -3,7 +3,8 @@ var Schema = mongoose.Schema;
 
 var comment = new Schema({
 	author: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-	article: { type: Schema.Types.ObjectId, ref: 'Article', required: true },
+	article: { type: Schema.Types.ObjectId, ref: 'Article'},
+	photo_article: { type: Schema.Types.ObjectId, ref: 'PhotoArticle'},
 	content: { type: String, required: true },
 	star: { type: Number, default: 0 },
 	starred_by: { type: [{ type: Schema.Types.ObjectId, ref: 'User' }], default: [] }

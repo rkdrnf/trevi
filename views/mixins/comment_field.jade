@@ -1,0 +1,15 @@
+mixin comment_field(action, name, id, redirect_url)
+	.container.reply-form-container
+		form#replyForm.reply-form(action="#{jadeHelper.addRedirection(action, redirect_url)}", method="post")
+			.row
+				.col-xs-12 
+					span.reply-header 남기고 싶은 말
+			.row
+				.col-xs-12
+					.form-group
+						textarea.form-control(name="content")
+						input(type="hidden", name="#{name}", value="#{id}")
+			.row
+				.col-xs-12
+					button.btn.btn-warning(type="submit") 남기기
+

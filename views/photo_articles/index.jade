@@ -1,0 +1,18 @@
+extends ../layout.jade
+
+block center_content
+	.photo-articles
+		each article in photo_articles
+			.photo-article-item
+				.photo-box
+					img(src="#{article.photo.path}")
+				.description-box
+					span= jadeHelper.dummyText
+				.comment-box
+					include('../mixins/comment_field.jade')
+					+comment_field("/comments/create_photo", "photo_article", article._id, jadeHelper.encodeURI(url))
+
+					
+
+		
+

@@ -5,6 +5,7 @@ var Board = require('../models/board.js');
 var boardsRouter = require('./boards.js');
 var Article = require('../models/article.js');
 var RouterHelper = require('../helper/router_helper.js');
+var photosRouter = require('./photo_articles.js');
 
 router.param('region_name', function(req, res, next, value) {
 	Region.findOne({ url: value }).populate('boards places').lean().exec(function(err, region) {
@@ -46,6 +47,8 @@ router.get('/:region_name', RouterHelper.setRecPlaces(), RouterHelper.setRecArti
 		res.render('regions/main', { region: req.region, recent_articles: recent_articles, recent_questions: recent_articles, local_data: { location: req.region.location, places: req.region.places } });
 	})
 });
+
+router.use('/:region_name/photos', photosRouter);
 
 
 

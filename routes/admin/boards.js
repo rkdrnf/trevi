@@ -1,6 +1,7 @@
 var router = require('express').Router();
 var Board = require('../../models/board.js');
 var Region = require('../../models/region.js');
+var RouterHelper = require('../../helper/router_helper.js');
 
 router.get('/', function(req, res, next) {
 	var query_condition = {};
@@ -8,15 +9,13 @@ router.get('/', function(req, res, next) {
 		query_condition.region = req.query.region_id;
 	}
 
-	Region.find().lean().exec(function (err, regions) {
-		Board.find(query_condition).populate('region').lean().exec(function (err, boards) {
-			res.render('admin/boards/index', { boards: boards, regions: regions });
-		});
+	Board.find(query_condition).populate('region').lean().exec(function (err, boards) {
+		res.render('admin/boards/index', { boards: boards, board_types: Board.getTypes() });
 	});
 });
 
 router.post('/create', function(req, res, next) {
-	Board.create({ region: req.body.region, name: req.body.name }, function(err) { 
+	Board.create({ region: req.body.region, name: req.body.name, type: req.body.type }, function(err) { 
 		if (err) {
 			console.log(err);
 			return handleError(err);
@@ -27,22 +26,19 @@ router.post('/create', function(req, res, next) {
 
 
 router.get('/edit/:id', function(req, res, next) {
-	Region.find().lean().exec(function(err, regions) {
-		Board.findOne({ _id: req.params.id }).populate('region').lean().exec(function(err, board) {
-			if (err) {
-				console.log(err);
-				return handleError(err);
-			}
+	Board.findOne({ _id: req.params.id }).populate('region').lean().exec(function(err, board) {
+		if (err) {
+			console.log(err);
+			return handleError(err);
+		}
 
+		res.render('admin/boards/edit', { board: board, board_types: Board.getTypes(), redirect_url: encodeURIComponent(req.query.redirect_url) });
 
-			res.render('admin/boards/edit', { board: board, regions: regions, redirect_url: encodeURIComponent(req.query.redirect_url) });
-
-		});
 	});
 });
 
 router.post('/update/:id', function(req, res, next) {
-	Board.update({ _id: req.params.id }, { region: req.body.region, name: req.body.name }, function(err) { 
+	Board.update({ _id: req.params.id }, { region: req.body.region, name: req.body.name, type: req.body.type }, function(err) { 
 		if (err) { 
 			console.log(err);
 			return handleError(err);

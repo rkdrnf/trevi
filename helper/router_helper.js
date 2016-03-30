@@ -65,9 +65,11 @@ function sendUserLoginPage(req, res) {
 
 }
 
-routerHelper.tryUseRedirectUrl = function (req, default_redirect_url) {
-	if (req.query.redirect_url && this.isValidURLPath(req.query.redirect_url)) {
-		return req.query.redirect_url;
+routerHelper.tryUseRedirectUrl = function (redirect_url, default_redirect_url) {
+	if (redirect_url && this.isValidURLPath(redirect_url)) {
+		console.log('########');
+		console.log(redirect_url);
+		return redirect_url;
 	}
 
 	return default_redirect_url;
