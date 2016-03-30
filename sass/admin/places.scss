@@ -27,4 +27,31 @@ html, body {
 	}
 }
 
+.photo-col {
+	.photo-preview {
+		width: 100px;
+		height: 100px;
+		display: inline-block;
 
+		.place-preview{
+			max-width: 100px;
+			max-height: 100px;
+		}
+	}
+
+	.photo-input-box {
+		width: 200px;
+		height: 100px;
+		overflow: visible;
+		display: inline-block;
+		vertical-align: top;
+		#placePhoto {
+			position: relative;
+			top: 50%;
+			width: 200px;
+			-webkit-transform: translateY(-50%);
+			-ms-transform: translateY(-50%);
+			transform: translateY(-50%);
+		}
+	}
+}

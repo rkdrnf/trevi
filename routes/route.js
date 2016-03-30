@@ -44,6 +44,7 @@ module.exports = function(app, passport) {
 	app.use('/uploads', uploads);
 	app.use('/ajax', require('./ajax.js'));
 	app.use('/comments', require('./comments.js'));
+	app.use('/places', require('./places.js'));
 
 
 	app.get('/login', function(req, res) {

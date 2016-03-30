@@ -8,7 +8,10 @@ var RouterHelper = require('../helper/router_helper.js');
 
 router.post('/', upload.fields([{ name: 'image' }, { name: 'images[]' }]), function(req, res, next) {
 	var mau = new MAU(req.files["images[]"], {}, function(err, result){
-		if(err) { res.json({ error: true }); }
+		if(err) { 
+			console.log(err);
+			res.json({ error: true }); 
+		}
 		else {
 			var values = result.files.map(function(fileInfo) {
 				return {

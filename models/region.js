@@ -8,9 +8,9 @@ var regionSchema = new Schema({
 	promotion_text: { type: String },
 	background_image_path: { type: String },
 	location: {
-		latitude: Number,
-		longitude: Number,
-		zoomLevel: Number
+		latitude: { type: Number, default: 1},
+		longitude: { type: Number, default: 1},
+		zoomLevel: { type: Number, default: 1}
 	},
 	places: [{ type: Schema.Types.ObjectId, ref: 'Place' }]
 }, {

@@ -32,7 +32,7 @@ block content
 										br
 							td= region.promotion_text
 							td= region.background_image_path
-							if (region.location) 
+							if (!_.isEmpty(region.location)) 
 								td #{region.location.latitude.toFixed(2)}/#{region.location.longitude.toFixed(2)}/#{region.location.zoomLevel}
 							else 
 								td

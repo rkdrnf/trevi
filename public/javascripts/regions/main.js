@@ -6,11 +6,16 @@ function initMap() {
 		center: {lat: local_data.location.latitude, lng: local_data.location.longitude},
 		mapTypeId: google.maps.MapTypeId.ROADMAP
 	});
-	
+
+	var infowindow = new google.maps.InfoWindow({
+		content: "hihihi"
+	});	
+
 	google.maps.event.addListener(map, 'click', function(event) {
 		addMarker(event.latLng, map);
 	});
 
+	
 }
 
 function geocodeAddress(geocoder, resultsMap) {
@@ -42,6 +47,7 @@ function addMarker(location, map) {
 		map: map
 	});
 	
+	return marker;
 }
 
 $(function() {

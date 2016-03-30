@@ -1,0 +1,35 @@
+.place-info {
+  width: 500px;
+  min-height: 200px;
+  margin: auto;
+  border: 1px solid #777;
+  box-sizing: border-box; }
+  .place-info .place-header {
+    height: 150px;
+    overflow: hidden;
+    border-bottom: 1px solid #777; }
+    .place-info .place-header .name {
+      width: 150px;
+      display: inline-block;
+      vertical-align: top; }
+      .place-info .place-header .name .place-region {
+        padding: 10px;
+        margin-left: 20px;
+        font-size: 15px; }
+      .place-info .place-header .name .place-name {
+        padding: 10px;
+        margin-left: 20px;
+        font-size: 20px;
+        font-weight: bold; }
+    .place-info .place-header .photos {
+      width: 340px;
+      height: 150px;
+      display: inline-block;
+      vertical-align: top;
+      overflow: scroll; }
+      .place-info .place-header .photos .photo-item {
+        display: inline-block;
+        vertical-align: top;
+        padding: 10px; }
+        .place-info .place-header .photos .photo-item img {
+          max-width: 100px; }

@@ -4,7 +4,7 @@ var Schema = mongoose.Schema;
 var placePhoto = new Schema({
 	path: String,				// /images/place_photos/file_name
 	thumbnail: String,	// /images/place_photos/thumbnail/file_name
-	owner: { type: Schema.Types.ObjectId, ref: 'User' }
+	owner: { type: Schema.Types.ObjectId, ref: 'User' },
 });
 
 

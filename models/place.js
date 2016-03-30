@@ -6,7 +6,9 @@ var placeSchema = new Schema({
 	description: String,
 	region: { type: Schema.Types.ObjectId, ref: 'Region' },
 	latitude: { type: Number },
-	longitude: { type: Number }
+	longitude: { type: Number },
+
+	photos: [{type: Schema.Types.ObjectId, ref: 'PlacePhoto' }]
 }, {
 	minimize: false
 });	

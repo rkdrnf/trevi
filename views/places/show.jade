@@ -1,0 +1,24 @@
+extends ../layout.jade
+
+block script
+	link(rel="stylesheet", href="/stylesheets/places/show.css")
+
+
+
+block content
+	.place-info
+		.place-header
+			.name
+				.place-region
+					span= place.region.name
+				.place-name
+					span= place.name
+			.photos
+				each photo in place.photos
+					.photo-item
+						img(src="#{photo.path}")
+		.place-body
+			.description
+				span= place.description
+
+		

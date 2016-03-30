@@ -1,0 +1,51 @@
+.place-info {
+	width: 500px;
+	min-height: 200px;
+	margin: auto;
+	border: 1px solid #777;
+	box-sizing: border-box;
+
+	.place-header {
+		height: 150px;
+		overflow: hidden;
+
+		border-bottom: 1px solid #777;
+
+		.name {
+			width: 150px;
+			display: inline-block;
+			vertical-align: top;
+
+			.place-region {
+				padding: 10px;
+				margin-left: 20px;
+				font-size: 15px;
+			}
+			.place-name {
+				padding: 10px;
+				margin-left: 20px;
+				font-size: 20px;
+				font-weight: bold;
+			}
+		}
+
+		.photos {
+			width: 340px;
+			height: 150px;
+			display: inline-block;
+			vertical-align: top;
+			overflow: scroll;
+
+			.photo-item {
+				display:inline-block;
+				vertical-align: top;
+				padding: 10px;
+				
+				img {
+					max-width: 100px;
+				}
+			}
+		}
+	}
+}
+

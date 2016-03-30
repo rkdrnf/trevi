@@ -1,8 +1,13 @@
 var express = require('express');
+var multer = require('multer');
 var router = express.Router();
+var upload = multer({ dest: 'public/images/place_photos/'});
+var PlacePhoto = require('../../models/place_photo.js');
+var MAU = require('../../helper/modify_and_upload.js');
 
 var Place = require('../../models/place.js');
 var Region = require('../../models/region.js');
+
 
 router.get('/', function(req, res) {
 	Place.find().populate('region').lean().exec(function(err, places) {
@@ -28,17 +33,30 @@ router.get('/edit', function(req, res) {
 	});
 });
 
-router.post('/create', function(req, res, next) {	
-	Place.create({ name: req.body.name , region: req.body.region , latitude: req.body.latitude , longitude: req.body.longitude }, function(err, place) {
-		if (err) {	 
-			console.log(err);
-			return handleError(err);
-		}
+router.post('/create', upload.array('photos[]'), function(req, res, next) {	
+	var newPhotos = req.files.map(function(newPhoto) {
+		return {
+			path: PlacePhoto.placeImagePath + newPhoto.filename,
+			thumbnail: PlacePhoto.thumbnailPath + newPhoto.filename,
+		};
+	});
 
-		Region.update({ _id: req.body.region}, { $addToSet: { places: place._id }}, function(err) {
-			if (err) console.log(err);
+	console.log(newPhotos);
+
+	PlacePhoto.create(newPhotos, function(err, photos) {
+		if (err) console.log(err);
+		var photo_ids = photos.map(function(photo) { return photo._id; });
+		Place.create({ name: req.body.name , region: req.body.region , latitude: req.body.latitude , longitude: req.body.longitude , photos: photo_ids }, function(err, place) {
+			if (err) {	 
+				console.log(err);
+				return handleError(err);
+			}
+
+			Region.update({ _id: req.body.region}, { $addToSet: { places: place._id }}, function(err) {
+				if (err) console.log(err);
+			});
+			res.redirect('./');
 		});
-		res.redirect('./');
 	});
 });
 
