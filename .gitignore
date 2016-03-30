@@ -36,5 +36,6 @@ node_modules
 *.swp
 
 public/images/user_images/*
+public/images/*
 config/server_config.js
 config/auth.js

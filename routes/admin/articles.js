@@ -5,7 +5,7 @@ var Article = require('../../models/article.js');
 var Author = require('../../models/user.js');
 var Photo = require('../../models/photo.js');
 
-router.get('/', function(req, res, next) {
+router.get('/', function(req, res) {
 	var query_condition = {};
 	if (req.query.board_id) {
 		query_condition.board = req.query.board_id;
@@ -66,7 +66,7 @@ router.post('/update/:id', function(req, res, next) {
 	});
 });
 
-router.get('/delete/:id', function(req, res, next) {
+router.get('/delete/:id', function(req, res) {
 	Article.remove({ _id: req.params.id }, function(err) {
 		if (err) {
 			console.log(err);

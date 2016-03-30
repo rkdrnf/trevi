@@ -9,6 +9,7 @@ router.use('/blogBoards', require('./blog_boards.js'));
 router.use('/articles', require('./articles.js'));
 router.use('/places', require('./places.js'));
 router.use('/tags', require('./tags.js'));
+router.use('/photo_articles', require('./photo_articles.js'));
 module.exports = router;
 
 

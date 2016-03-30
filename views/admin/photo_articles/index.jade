@@ -1,0 +1,26 @@
+extends ../layout
+
+block content
+	table.table
+		tr
+			th ID
+			th Author
+			th Region
+			th photo
+			th thumbnail
+			th description
+			th Option
+				if articles
+					each article in articles
+						tr
+							td= article._id
+							td= article.author ? jadeHelper.user.getName(article.author) : ""
+							td= article.region.name
+							td
+								img(src="#{article.photo.path}", style="max-width: 200px;")
+							td
+								img(src="#{article.photo.thumbnail}", style="max-width: 150px;")
+							td= article.description
+							td
+								a.btn.btn-default(type="button", href="/admin/photo_articles/delete/#{article._id}?redirect_url=#{jadeHelper.encodeURI(url)}") Delete
+

@@ -1,18 +1,16 @@
 extends ../layout.jade
 
 block center_content
+	if (region)
+		include ../partials/region_header.jade
 	.photo-articles
-		each article in photo_articles
-			.photo-article-item
-				.photo-box
-					img(src="#{article.photo.path}")
-				.description-box
-					span= jadeHelper.dummyText
-				.comment-box
-					include('../mixins/comment_field.jade')
-					+comment_field("/comments/create_photo", "photo_article", article._id, jadeHelper.encodeURI(url))
+		.menu-box
+			a.btn.btn-default(type="button", href="/regions/#{region.url}/photos/new?redirect_url=#{jadeHelper.encodeURI(url)}") 새글쓰기
 
-					
-
-		
-
+		if(photo_articles)
+			each article in photo_articles
+				.photo-article-item
+					.photo-box
+						img(src="#{article.photo.path}")
+					.description-box
+						span= jadeHelper.dummyText

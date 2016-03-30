@@ -12,8 +12,8 @@ router.post('/', upload.fields([{ name: 'image' }, { name: 'images[]' }]), funct
 		else {
 			var values = result.files.map(function(fileInfo) {
 				return {
-					path: Photo.userImagePath + fileInfo.filename,
-					thumbnail: Photo.thumbnailPath + fileInfo.thumbnailName,
+					path: Photo.getImagePath('Article') + fileInfo.filename,
+					thumbnail: Photo.getThumbnailPath('Article') + fileInfo.thumbnailName,
 					owner: req.user._id
 				};
 			});
