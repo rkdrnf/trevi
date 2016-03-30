@@ -6,5 +6,10 @@ block content
 		form(action="/admin/boards/update/#{board._id}?redirect_url=#{redirect_url}", method="post")
 			.form-group
 				input.form-control(type="text", name="name", placeholder="이름", value="#{board.name}")
+			.form-group
+				select.form-control(name="type")
+					each type in board_types
+						option(value="#{type}")= type
+
 			button.btn.btn-default.btn-block(type="submit", href="#{redirect_url}") Update
 

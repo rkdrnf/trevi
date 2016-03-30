@@ -47,11 +47,11 @@ userSchema.statics.isValidName = function(name) {
 };
 
 userSchema.virtual('name').get(function() {
-	return userSchema.statics.getName(this);
-	});
+	return userSchema.statics.getName(this.toObject());
+});
 
 userSchema.virtual('email').get(function() {
-	return userSchema.statics.getEmail(this);
+	return userSchema.statics.getEmail(this.toObject());
 });
 
 userSchema.statics.getName = function(user) {

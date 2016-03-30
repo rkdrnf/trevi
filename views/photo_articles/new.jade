@@ -1,0 +1,32 @@
+extends ../layout.jade
+
+block script
+	script(src="/javascripts/photo_articles/new.js")
+	link(rel="stylesheet", href="/stylesheets/photo_articles/new.css")
+	link(rel="stylesheet", href="/stylesheets/tag_selector.css")
+	script(src="/javascripts/tag_selector.js")
+	link(rel="stylesheet", href="/stylesheets/plugins/typeahead.css")
+
+block center_content
+	.form-wrapper
+		form(action="/regions/#{region.url}/photos/create?redirect_url=#{redirect_url}", method="post", enctype="multipart/form-data")
+			.form-group
+				.photo-preview
+					a.upload-photo(href="#") 
+						span +
+					input.photo_input(type="file", name="photo")
+			.form-group
+				textarea.form-control.description(name="description")
+			.form-group
+				.tags
+					input.tag-select.form-control(type="text", name="tag_autocomplete", placeholder="태그(스페이스로 구분)")
+			.input(type="hidden", name="region", value="#{region._id}")
+
+			.submit
+				button.btn.btn-primary(type="submit") 올리기
+					
+				
+				
+		
+append bottom_script
+	script(src="/plugins/typeahead.js/typeahead.bundle.min.js")

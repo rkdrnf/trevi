@@ -38,5 +38,6 @@ node_modules
 public/images/user_images/*
 public/images/profile_photos/*
 public/images/place_photos/*
+public/images/*
 config/server_config.js
 config/auth.js

@@ -22,9 +22,9 @@ block content
 			.form-group
 				input.form-control(type="text", name="background_image_path", placeholder="/background_images/region_name.png", value="#{region.background_image_path}")
 			.form-group.location-fields
-				input#lngValue.form-control(type="text", name="longitude")
-				input#latValue.form-control(type="text", name="latitude")
-				input#zoomLevel.form-control(type="text", name="zoomLevel")
+				input#lngValue.form-control(type="text", name="longitude", value="#{region.location.longitude}")
+				input#latValue.form-control(type="text", name="latitude", value="#{region.location.latitude}")
+				input#zoomLevel.form-control(type="text", name="zoomLevel", value="#{region.location.zoomLevel}")
 			.map-wrapper
 				#map
 

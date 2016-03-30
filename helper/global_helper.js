@@ -1,6 +1,6 @@
 Date.prototype.prettify = function ()
 {
-	return this.getFullYear() + '-' + this.getMonth() + '-' + this.getDay() + ' ' + formatAMPM(this);
+	return this.getFullYear() + '-' + (this.getMonth() + 1) + '-' + this.getDate() + ' ' + formatAMPM(this);
 };
 
 

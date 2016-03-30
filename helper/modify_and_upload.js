@@ -11,18 +11,19 @@ function ModifyAndUpload(images, options, callback){
 		thumbnail_size: { x: 175, y: 175 }
 	};
 
+	extend(this.options, options);
+
 	this.originalImagePath = process.cwd();
 	this.newThumbPath = process.cwd() + '/' + this.options.save_path + this.options.thumbnail_path;
-
 
 	this.init(); 
 }
 
 function extend(a, b){
-	for(var key in b)
-		if(b.hasOwnProperty(key))
-			a[key] = b[key];
-	return a;
+    for(var key in b)
+        if(b.hasOwnProperty(key))
+            a[key] = b[key];
+    return a;
 }
 
 

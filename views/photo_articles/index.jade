@@ -1,0 +1,20 @@
+extends ../layout.jade
+
+block script
+	link(rel="stylesheet", href="/stylesheets/photo_articles/index.css")
+
+block center_content
+	if (region)
+		include ../partials/region_header.jade
+	.photo-articles
+		.menu-box
+			a.btn.btn-default(type="button", href="/regions/#{region.url}/photos/new?redirect_url=#{jadeHelper.encodeURI(url)}") 새글쓰기
+
+		if(photo_articles)
+			each article in photo_articles
+				.photo-article-item
+					.photo-box
+						a(href="/regions/#{region.url}/photos/#{article._id}")
+							img(src="#{article.photo.thumbnail}")
+					.author
+						span= jadeHelper.user.getName(article.author)

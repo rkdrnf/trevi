@@ -8,6 +8,11 @@ div#newBoardModal.modal.modal-small.fade(tabindex="-1", role="dialog", aria-labe
 						form(action="/admin/boards/create", method="post")
 							.form-group
 								input.form-control(type="text", name="name", placeholder="이름")
+							.form-group
+								select.form-control(name="type")
+									each type in board_types
+										option(value="#{type}")= type
+
 							button.btn.btn-default.btn-block(type="submit") Create
 					.modal-footer
 				//</content

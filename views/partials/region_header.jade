@@ -6,4 +6,5 @@
 			each board in region.boards
 				- query = jadeHelper.buildGetQuery({ region: region._id.toString(), regions: [region._id.toString()], boards: [board._id.toString()] });
 				a.btn.btn-default(href="/articles?#{query}")= board.name
+			a.btn.btn-default(href="/regions/#{region.url}/photos/") 한장사진
 
