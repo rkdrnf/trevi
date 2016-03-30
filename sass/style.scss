@@ -8,6 +8,10 @@
 	background-color: #c2eddb;
 }
 
+.btn-recommend{
+	background-color: rgba(255, 255, 0, 0.8);
+}
+
 .region-select-box {
 	width: 460px;
 	margin: auto;
@@ -15,6 +19,17 @@
 	background-color: rgba(0, 0, 0, 0.2);
 }
 
+.region-recommend-box {
+	width: 300px;
+	margin: auto;
+	padding: 20px 20px 20px 20px;
+
+	.btn {
+		width: 200px;		
+		border: 1px solid rgba(0,0,0,0.1);
+		margin: 0px;
+	}
+}
 .select-with-button {
 	width: 300px;
 	margin: auto;
