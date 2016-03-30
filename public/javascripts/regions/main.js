@@ -1,20 +1,32 @@
 var map;
+var data;
 
 function initMap() {
+	data = processLocalData(local_data);
+	function processLocalData(localData) {
+		var result = {};
+		localData.places.forEach(function(place) {
+			result[place._id] = place;
+		});
+
+		return result;
+	}
+
+
 	map = new google.maps.Map(document.getElementById('map'), {
 		zoom: local_data.location.zoomLevel,
 		center: {lat: local_data.location.latitude, lng: local_data.location.longitude},
 		mapTypeId: google.maps.MapTypeId.ROADMAP
 	});
 
-	var infowindow = new google.maps.InfoWindow({
-		content: "hihihi"
-	});	
+	local_data.places.forEach(function(place) {
+		var marker = addMarker({ lat: place.latitude, lng: place.longitude }, map);
+		data[place._id].marker = marker;
 
-	google.maps.event.addListener(map, 'click', function(event) {
-		addMarker(event.latLng, map);
+		marker.addListener('click', function() {
+			showInfoWindow(place);
+		});
 	});
-
 	
 }
 
@@ -39,46 +51,54 @@ function geocodeAddress(geocoder, resultsMap) {
 */
 
 function addMarker(location, map) {
-	$('#lngValue').val(location.lng());
-	$('#latValue').val(location.lat());
 	var marker = new google.maps.Marker({
 		position: location,
-		label: labels[labelIndex++ % labels.length],
 		map: map
 	});
-	
+
 	return marker;
 }
 
+function showInfoWindow(place) {
+		var infowindow = new google.maps.InfoWindow({
+			content: "<a class=\"marker-info\" data-id=\"" + place._id + "\"><h3>" + place.name + "</h3></a>"
+		});	
+
+		infowindow.open(map, place.marker);
+}
+
+
+
+
 $(function() {
-	var data = processLocalData(local_data);
 	
 	$(document).on('click', '.place-button', onClickPlaceButton);
+
+	$(document).on('click', '.marker-info', onClickMarker)
+
+	function onClickMarker(e) {
+		alert($(e.target).attr("data-id"));
+	}
+
 
 	function onClickPlaceButton() {
 		var placeId = $(this).attr('data-id');
 
 		moveToPlace(data[placeId]);
+		showInfoWindow(data[placeId]);
 	}
 
+	
 
-	function processLocalData(localData) {
-		var result = {};
-		localData.places.forEach(function(place) {
-			result[place._id] = place;
-		});
-
-		return result;
-	}
-
+	
 	function moveToPlace(place) {
 		var location = { lat: place.latitude, lng: place.longitude };
 		map.setCenter(location);
 		map.setZoom(16);
-		var marker = new google.maps.Marker({
-			map: map,
-			position: location
-		});
+//		var marker = new google.maps.Marker({
+//			map: map,
+//			position: location
+//		});
 	}
 
 });
