@@ -47,14 +47,15 @@ userSchema.statics.isValidName = function(name) {
 };
 
 userSchema.virtual('name').get(function() {
-	return userSchema.statics.getName(this.toObject());
+	return userSchema.statics.getName(this);
 });
 
 userSchema.virtual('email').get(function() {
-	return userSchema.statics.getEmail(this.toObject());
+	return userSchema.statics.getEmail(this);
 });
 
 userSchema.statics.getName = function(user) {
+	if (user.toObject) user = user.toObject();
 	if (!_.isEmpty(user.local) && user.local.name.length > 0) return user.local.name;
 	if (!_.isEmpty(user.facebook) && user.facebook.name.length > 0) return user.facebook.name;
 	if (!_.isEmpty(user.google) && user.google.name.length > 0) return user.google.name;

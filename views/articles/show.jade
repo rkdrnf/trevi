@@ -47,7 +47,7 @@ block center_content
 					.container.comment-container(id="#{comment._id}")
 						.row.comment-header
 							.col-xs-12
-								span.author-info= comment.author.local.name
+								span.author-info= jadeHelper.user.getName(comment.author)
 								span.author-name-postfix 님의 말
 
 						.row.date-row
