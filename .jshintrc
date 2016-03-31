@@ -1,0 +1,6 @@
+{
+	"undef": true,
+	"unused": true,
+	"predef": [ "require", "process", "module", "console", "$", "document", "window", "_" ]
+
+}

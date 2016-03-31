@@ -3,7 +3,7 @@ var router = express.Router();
 var PhotoArticle = require('../models/photo_article.js');
 var multer = require('multer');
 var upload = multer({ dest: 'public/images/photo_article_images/'});
-var MAU = require('../helper/modify_and_upload.js');
+var processImages = require('../helper/modify_and_upload.js');
 var Photo = require('../models/photo.js');
 var RouterHelper = require('../helper/router_helper.js');
 
@@ -22,43 +22,31 @@ router.get('/new', RouterHelper.checkUserLoggedIn, function(req, res) {
 	res.render('photo_articles/new.jade', renderParams);
 });
 
-router.post('/create', RouterHelper.checkUserLoggedIn, upload.single('photo'), RouterHelper.processTags(function(req) {
+router.post('/create', RouterHelper.checkUserLoggedIn, upload.single('photo'), processImages(function(req) { return [req.file]; }, { type: 'PhotoArticle', saves: 'thumbnail masonry' }), RouterHelper.processTags(function(req) {
 	return req.body.tags.split(';');
 }), function(req, res) {
-	var mau = new MAU([req.file], { save_path: 'public' + Photo.getImagePath('PhotoArticle')}, function(err, result) {
+	var values = req.processedImages.files.map(function(fileInfo) {
+		return {
+			original: fileInfo.original,
+			thumbnail: fileInfo.thumbnail,
+			masonry: fileInfo.masonry,
+			owner: req.user._id
+		};
+	});
+
+	Photo.create(values, function(err, photos) {
 		if (err) { 
 			console.log(err);
 			res.redirect('/');
-		}	else {
-			var values = result.files.map(function(fileInfo) {
-				return {
-					path: Photo.getImagePath('PhotoArticle') + fileInfo.filename,
-					thumbnail: Photo.getThumbnailPath('PhotoArticle') + fileInfo.thumbnailName,
-					owner: req.user._id
-				};
-			});
-
-			Photo.create(values, function(err, photos) {
-				if (err) { 
+		} else {
+			PhotoArticle.create({ author: req.user._id, region: req.region._id, description: req.body.description, photo: photos[0]._id, tags: req.tags }, function(err) {
+				if (err) {
 					console.log(err);
-					res.redirect('/');
-				} else {
-					PhotoArticle.create({ author: req.user._id, region: req.region._id, description: req.body.description, photo: photos[0]._id, tags: req.tags }, function(err, photoArticle) {
-						if (err) {
-							console.log(err);
-						}
-
-						console.log('$$$$$$$$$$$$4');
-						console.log(req.query.redirect_url);
-							
-						res.redirect(RouterHelper.tryUseRedirectUrl(req.query.redirect_url, 'back'));
-					});
 				}
+				res.redirect(RouterHelper.tryUseRedirectUrl(req.query.redirect_url, 'back'));
 			});
 		}
-
 	});
-
 });
 
 router.get('/:id', function(req, res) {

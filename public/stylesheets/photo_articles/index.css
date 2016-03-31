@@ -1,16 +1,18 @@
+.grid {
+  width: 100%;
+  margin: auto; }
+
+.grid-sizer, .grid-item {
+  width: 33.33%; }
+
 .photo-article-item {
-  width: 210px;
-  margin: auto;
-  border: 1px solid #ccc;
-  margin-bottom: 15px;
-  margin-top: 15px; }
+  float: left; }
   .photo-article-item .photo-box {
     width: 100%;
-    height: 150px;
     margin: auto;
-    padding: 10px;
     text-align: center; }
     .photo-article-item .photo-box img {
+      width: 100%;
       max-height: 100%; }
   .photo-article-item .author {
     background-color: #e6e0c8;

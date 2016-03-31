@@ -1,3 +1,4 @@
+/* globals tinymce */
 $(function() {
 	'use strict';
 
@@ -83,19 +84,20 @@ $(function() {
 			.append($('<span class="text-danger"/>').text(file.error));
 		}
 	}).on('fileuploaddone', function (e, data) {
-		$.each(data.result.files, function (index, file) {
+		console.log(data.result);
+		$.each(data.result, function (index, file) {
 			var node = data.context[index];
-			if (file.url) {
-				node.append('<img class="preview" src="' + file.url + '" />');
+			if (file.original) {
+				node.append('<img class="preview" src="' + file.original.path + '" />');
 
 				var link = $('<a>')
 				.attr('target', '_blank')
-				.prop('href', file.url);
+				.prop('href', file.original.path);
 
 				node.wrap(link);
 
 				if (data.doneCallback) {
-					data.doneCallback(file.url);
+					data.doneCallback(file.original.path);
 				}
 
 				addImageId(file.id);
@@ -125,7 +127,7 @@ $(function() {
 	}
 
 	var boardSelector = $('.board-select').makeBoardSelector();
-	var regionSelector = $('.region-select').makeRegionSelector({
+	$('.region-select').makeRegionSelector({
 		onAddRegion: function(region) {
 			boardSelector.addRegion(region.id);
 		},
@@ -134,7 +136,7 @@ $(function() {
 		}
 	});
 
-	var tagSelector = $('.tag-select').makeTagSelector();
+	$('.tag-select').makeTagSelector();
 
 	$('input[type="text"]').keydown(function(e) {
 		if (e.keyCode == 13)

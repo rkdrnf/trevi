@@ -18,7 +18,7 @@ boardSchema.statics.isValidName = function(name) {
 
 boardSchema.statics.getTypes = function() {
 	return board_types;
-}
+};
 
 
 module.exports = mongoose.model('Board', boardSchema);

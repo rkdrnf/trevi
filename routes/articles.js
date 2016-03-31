@@ -6,10 +6,8 @@ var Region = require('../models/region.js');
 var Board = require('../models/board.js');
 var RouterHelper = require('../helper/router_helper.js');
 var Photo = require('../models/photo.js');
-var Place = require('../models/place.js');
-var Tag = require('../models/tag.js');
 
-router.get('/new', RouterHelper.checkUserLoggedIn, function(req, res, next) {
+router.get('/new', RouterHelper.checkUserLoggedIn, function(req, res) {
 	//	var region_ids = JSON.parse(req.query.regions);
 	//	var board_ids = JSON.parse(req.query.boards);
 	Region.find().lean().exec(function(err, regions) {
@@ -32,7 +30,7 @@ router.get('/new', RouterHelper.checkUserLoggedIn, function(req, res, next) {
 
 router.post('/create', RouterHelper.checkUserLoggedIn, RouterHelper.processTags(function(req) {
 	return req.body.tags.split(';');
-}), function(req, res, next) {
+}), function(req, res) {
 	var photo_ids = req.body.image_ids ? req.body.image_ids.split(';') : [];
 	var region_ids = req.body.regions ? req.body.regions.split(';') : [];
 	Article.create({ author: req.user._id, regions: region_ids, board: req.body.board, title: req.body.title, content: req.body.article_content, photos: photo_ids, tags: req.tags}, function(err, article) {
@@ -41,7 +39,7 @@ router.post('/create', RouterHelper.checkUserLoggedIn, RouterHelper.processTags(
 			res.render(500);
 		}
 		else {
-			res.redirect(RouterHelper.tryUseRedirectUrl(req, '/'));
+			res.redirect(RouterHelper.tryUseRedirectUrl(req.query.redirect_url, '/'));
 
 			Photo.update({ _id: { $in: photo_ids }}, { $addToSet: { 'references.articles' : article._id }}, function (err) {
 				if (err) return;
@@ -50,7 +48,7 @@ router.post('/create', RouterHelper.checkUserLoggedIn, RouterHelper.processTags(
 	});
 });
 
-router.get('/', setRegion, RouterHelper.setRecPlaces(), RouterHelper.setRecArticles(), RouterHelper.setRecQuestions(), RouterHelper.getAllRegions('_id name boards'), RouterHelper.getAllBoards('_id name'), function(req, res, next) {
+router.get('/', setRegion, RouterHelper.setRecPlaces(), RouterHelper.setRecArticles(), RouterHelper.setRecQuestions(), RouterHelper.getAllRegions('_id name boards'), RouterHelper.getAllBoards('_id name'), function(req, res) {
 	var query = findArticlesQuery(req.query.regions, req.query.boards);
 	var board_ids = req.query.boards ? req.query.boards : [];
 	var region_ids = req.query.regions ? req.query.regions : [];
@@ -61,7 +59,7 @@ router.get('/', setRegion, RouterHelper.setRecPlaces(), RouterHelper.setRecArtic
 
 router.post('/addStar', RouterHelper.checkUserLoggedInAjax(function(req, res) {
 	res.json({ error: "먼저 로그인해주세요" });
-}), function(req, res, next) {
+}), function(req, res) {
 	Article.addStar(req.user, req.body.id, function(err) {
 		if (err) 
 			res.json({ error: "이미 추천한 게시물입니다."});
@@ -71,7 +69,7 @@ router.post('/addStar', RouterHelper.checkUserLoggedInAjax(function(req, res) {
 	});
 });
 
-router.get('/:article_id', setRegion, RouterHelper.setRecPlaces(), RouterHelper.setRecArticles(), RouterHelper.setRecQuestions(), function(req, res, next) {
+router.get('/:article_id', setRegion, RouterHelper.setRecPlaces(), RouterHelper.setRecArticles(), RouterHelper.setRecQuestions(), function(req, res) {
 	var query = findArticlesQuery(req.query.regions, req.query.boards);
 	Article.find(query).populate('author').lean().exec(function(err, other_articles) {
 		Article.findOne({ _id: req.params.article_id }).populate('author regions board photos').populate({ path: 'comments', populate: { path: 'author' }}).lean().exec(function (err, article) {

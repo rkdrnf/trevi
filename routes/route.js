@@ -1,5 +1,3 @@
-var express = require('express');
-var router = express.Router();
 var index = require('./index.js');
 var users = require('./users.js');
 var admin = require('./admin/admin.js');
@@ -12,7 +10,7 @@ var uploads = require('./uploads.js');
 
 var jadeHelper = require('../helper/jade_helper.js');
 var routerHelper = require('../helper/router_helper.js');
-var globalHelper = require('../helper/global_helper.js');
+require('../helper/global_helper.js');
 
 _ = require('lodash');
 
@@ -95,7 +93,7 @@ module.exports = function(app, passport) {
 		failureRedirect : '/signup', // redirect back to the signup page if there is an error
 		failureFlash : true // allow flash messages
 	}), function(req, res) {
-		res.redirect(routerHelper.tryUseRedirectUrl(req, '/'));
+		res.redirect(routerHelper.tryUseRedirectUrl(req.query.redirect_url, '/'));
 	});
 
 
@@ -108,7 +106,7 @@ module.exports = function(app, passport) {
 
 	app.get('/logout', function(req, res) {
 		req.logout();
-		res.redirect(routerHelper.tryUseRedirectUrl(req, 'back'));
+		res.redirect(routerHelper.tryUseRedirectUrl(req.query.redirect_url, 'back'));
 	});
 
 	app.get('/test', function(req, res) {

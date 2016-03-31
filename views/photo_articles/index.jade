@@ -2,6 +2,9 @@ extends ../layout.jade
 
 block script
 	link(rel="stylesheet", href="/stylesheets/photo_articles/index.css")
+	link(rel="stylesheet", href="/stylesheets/partials/region_header.css")
+	script(src="/bower_components/masonry/dist/masonry.pkgd.min.js")
+	script(src="/javascripts/photo_articles/index.js")
 
 block center_content
 	if (region)
@@ -10,11 +13,13 @@ block center_content
 		.menu-box
 			a.btn.btn-default(type="button", href="/regions/#{region.url}/photos/new?redirect_url=#{jadeHelper.encodeURI(url)}") 새글쓰기
 
-		if(photo_articles)
-			each article in photo_articles
-				.photo-article-item
-					.photo-box
-						a(href="/regions/#{region.url}/photos/#{article._id}")
-							img(src="#{article.photo.thumbnail}")
-					.author
-						span= jadeHelper.user.getName(article.author)
+		.grid
+			.grid-sizer
+			if(photo_articles)
+				each article in photo_articles
+					.grid-item.photo-article-item
+						.photo-box
+							a(href="/regions/#{region.url}/photos/#{article._id}")
+								img(src="#{article.photo.masonry.path}")
+						.author
+							span= jadeHelper.user.getName(article.author)

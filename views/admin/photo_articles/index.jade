@@ -8,6 +8,7 @@ block content
 			th Region
 			th photo
 			th thumbnail
+			th masonry
 			th description
 			th Option
 				if articles
@@ -17,9 +18,11 @@ block content
 							td= article.author ? jadeHelper.user.getName(article.author) : ""
 							td= article.region.name
 							td
-								img(src="#{article.photo.path}", style="max-width: 200px;")
+								img(src="#{article.photo.original.path}", style="max-width: 200px;")
 							td
-								img(src="#{article.photo.thumbnail}", style="max-width: 150px;")
+								img(src="#{article.photo.thumbnail.path}")
+							td
+								img(src="#{article.photo.masonry.path}")
 							td= article.description
 							td
 								a.btn.btn-default(type="button", href="/admin/photo_articles/delete/#{article._id}?redirect_url=#{jadeHelper.encodeURI(url)}") Delete

@@ -1,29 +1,42 @@
 var gm = require('gm').subClass({ imageMagick: true });
+var shortid = require('shortid');
+var Photo = require('../models/photo.js');
 
+function processImages(imageGetter, options) {
+	return function(req, res, next) {
+		var images = imageGetter(req);
+		new ModifyAndUpload(images, options, function (result) {
+			req.processedImages = result;
+			next();
+		});
+	};
+} 
 function ModifyAndUpload(images, options, callback){
 	this.images = images;
 	this.callback = callback;
 	this.result = { files: [] };
-	
+
 	this.options = {
-		save_path: 'public/images/user_images/',
-		thumbnail_path: 'thumbnail/',
-		thumbnail_size: { x: 175, y: 175 }
+		type: 'Article',
+		saves: 'thumbnail',
+		thumbnail_size: { x: 175, y: 175 },
+		masonry_size: { x: 400, y: 500 }
 	};
 
 	extend(this.options, options);
 
-	this.originalImagePath = process.cwd();
-	this.newThumbPath = process.cwd() + '/' + this.options.save_path + this.options.thumbnail_path;
-
+	this.appPath = process.cwd();
+	this.basePath = this.appPath + '/public';
+	this.toProcessCount = images.length * this.options.saves.split(' ').length;
 	this.init(); 
+
 }
 
 function extend(a, b){
-    for(var key in b)
-        if(b.hasOwnProperty(key))
-            a[key] = b[key];
-    return a;
+	for(var key in b)
+		if(b.hasOwnProperty(key))
+			a[key] = b[key];
+	return a;
 }
 
 
@@ -51,33 +64,109 @@ function extend(a, b){
 ModifyAndUpload.prototype = {
 
 	modifyImages: function(){
-		var processedCount = 0;
-		var that = this;
-		this.images.forEach(function(image) {
-			var thumbPath = that.newThumbPath + image.originalname;
-			gm(that.originalImagePath + '/' + image.path)
-			.resize(that.options.thumbnail_size.x, that.options.thumbnail_size.y + '^')
-			.gravity('center')
-			.extent(that.options.thumbnail_size.x, that.options.thumbnail_size.y)
-			.write(thumbPath, function (err){
-				var fileInfo = {
-					name: image.originalname,
-					filename: image.filename,
-					thumbnailName: image.originalname,
-					size: image.size,
-					url: '/' + image.path.split('/').slice(1).join('/'),
-					thumbnailUrl: thumbPath,
-					deleteUrl: image.path,
-					deleteType: "DELETE"
-				};
-				that.result.files.push(fileInfo);
-				processedCount++;
-				if (processedCount === that.images.length && that.callback && typeof(that.callback) === 'function'){
-					that.callback(err, that.result);
-				}
-			}); 
+		var self = this;
+		var saves = this.options.saves.split(' ');
+		self.images.forEach(function(image) {
+			var fileInfo = {
+				name: image.originalname,
+				filename: image.filename,
+				size: image.size,
+				original: {
+					path: '/' + image.path.split('/').slice(1).join('/'),
+					size: { x: image.size.x, y: image.size.y },
+					name: image.filename
+				},
+				deleteUrl: image.path,
+				deleteType: "DELETE"
+			};
 
+			self.result.files.push(fileInfo);
+
+			saves.forEach(function(saveType) {
+				self.modifyAndSave(image, saveType, fileInfo);
+			});
 		});
+	},
+
+	modifyAndSave: function(image, saveType, fileInfo) {
+		switch(saveType) {
+			case 'thumbnail': 
+				this.saveThumbnail(image, fileInfo);
+				break;
+			case 'masonry':
+				this.saveMasonry(image, fileInfo);
+				break;
+			default:
+				throw new Error('undefined saveType!!');
+		}
+	},
+
+	saveThumbnail: function(image, fileInfo) {
+		var self = this;
+		var name = shortid.generate();
+		var thumbnailPath = Photo.getThumbnailPath(self.options.type) + name;
+		var savePath = self.basePath + thumbnailPath;
+		var originalImage = self.appPath + '/' + image.path;
+
+		var imageSize = self.options.thumbnail_size;
+		gm(originalImage)
+		.resize(imageSize.x + '^', imageSize.y + '^')
+		.gravity('Center')
+		.crop(imageSize.x, imageSize.y)
+		.write(savePath, function (err){
+			if (err) throw err;
+			gm(savePath).size(function(err, size) {
+				if (err) throw err;
+				fileInfo.thumbnail = {
+					path: thumbnailPath,
+					size: {
+						x: size.width,
+						y: size.height
+					},
+					name: name
+				};
+
+				self.toProcessCount--;
+				self.checkAllProcessed();
+
+			});
+		}); 
+	},
+
+	saveMasonry: function(image, fileInfo) {
+		var self = this;
+		var name= shortid.generate();
+		var masonryPath = Photo.getMasonryPath(self.options.type) + name; 
+		var savePath = self.basePath + masonryPath;
+		var originalImage = self.appPath + '/' + image.path;
+
+		var imageSize = self.options.masonry_size;
+
+		gm(originalImage)
+		.resize(imageSize.x)
+		.write(savePath, function (err){
+			if (err) throw err;
+			gm(savePath).size(function(err, size) {
+				fileInfo.masonry = {
+					path: masonryPath,
+					size: {
+						x: size.width,
+						y: size.height
+					},
+					name: name
+				};
+
+				self.toProcessCount--;
+				self.checkAllProcessed();
+			}); 
+		});
+	},
+
+	checkAllProcessed: function() {
+		var self = this;
+		if (self.toProcessCount === 0) {
+			self.callback(self.result);
+		}
 	},
 
 	init: function(){
@@ -85,4 +174,4 @@ ModifyAndUpload.prototype = {
 	}
 };
 
-module.exports = ModifyAndUpload;
+module.exports = processImages;
