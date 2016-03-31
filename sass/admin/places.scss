@@ -55,3 +55,21 @@ html, body {
 		}
 	}
 }
+
+.photos {
+	width: 340px;
+	height: 150px;
+	display: inline-block;
+	vertical-align: top;
+
+	.photo-item {
+		display:inline-block;
+		vertical-align: top;
+		padding: 10px;
+
+		img {
+			max-width: 100px;
+		}
+	}
+}
+

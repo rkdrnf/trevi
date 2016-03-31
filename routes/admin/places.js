@@ -24,12 +24,26 @@ router.get('/new', function(req, res) {
 	});
 });
 
-router.get('/edit', function(req, res) {
-	Place.find().populate('region').lean().exec(function(err, places) {
+router.get('/edit/:id', function(req, res, next) {
+	Place.findOne({ _id: req.params.id }).populate('region photos').lean().exec(function(err, place) {
 		if (err) {
 			console.log(err);
+			return handleError(err);
 		}
-		res.render('admin/places/edit', { places: places });
+
+		Region.find().lean().exec(function(err, regions) {
+			res.render('admin/places/edit', { place: place, regions: regions });
+		});
+	});
+});
+
+router.post('/update/:id', upload.array('photos[]'), function(req, res, next){
+	Place.update({ _id: req.params.id }, { name: req.body.name, region: req.body.region, latitude: req.body.latitude, longitude: req.body.longitude }, function(err) {
+		if (err) {
+			console.log(err);
+			return handleError(err);
+		}
+		res.redirect('../');
 	});
 });
 
