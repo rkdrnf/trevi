@@ -3,7 +3,13 @@ extends ../layout
 
 block script
 	link(rel = "stylesheet", href="/stylesheets/regions/main.css")
+	script(src="/javascripts/map_manager.js")
 	script(src="/javascripts/regions/main.js")
+	script(src="/bower_components/lodash/dist/lodash.min.js")
+	script(src="/bower_components/angular/angular.min.js")
+	script(src="/bower_components/angular-simple-logger/dist/angular-simple-logger.min.js")
+	script(src="/bower_components/angular-google-maps/dist/angular-google-maps.min.js")
+
 
 block script_variables 
 	| var local_data = !{JSON.stringify(local_data)};   
@@ -39,6 +45,8 @@ block center_content
 				h4.category-header 도움이 필요해요
 				each article in recent_questions
 					include ../partials/article_brief.jade
+		.testmap(ng-app="google-map", ng-controller="googleMapController as gMapController")
+			ui-gmap-google-map(center='map.center', zoom="map.zoom")
 
 		.hot-courses
 			.region-map
