@@ -3,7 +3,7 @@ block variables
 	- var nav_style = 'default'
 
 doctype html
-html
+html(ng-app=angular_app ? "#{angular_app}" : false)
 	head
 		title= title
 		meta(name='viewport', content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0')
@@ -30,6 +30,8 @@ html
 		| <script type='text/javascript'>
 		block script_variables
 		| </script>
+
+		block templates
 
 		include ./mixins/common.jade
 

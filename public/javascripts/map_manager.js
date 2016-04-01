@@ -1,3 +1,4 @@
+/* globals google */
 (function($) {
 	var MapManager = function(elem, options) {
 		this.elem = elem;
@@ -10,10 +11,7 @@
 		this.options = $.extend({}, this.options, options);
 
 		this.init();
-	};
-
-	MapManager.prototype.init = function() {
-		var self = this;
+	}; MapManager.prototype.init = function() { var self = this;
 
 		if (self.options.places_data) {
 			self.places = processLocalData(self.options.places_data);
@@ -25,11 +23,11 @@
 
 		self.addPlacesMarker(self.places);
 
-		$(document).on('click', '.marker-info', onClickMarker)
+		$(document).on('click', '.marker-info', onClickMarker);
 		function onClickMarker(e) {
 			alert($(e.target).attr("data-id"));
 		}
-	}
+	};
 
 	MapManager.prototype.initMap = function(zoom, latLng) {
 		this.map = new google.maps.Map(this.elem[0], {
@@ -37,7 +35,7 @@
 			center: latLng,
 			mapTypeId: google.maps.MapTypeId.ROADMAP
 		});
-	}
+	};
 
 	function processLocalData(placesData) {
 		var result = {};
@@ -59,7 +57,7 @@
 				self.showInfoWindow(place);
 			});
 		});
-	}
+	};
 
 	function addMarker(location, map) {
 		var marker = new google.maps.Marker({
@@ -76,7 +74,7 @@
 		});	
 
 		infowindow.open(this.map, place.marker);
-	}
+	};
 
 	MapManager.prototype.moveToPlace = function (place_id) {
 		var place = this.places[place_id];
