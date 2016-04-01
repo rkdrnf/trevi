@@ -1,6 +1,10 @@
 script(type="text/ng-template", id="placeModal.html")
 	.modal-header
-		h3.modal-title I'm a modal!
+		.title-block
+			h3.modal-title {{place.name}}
+			span.category {{place.category}}
+		.photos-block
+		
 	.modal-body
 		p= jadeHelper.dummyText
 	.modal-footer

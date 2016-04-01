@@ -11,8 +11,11 @@ block script
 	script(src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js")
 	script(src="/javascripts/angular/google.map.js")
 	script(src="/javascripts/angular/place.modal.js")
+	link(rel="stylesheet", href="/bower_components/raty/lib/jquery.raty.css")
+	script(src="/bower_components/raty/lib/jquery.raty.js")
+	
 
-block variables
+append variables
 	- var angular_app = 'region.main';
 
 block script_variables 
@@ -20,10 +23,8 @@ block script_variables
 
 block templates
 	include ../angular/place_modal.jade
-	script(type="text/ng-template", id="mapPlaceWindow.html")
-		div(data-ng-controller="infoWindowController")
-			button(ng-click="open(parameter)") {{parameter.name}}
-
+	include ../angular/place_info_window.jade
+	
 block center_content 
 	.head-sector
 		.background
