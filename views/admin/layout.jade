@@ -9,6 +9,12 @@ html
 		script(src='http://code.jquery.com/jquery.js')
 		block script
 	body
+		| <script type='text/javascript'>
+		block script_variables
+		| </script>
+
+		block templates
+
 		block header
 			nav.navbar.navbar-inverse
 				div.container
@@ -45,4 +51,5 @@ html
 			- if (messages.error)
 				span= messages.error
 
-		script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous")
+		block bottom_script
+			script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous")

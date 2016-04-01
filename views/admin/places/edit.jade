@@ -1,9 +1,12 @@
 extends ../layout
 
 
+block script_variables 
+	| var local_data = !{JSON.stringify(local_data)};   
+
 block script
 	link(rel="stylesheet", href="/stylesheets/admin/places.css")
-	script(src="/javascripts/admin/places/new.js")
+	script(src="/javascripts/admin/places/edit.js")
 
 block content
 	.map-form-wrapper

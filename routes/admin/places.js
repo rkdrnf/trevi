@@ -32,7 +32,7 @@ router.get('/edit/:id', function(req, res, next) {
 		}
 
 		Region.find().lean().exec(function(err, regions) {
-			res.render('admin/places/edit', { place: place, regions: regions });
+			res.render('admin/places/edit', { place: place, regions: regions, local_data: { place: place }});
 		});
 	});
 });
