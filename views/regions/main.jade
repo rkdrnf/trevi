@@ -1,13 +1,28 @@
 extends ../layout
 
-
 block script
 	link(rel = "stylesheet", href="/stylesheets/regions/main.css")
-	script(src="/javascripts/regions/main.js")
+	script(src="/javascripts/map_manager.js")
+	script(src="/javascripts/regions/main.js") 
+	script(src="/bower_components/lodash/dist/lodash.min.js")
+	script(src="/bower_components/angular/angular.js")
+	script(src="/bower_components/angular-simple-logger/dist/angular-simple-logger.min.js")
+	script(src="/bower_components/angular-google-maps/dist/angular-google-maps.min.js")
+	script(src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js")
+	script(src="/javascripts/angular/google.map.js")
+	script(src="/javascripts/angular/place.modal.js")
+
+block variables
+	- var angular_app = 'region.main';
 
 block script_variables 
 	| var local_data = !{JSON.stringify(local_data)};   
-	
+
+block templates
+	include ../angular/place_modal.jade
+	script(type="text/ng-template", id="mapPlaceWindow.html")
+		div(data-ng-controller="infoWindowController")
+			button(ng-click="open(parameter)") {{parameter.name}}
 
 block center_content 
 	.head-sector
@@ -40,16 +55,16 @@ block center_content
 				each article in recent_questions
 					include ../partials/article_brief.jade
 
-		.hot-courses
+		.hot-courses(ng-controller="googleMapController as gMapController")
 			.region-map
-				#map
+				.testmap
+					ui-gmap-google-map(center="map.center", zoom="map.zoom", pan="false")
+						ui-gmap-markers(models="places", coords="'location'", click="onClickMarker")
+						ui-gmap-window(coords="infoWindow.location", show="infoWindow.show", closeClick="onCloseInfoWindow", templateUrl="'mapPlaceWindow.html'", templateParameter="infoWindow")
 			.places
-				if (region.places)
-					each place in region.places
-						.place-item
-							button.place-button.btn.btn-default(type="button", data-id="#{place._id}") 
-								span= place.name
-								span= place.description
+				.place-item(ng-repeat="place in places")
+					button.place-button.btn.btn-default(type="button", ng-click="onClickPlaceButton(place)") 
+						span {{ place.name }}
+						span {{ place.description }}
 
 
-	script(src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCdZTd-irAaxjv6JcGvXSH-NBWC-8Gq-6g&callback=initMap", async, defer)

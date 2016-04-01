@@ -1,6 +1,5 @@
 {
 	"undef": true,
 	"unused": true,
-	"predef": [ "require", "process", "module", "console", "$", "document", "window", "_" ]
-
+	"predef": [ "require", "process", "module", "console", "$", "document", "window", "_", "alert", "angular", "jQuery" ]
 }

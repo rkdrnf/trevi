@@ -16,7 +16,7 @@ block content
 					each article in articles
 						tr
 							td= article._id
-							td= article.author ? article.author.local.name : ""
+							td= jadeHelper.user.getName(article.author)
 							td
 								if (article.regions)
 									each region in article.regions
