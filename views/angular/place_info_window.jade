@@ -1,0 +1,6 @@
+script(type="text/ng-template", id="mapPlaceWindow.html")
+		div.info-window(data-ng-controller="infoWindowController", ng-cloak)
+			a(ng-click="open(parameter)", ng-cloak)
+				h3.name(ng-cloak) {{ parameter.name }}
+				span.category(ng-cloak) {{ parameter.category }}
+			div.star-rating(ng-init="makeRaty()")

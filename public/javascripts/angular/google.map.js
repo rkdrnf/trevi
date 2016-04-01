@@ -36,7 +36,6 @@
 			$scope.map.zoom = 16;
 			$scope.infoWindow = place;
 			$scope.infoWindow.show = true;
-
 		};
 
 		$scope.onCloseInfoWindow = function() {
@@ -46,10 +45,28 @@
 		$scope.initialize($window.local_data);
 	}]);
 
-	mapModule.controller('infoWindowController', ['$scope', 'PlaceModalOpener', function($scope, PlaceModalOpener) {
+	mapModule.controller('infoWindowController', ['$scope', '$timeout', 'PlaceModalOpener', function($scope, $timeout,PlaceModalOpener) {
 		$scope.open = function(place) {
 			PlaceModalOpener(place);
 		};
+
+		$scope.makeRaty = function() {
+			var defaultPath = "/bower_components/raty/lib/images/";
+			$timeout(function() {
+				var target = $('.star-rating');
+				if (target.length === 0) {
+					console.log('no target');
+				}
+				target.raty({
+					starHalf    : defaultPath + 'star-half.png',
+					starOff     : defaultPath + 'star-off.png',
+					starOn      : defaultPath + 'star-on.png' 
+				});
+			}, 0, false)
+		};
+
+		$scope.load = function() {
+		};
 	}]);
 })();
-	
+
