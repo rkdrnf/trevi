@@ -8,7 +8,8 @@ var placeSchema = new Schema({
 	region: { type: Schema.Types.ObjectId, ref: 'Region' },
 	latitude: { type: Number },
 	longitude: { type: Number },
-	photos: [{type: Schema.Types.ObjectId, ref: 'PlacePhoto' }],
+	photos: [{type: Schema.Types.ObjectId, ref: 'Photo' }],
+	comments: [{type: Schema.Types.ObjectId, ref: 'Comment' }],
 	star: {
 		average: { type: Number, default: 0 },
 		voted: { type: Number, default: 0 },

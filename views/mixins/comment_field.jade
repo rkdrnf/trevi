@@ -1,5 +1,5 @@
 mixin comment_field(action, name, id, redirect_url)
-	.container.reply-form-container
+	.container-fluid.reply-form-container
 		form#replyForm.reply-form(action="#{jadeHelper.addRedirection(action, redirect_url)}", method="post")
 			.row
 				.col-xs-12 

@@ -1,0 +1,17 @@
+.place-modal .modal-header {
+  background-color: #c3e0e6; }
+
+.place-modal .slick-next {
+  right: -5px; }
+
+.place-modal .slick-prev {
+  left: -5px; }
+
+.place-modal .slick-slider {
+  margin-bottom: 5px; }
+
+.place-modal .photos-block .photo-item img {
+  width: 100%; }
+
+.place-modal .description p {
+  white-space: pre; }

@@ -25,8 +25,9 @@ var photo = new Schema({
 	},
 	owner: { type: Schema.Types.ObjectId, ref: 'User' },
 	references: { 
-		articles: { type: Schema.Types.ObjectId, ref: 'Article' },
-		photo_articles: { type: Schema.Types.ObjectId, ref: 'PhotoArticle' }
+		article: { type: Schema.Types.ObjectId, ref: 'Article' },
+		photo_article: { type: Schema.Types.ObjectId, ref: 'PhotoArticle' },
+		place: { type: Schema.Types.ObjectId, ref: 'Place' }
 	}
 });
 
@@ -45,6 +46,9 @@ photo.statics.getImagePath = function(type) {
 
 		case 'PhotoArticle':
 			return '/images/photo_article_images/';
+		
+		case 'Place':
+			return '/images/place_photos/';
 	}
 
 	throw new Error('invalid image path type');

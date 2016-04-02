@@ -1,0 +1,14 @@
+mixin comment_field_ajax()
+	.container-fluid.reply-form-container(data-ng-controller="CommentFormController")
+		form#replyForm.reply-form(ng-submit="processForm()")
+			.row
+				.col-xs-12 
+					span.reply-header 남기고 싶은 말
+			.row
+				.col-xs-12
+					.form-group
+						textarea.form-control(name="content", ng-model="formData.content")
+			.row
+				.col-xs-12
+					button.btn.btn-warning(type="submit") 남기기
+

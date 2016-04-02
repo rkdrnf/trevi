@@ -1,13 +1,27 @@
 script(type="text/ng-template", id="placeModal.html")
-	.modal-header
-		.title-block
-			h3.modal-title {{place.name}}
-			span.category {{place.category}}
-		.photos-block
+	.place-modal
+		.modal-header
+			.container-fluid
+				.row
+					.title-block.col-md-5.col-xs-12
+						h3.modal-title {{place.name}}
+						span.category {{place.category}}
+					.photos-block.col-md-7.col-xs-12(ng-init="makeSlick()")
+						.photo-item(ng-repeat="photo in place.photos")
+							img(ng-src="{{photo.thumbnail.path}}")
+		.modal-body
+			.description 
+				p {{place.description}}
+
+			.comment-container.container-fluid
+				include ../mixins/comment_row_small.jade
+				+comment_row_small(true, "comments")
+
+			include ../mixins/comment_field_ajax.jade
+			+comment_field_ajax()
 		
-	.modal-body
-		p= jadeHelper.dummyText
-	.modal-footer
-		button.btn.btn-primary(type="button", ng-click="close()") 닫기
+		.modal-footer
+			button.btn.btn-primary(type="button", ng-click="close()") 닫기
+
 
 

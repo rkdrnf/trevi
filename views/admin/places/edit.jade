@@ -28,9 +28,10 @@ block content
 						input#placePhoto.form-control(type="file", name="photos[]", multiple)
 
 				.photos
-					each photo in place.photos
-						.photo-item
-							img(src="#{photo.path}")
+					if (place.photos)
+						each photo in place.photos
+							.photo-item
+								img(src="#{photo.thumbnail.path}")
 
 			button.submit-button.btn.btn-default.btn-block(type="submit", href="/admin/places/index") Submit
 		#map

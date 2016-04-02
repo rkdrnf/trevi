@@ -1,0 +1,11 @@
+.comment-row-small .profile-image img {
+  width: 100%; }
+
+.comment-row-small .date-row {
+  color: #777;
+  font-size: 12px; }
+  .comment-row-small .date-row .updated-at {
+    margin-left: 15px; }
+
+.comment-row-small .comment-body p {
+  white-space: pre; }

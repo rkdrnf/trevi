@@ -42,6 +42,10 @@ routerHelper.checkUserLoggedIn = function (req, res, next) {
 };
 
 routerHelper.checkUserLoggedInAjax = function (errorCallback) {
+	if (!errorCallback) { 
+		throw new Error('errorCallback not specified!');
+	}
+
 	return function(req, res, next) {
 		if (req.user) {
 			next();

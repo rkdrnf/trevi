@@ -62,7 +62,7 @@
 					starOff     : defaultPath + 'star-off.png',
 					starOn      : defaultPath + 'star-on.png' 
 				});
-			}, 0, false)
+			}, 0, false);
 		};
 
 		$scope.load = function() {

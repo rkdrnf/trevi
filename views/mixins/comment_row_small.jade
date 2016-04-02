@@ -1,0 +1,23 @@
+mixin comment_row_small_cols(author, content, createdAt, updatedAt)
+	.col-xs-2
+		.author-name
+			span {{#{author}.name}}
+		.profile-image
+			img(src="/images/sample.png")
+	.col-xs-10
+		.date-row
+			span.created-at {{#{createdAt} | date:'yyyy-MM-dd hh:mm:ss a'}}
+			span.updated-at(ng-if="#{updatedAt}") {{#{updatedAt} | date:'yyyy-MM-dd hh:mm:ss a'}}에 수정됨
+
+		.comment-body
+			p {{#{content}}}
+
+
+mixin comment_row_small(is_angular, comments) 
+	if (is_angular) 
+		.comment-row-small.row(ng-repeat="comment in #{comments}")
+			+comment_row_small_cols("comment.author", "comment.content", "comment.createdAt", "comment.updatedAt")
+	else
+		each comment in comments
+			.comment-row-small.row
+				+commment_row_small_cols(comment.content)
