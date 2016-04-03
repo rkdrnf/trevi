@@ -18,6 +18,7 @@ block script
 	link(rel="stylesheet", href="/bower_components/slick-carousel/slick/slick.css")
 	link(rel="stylesheet", href="/bower_components/slick-carousel/slick/slick-theme.css")
 	link(rel="stylesheet", href="/stylesheets/angular/place_modal.css")
+	link(rel="stylesheet", href="/stylesheets/angular/place_info_window.css")
 	link(rel="stylesheet", href="/stylesheets/mixins/comment_field.css")
 	link(rel="stylesheet", href="/stylesheets/mixins/comment_row_small.css")
 
@@ -72,6 +73,5 @@ block center_content
 				.place-item(ng-repeat="place in places")
 					button.place-button.btn.btn-default(type="button", ng-click="onClickPlaceButton(place)") 
 						span {{ place.name }}
-						span {{ place.description }}
 
 

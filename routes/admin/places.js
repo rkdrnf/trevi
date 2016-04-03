@@ -40,6 +40,9 @@ router.get('/edit/:id', function(req, res) {
 router.post('/update/:id', upload.array('photos[]'), processImages(function(req) { return req.files; }, {
 	type: 'Place',
 	saves: 'thumbnail'
+}, {
+	type: 'Place',
+	saves: 'thumbnail'
 }), function(req, res){
 	var values = req.processedImages.files.map(function(fileInfo) {
 		return {
@@ -49,23 +52,48 @@ router.post('/update/:id', upload.array('photos[]'), processImages(function(req)
 		};
 	});
 
-	Photo.create(values, function(err, photos) {
-		if (err) {
-			console.log(err);
-			throw err;
-		} else {
-			Place.update({ _id: req.params.id }, { name: req.body.name, region: req.body.region, latitude: req.body.latitude, longitude: req.body.longitude, photos: photos }, function(err) {
-				if (err) {
-					console.log(err);
-					throw err;
-				}
-				res.redirect('../');
-			});
-		}
-	});
+	var categories = req.body.categories.split(' ').map(function(category) { return category.trim(); }).filter(function(category) { return category.length > 0; });
+
+	var updateQuery = {
+		name: req.body.name, 
+		region: req.body.region, 
+		latitude: req.body.latitude, 
+		longitude: req.body.longitude, 
+		categories: categories, 
+		description: req.body.description
+	};
+
+	if (values.length > 0) {
+		Photo.create(values, function(err, photos) {
+			if (err) {
+				console.log(err);
+				throw err;
+			} else {
+				updateQuery.photos = photos;
+				Place.update({ _id: req.params.id }, updateQuery, function(err) {
+					if (err) {
+						console.log(err);
+						throw err;
+					}
+					res.redirect('../');
+				});
+			}
+		});
+	} else {
+		Place.update({ _id: req.params.id }, updateQuery, function(err) {
+			if (err) {
+				console.log(err);
+				throw err;
+			}
+			res.redirect('../');
+		});
+	}
 });
 
 router.post('/create', upload.array('photos[]'), processImages(function(req) { return req.files; }, {
+	type: 'Place',
+	svaes: 'thumbnail'
+}, {
 	type: 'Place',
 	saves: 'thumbnail'
 }), function(req, res) {	
@@ -77,6 +105,17 @@ router.post('/create', upload.array('photos[]'), processImages(function(req) { r
 		};
 	});
 
+	var categories = req.body.categories.split(' ').map(function(category) { return category.trim(); }).filter(function(category) { return category.length > 0; });
+
+	var createQuery = { 
+		name: req.body.name,
+	 	region: req.body.region, 
+		latitude: req.body.latitude,
+		longitude: req.body.longitude,
+		categories: categories,
+		description: req.body.description
+	};
+
 	Photo.create(values, function(err, photos) {
 		if (err) {
 			console.log(err);
@@ -84,7 +123,9 @@ router.post('/create', upload.array('photos[]'), processImages(function(req) { r
 		}
 
 		var photo_ids = photos.map(function(photo) { return photo._id; });
-		Place.create({ name: req.body.name , region: req.body.region , latitude: req.body.latitude , longitude: req.body.longitude , photos: photo_ids }, function(err, place) {
+		createQuery.photos = photo_ids;
+
+		Place.create(createQuery, function(err, place) {
 			if (err) {	 
 				console.log(err);
 				throw err;

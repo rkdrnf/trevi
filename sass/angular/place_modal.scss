@@ -20,9 +20,24 @@
 		}
 	}
 
+	.category {
+		margin-right: 5px;
+	}
+
 	.description {
 		p {
 			white-space: pre;
+			word-wrap: break-word;
 		}
+
+		border-bottom: 1px solid #ccc;
+	}
+
+	.comment-container {
+		margin-top: 15px;
+	}
+
+	.comment-field-ajax {
+		margin-top: 15px;
 	}
 }

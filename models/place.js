@@ -3,13 +3,13 @@ var Schema = mongoose.Schema;
 
 var placeSchema = new Schema({
 	name: { type: String },
-	category: [{ type: String }],
-	description: String,
+	categories: { type: [{ type: String }], default: [] },
+	description: { type: String, default: "" },
 	region: { type: Schema.Types.ObjectId, ref: 'Region' },
 	latitude: { type: Number },
 	longitude: { type: Number },
-	photos: [{type: Schema.Types.ObjectId, ref: 'Photo' }],
-	comments: [{type: Schema.Types.ObjectId, ref: 'Comment' }],
+	photos: { type: [{type: Schema.Types.ObjectId, ref: 'Photo' }], default: [] },
+	comments: { type: [{type: Schema.Types.ObjectId, ref: 'Comment' }], default: [] },
 	star: {
 		average: { type: Number, default: 0 },
 		voted: { type: Number, default: 0 },

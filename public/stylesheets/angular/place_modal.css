@@ -13,5 +13,17 @@
 .place-modal .photos-block .photo-item img {
   width: 100%; }
 
-.place-modal .description p {
-  white-space: pre; }
+.place-modal .category {
+  margin-right: 5px; }
+
+.place-modal .description {
+  border-bottom: 1px solid #ccc; }
+  .place-modal .description p {
+    white-space: pre;
+    word-wrap: break-word; }
+
+.place-modal .comment-container {
+  margin-top: 15px; }
+
+.place-modal .comment-field-ajax {
+  margin-top: 15px; }

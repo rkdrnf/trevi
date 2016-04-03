@@ -28,6 +28,11 @@ function ModifyAndUpload(images, options, callback){
 	this.appPath = process.cwd();
 	this.basePath = this.appPath + '/public';
 	this.toProcessCount = images.length * this.options.saves.split(' ').length;
+
+	if (this.toProcessCount === 0) {
+		this.callback(this.result);
+	}
+	
 	this.init(); 
 
 }

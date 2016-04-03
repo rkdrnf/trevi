@@ -5,7 +5,7 @@ script(type="text/ng-template", id="placeModal.html")
 				.row
 					.title-block.col-md-5.col-xs-12
 						h3.modal-title {{place.name}}
-						span.category {{place.category}}
+						span.category(ng-repeat="category in place.categories") {{category}}
 					.photos-block.col-md-7.col-xs-12(ng-init="makeSlick()")
 						.photo-item(ng-repeat="photo in place.photos")
 							img(ng-src="{{photo.thumbnail.path}}")

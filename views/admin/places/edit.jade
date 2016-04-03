@@ -19,6 +19,12 @@ block content
 						option(value="#{region._id}", selected=jadeHelper.compareId(place.region._id, region._id) )= region.name
 						
 			.form-group
+				input.form-control(type="text", name="categories", placeholder="카테고리(스페이스로 구분", value="#{place.categories ? place.categories.join(' ') : ''}")
+					
+			.form-group
+				textarea.form-control(name="description", placeholder="설명")= place.description
+
+			.form-group
 				input#lngValue.form-control(type="text", name="longitude", value="#{place.longitude}")
 			.form-group
 				input#latValue.form-control(type="text", name="latitude", value="#{place.latitude}")

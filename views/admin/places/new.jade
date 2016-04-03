@@ -15,6 +15,10 @@ block content
 					each region in regions
 						option(value="#{region._id}")= region.name
 			.form-group
+				input.form-control(type="text", name="categories", placeholder="카테고리(스페이스로 구분")
+			.form-group
+				textarea.form-control(name="description", placeholder="설명")
+			.form-group
 				input#lngValue.form-control(type="text", name="longitude")
 			.form-group
 				input#latValue.form-control(type="text", name="latitude")
