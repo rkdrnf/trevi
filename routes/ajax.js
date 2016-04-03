@@ -10,8 +10,7 @@ var User = require('../models/user.js');
 router.get('/regions_for_search_dbid', function (req, res) {
 	Region.find().lean().exec(function(err, regions) {
 		res.json(regions.map(function(region) { return { id: region._id, name: region.name }; }));
-	});
-
+	}); 
 });
 
 router.get('/regions_for_search', function(req, res) {
@@ -22,8 +21,7 @@ router.get('/regions_for_search', function(req, res) {
 
 
 router.get('/boards_for_search', function(req, res) {
-	Region.find().lean().exec(function(err, regions) {
-		Board.find().lean().exec(function(err, boards) {
+	Region.find().lean().exec(function(err, regions) { Board.find().lean().exec(function(err, boards) {
 			res.json({ regions: regions, boards: boards });
 		});
 	});
@@ -36,19 +34,21 @@ router.get('/tags_autocomplete', function(req, res) {
 });
 
 router.get('/get_place_comments', function(req, res) {
-	Comment.find({ place: req.query.place }).populate('author').select('author content createdAt updatedAt').lean().exec(function(err, comments) {
+	Comment.find({ place: req.query.place }).populate({ path: 'author', select: '_id local.name google.name facebook.name'}).select('author content createdAt updatedAt').lean().exec(function(err, comments) {
 		if (err) {
 			res.json({ error: err });
 			return;
 		}
+
+		console.log(req.query.place);
+
+		console.log(comments.length);
 
 		comments.forEach(function(comment) { 
 			if (comment.author) {
 				comment.author.name = User.getName(comment.author);
 			}
 		});
-
-
 
 		res.json({ comments: comments });
 	});

@@ -53,7 +53,7 @@ router.post('/create_photo', RouterHelper.checkUserLoggedIn, function(req, res) 
 router.post('/create_place_ajax', RouterHelper.checkUserLoggedInAjax(function(req, res) {
 	res.json({ error: "먼저 로그인해주세요"});
 }), function(req, res) {
-	console.log('arrived');
+	console.log((req.body.place));
 	Comment.create({ author: req.user._id, place: req.body.place, content: req.body.content }, function(err, comment) {
 		if (err) {
 			console.log(err);
@@ -68,11 +68,21 @@ router.post('/create_place_ajax', RouterHelper.checkUserLoggedInAjax(function(re
 				return;
 			}
 
-			res.json({ newComment: comment });
+			Comment.populate(comment, { path: 'author', select: '_id name local facebook google' }, function(err, comment) {
+				if (err) {
+					console.log(err);
+					res.json({ error: err });
+					return;
+				}
+
+				console.log(comment.author.name);
+
+				res.json({ newComment: comment });
+				
+			});
 		});
 	});
 });
-
 
 router.post('/addStar', RouterHelper.checkUserLoggedInAjax(function(req, res) {
 	res.json({ error: "먼저 로그인해주세요" });

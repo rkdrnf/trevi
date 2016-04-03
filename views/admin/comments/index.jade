@@ -1,0 +1,22 @@
+extends ../layout.jade
+
+block content
+	table.table
+		tr
+			th ID
+			th Article
+			th PhotoArticle
+			th Place
+			th Author
+			th Content
+			th Option
+				if comments
+					each comment in comments 
+						tr
+							td= comment._id
+							td= comment.article ? comment.article._id : ''
+							td= comment.photo_article ?comment.photo_article._id : ''
+							td= comment.place ? comment.place.name : ''
+							td= comment.author.name
+							td= comment.content
+							td

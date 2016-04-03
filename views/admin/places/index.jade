@@ -10,6 +10,7 @@ block content
 			th Region
 			th Name
 			th Position
+			th Comments
 			th Option
 				if places
 					each place in places 
@@ -19,6 +20,8 @@ block content
 							td
 								a(href="/places/#{place._id}")= place.name
 							td #{place.latitude}, #{place.longitude}
+							td= place.comments ? place.comments.length : 0
 							td
+								a.btn.btn-default(type="button", href="/admin/comments?place_id=#{place._id}") Comments
 								a.btn.btn-default(type="button", href="/admin/places/edit/#{place._id}?redirect_url=#{jadeHelper.encodeURI(url)}") Edit
 								a.btn.btn-default(type="button", href="/admin/places/delete/#{place._id}?redirect_url=#{jadeHelper.encodeURI(url)}") Delete

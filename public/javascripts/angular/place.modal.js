@@ -11,7 +11,7 @@ placeModal.factory('PlaceModalOpener', ['$uibModal', function($uibModal) {
 		});
 	};
 }]);
-placeModal.controller('PlaceModalController', function($scope, $http, $timeout, $uibModalInstance, CommentFormInitializer, place) {
+placeModal.controller('PlaceModalController', function($scope, $rootScope, $http, $timeout, $uibModalInstance, CommentFormInitializer, place) {
 	$scope.place = place;
 
 	$scope.close = function(){
@@ -30,10 +30,23 @@ placeModal.controller('PlaceModalController', function($scope, $http, $timeout, 
 
 	CommentFormInitializer.initialize("/comments/create_place_ajax", "place", $scope.place);
 
+	$scope.comments = [];
+
+	var newCommentHandler = $rootScope.$on('newCommentCreated', function(e, data) {
+		console.log(data);
+		if (data.comment.place === $scope.place._id)
+			$scope.comments.push(data.comment);
+	});
+
+	$scope.$on('$destroy', newCommentHandler);
+
+
+	console.log($scope.place);
+
 	$http({
 		method: 'GET',
 		url: '/ajax/get_place_comments',
-		data: $.param({ place: $scope.place._id }),
+		params: { place: $scope.place._id },
 		headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
 	}).then(function(res) {
 		if (res.data.error) {

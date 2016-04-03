@@ -10,6 +10,7 @@ router.use('/articles', require('./articles.js'));
 router.use('/places', require('./places.js'));
 router.use('/tags', require('./tags.js'));
 router.use('/photo_articles', require('./photo_articles.js'));
+router.use('/comments', require('./comments.js'));
 module.exports = router;
 
 
