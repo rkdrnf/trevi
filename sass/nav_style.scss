@@ -1,5 +1,6 @@
 nav.navbar {
 	position: relative;
+	border: none;
 	.container {
 		position: relative;
 	}
@@ -64,6 +65,16 @@ nav.default {
 			z-index: 3;
 		}
 
+	}
+
+	#subNav {
+		clear: left;
+		float: left;
+		width: 100%;
+		background-color: #e8aa68;
+		a {
+			color: white;
+		}
 	}
 }
 
