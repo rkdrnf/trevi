@@ -1,0 +1,54 @@
+extends ../layout.jade
+
+block script
+	link(rel="stylesheet", href="/stylesheets/etc/dontknow.css")
+block content
+	.dontknow.container
+		.row
+			.col-xs-12
+				.question
+					span 누구와 여행을 가시나요?
+		.row
+			.col-md-4
+				a.lone(href="#")
+					.with
+						.text-wrapper
+							.text
+								span 혼자
+			.col-md-4
+				a.friends(href="#")
+					.with
+						.text-wrapper
+							.text
+								span 친구와
+			.col-md-4
+				a.family(href="#")
+					.with 
+						.text-wrapper
+							.text
+								span 가족과
+
+		.row
+			.col-xs-12
+				.question
+					span 어떤 여행을 원하시나요?
+		.row
+			.col-md-4
+				a.food(href="#")
+					.with
+						.text-wrapper
+							.text
+								span 음식
+			.col-md-4
+				a.landscape(href="#")
+					.with
+						.text-wrapper
+							.text
+								span 풍경
+			.col-md-4
+				a.train(href="#")
+					.with
+						.text-wrapper
+							.text
+								span 기차
+

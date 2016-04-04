@@ -1,0 +1,44 @@
+.dontknow .question {
+  text-align: center;
+  font-size: 50px;
+  margin-bottom: 10px;
+  font-weight: bold; }
+
+.dontknow .with {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  background-position: center center;
+  background-repeat: no-repeat; }
+  .dontknow .with .text-wrapper {
+    position: absolute;
+    width: 100%;
+    padding: 30px;
+    bottom: 0px;
+    background-color: rgba(0, 0, 0, 0.3);
+    text-align: center; }
+    .dontknow .with .text-wrapper .text span {
+      display: inline-block;
+      color: white;
+      font-size: 50px;
+      font-weight: bold;
+      letter-spacing: 5px; }
+
+.dontknow .lone .with {
+  background-image: url("/images/lone_traveller.jpg"); }
+
+.dontknow .friends .with {
+  background-image: url("/images/traveller_friends.jpg"); }
+
+.dontknow .family .with {
+  background-image: url("/images/traveller_family.jpg"); }
+
+.dontknow .food .with {
+  background-image: url("/images/food.jpg");
+  background-size: auto 100%; }
+
+.dontknow .landscape .with {
+  background-image: url("/images/landscape.jpg"); }
+
+.dontknow .train .with {
+  background-image: url("/images/train.jpg"); }

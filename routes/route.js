@@ -7,6 +7,7 @@ var blogs = require('./blog/blogs.js');
 var journal = require('./journal.js');
 var images = require('./images.js');
 var uploads = require('./uploads.js');
+var etc = require('./etc.js');
 
 var jadeHelper = require('../helper/jade_helper.js');
 var routerHelper = require('../helper/router_helper.js');
@@ -33,6 +34,7 @@ module.exports = function(app, passport) {
 
 	app.use('/', index);
 	app.use('/', journal);
+	app.use('/', etc);
 	app.use('/users', users);
 	app.use('/admin', admin);
 	app.use('/regions', regions);
