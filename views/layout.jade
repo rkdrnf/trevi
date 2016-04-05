@@ -25,6 +25,9 @@ html(ng-app=angular_app ? "#{angular_app}" : false)
 		if (nav_style === "default")
 			script(src='/javascripts/nav_search.js')
 
+		script(src='/javascripts/users/signup.js')
+		link(rel='stylesheet', href='/stylesheets/signup.css')
+
 		block script
 	body
 		| <script type='text/javascript'>

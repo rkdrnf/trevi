@@ -24,6 +24,13 @@ var userSchema = new Schema({
 	sex: { type: String, enum: ['Male', 'Female']},
 	birth: { type: Date, default: new Date() },
 	phone: { type: String, default: "010-1234-5678" },
+
+	additionalInfo	: { 
+		likeGenre				: String,
+		likeRegion 			:	String,
+		wellknownRegion : String,
+		visitedRegion		: String },
+
 }, {
 	toObject: {
 		virtuals: true,

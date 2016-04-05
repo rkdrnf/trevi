@@ -35,16 +35,15 @@ block center_content
 							input.form-control(type="radio", name="sex", value="Male", checked=user.sex === 'Male')
 							| 남자
 						label
-							input.form-control(type="radio", name="sex", value="Femail", checked=user.sex ==='Femail')
+							input.form-control(type="radio", name="sex", value="Female", checked=user.sex ==='Female')
 							| 여자
 				.row
 					.label-col.col-xs-3
 						span 생일
 					.col-xs-9
-						.date-fields
-							- var birthValue = "0-1-1991"
-							if (user.birth) 
-								- birthValue = "#{user.birth.getMonth()}-#{user.birth.getDate()}-#{user.birth.getFullYear()}";
+						#userEditForm.date-fields
+							if (user.birth)
+								- birthValue = user.birth.getMonth() + "-" + user.birth.getDate() + "-" + user.birth.getFullYear();
 							input#birthValue(type="hidden", value="#{birthValue}")
 							select.form-control(name="birth_month")
 							select.form-control(name="birth_date")

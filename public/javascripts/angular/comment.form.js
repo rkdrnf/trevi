@@ -22,6 +22,7 @@ commentForm.controller('CommentFormController', function($scope, $rootScope, $ht
 
 			if (data.error) {
 				alert(data.error);
+				return;
 			}
 
 			$rootScope.$emit('newCommentCreated', { comment: data.newComment });

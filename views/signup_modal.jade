@@ -12,6 +12,19 @@ div#signupModal.modal.modal-small.fade(tabindex="-1", role="dialog", aria-labell
 							input.form-control(type="text", name="email", placeholder="이메일 주소")
 						.form-group
 							input.form-control(type="password", name="password", placeholder="비밀번호")
+						.form-group
+							label
+								input.form-control(type="radio", name="sex", value="Male")
+								| 남자
+							label
+								input.form-control(type="radio", name="sex", value="Female")
+								| 여자
+						.form-group
+							span 생일
+							.date-fields
+								select.form-control(name="birth_month")
+								select.form-control(name="birth_date")
+								select.form-control(name="birth_year")
 						button.btn.btn-default.btn-block(type="submit") 회원가입
 				.modal-footer
 			//</content

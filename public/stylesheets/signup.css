@@ -1,0 +1,13 @@
+#signupModal .date-fields select {
+  display: inline-block;
+  margin: 2px;
+  width: 100px; }
+
+#signupModal .sex-fields input, #signupModal .sex-fields label {
+  display: inline-block; }
+
+#signupModal .sex-fields label {
+  width: 100px; }
+
+#signupModal .sex-fields input {
+  width: 20px; }

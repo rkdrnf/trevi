@@ -43,6 +43,9 @@ module.exports = function(passport) { passport.serializeUser(function(user, done
 					newUser.local.name		 = req.body.name;
 					newUser.local.email    = email;
 					newUser.local.password = newUser.generateHash(password);
+					newUser.sex = req.body.sex;
+					var birth = new Date(+req.body.birth_year, +req.body.birth_month - 1, +req.body.birth_date);
+					newUser.birth = birth; 
 
 					newUser.save(function(err) { if (err) throw err;
 											 return done(null, newUser);
