@@ -1,0 +1,36 @@
+extends ../layout
+
+block content
+	a.btn.btn-primary(type="button", href="/admin/restaurants/new?redirect_url=#{jadeHelper.encodeURI(url)}") New Restaurant 
+
+	table.table
+		tr
+			th ID
+			th Region
+			th Name
+			th Description
+			th Menus
+			th Position
+			th Comments
+			th Option
+				if restaurants
+					each rest in restaurants
+						tr
+							td= rest._id
+							td= rest.region.name
+							td
+								a(href="/restaurants/#{rest._id}")= rest.name
+							td= rest.description
+							td
+								table
+									each menu in rest.menus
+										tr
+											td= menu.name
+											td= menu.price
+
+							td #{rest.latitude.toFixed(3)}, #{rest.longitude.toFixed(3)}
+							td= rest.comments ? rest.comments.length : 0
+							td
+								a.btn.btn-default(type="button", href="/admin/comments?place_id=#{rest._id}") Comments
+								a.btn.btn-default(type="button", href="/admin/restaurants/edit/#{rest._id}?redirect_url=#{jadeHelper.encodeURI(url)}") Edit
+								a.btn.btn-default(type="button", href="/admin/place/delete/#{rest._id}?redirect_url=#{jadeHelper.encodeURI(url)}") Delete

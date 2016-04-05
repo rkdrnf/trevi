@@ -6,29 +6,8 @@ block script
 	script(src="/javascripts/admin/places/new.js")
 
 block content
-	.map-form-wrapper
-		form(action="/admin/places/create", method="post", enctype="multipart/form-data")
-			.form-group
-				input.form-control(type="text", name="name")
-			.form-group
-				select.form-control(name="region")
-					each region in regions
-						option(value="#{region._id}")= region.name
-			.form-group
-				input.form-control(type="text", name="categories", placeholder="카테고리(스페이스로 구분")
-			.form-group
-				textarea.form-control(name="description", placeholder="설명")
-			.form-group
-				input#lngValue.form-control(type="text", name="longitude")
-			.form-group
-				input#latValue.form-control(type="text", name="latitude")
-			.form-group
-				.photo-col.col-xs-9
-					.photo-input-box
-						input#placePhoto.form-control(type="file", name="photos[]", multiple)
-
-			button.submit-button.btn.btn-default.btn-block(type="submit", href="/admin/places/index") Submit
-		#map
+	include ../mixins/new_place_form.jade
+	+new_place_form(all_regions, place_type)
 
 	script(src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCdZTd-irAaxjv6JcGvXSH-NBWC-8Gq-6g&callback=initMap", async, defer)
 
