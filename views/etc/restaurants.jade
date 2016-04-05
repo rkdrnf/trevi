@@ -1,0 +1,27 @@
+extends ../layout
+
+block script
+	link(rel="stylesheet", href="/stylesheets/etc/restaurants.css")
+	link(rel="stylesheet", href="/bower_components/angular-material/angular-material.min.css")
+
+append variables
+	- var angular_app = 'etc.restaurants';
+
+block content
+	.restaurants
+		.hero
+			.middle
+				.title
+					h1 음식점을 둘러볼 지역을 찾아주세요!
+				.region-select-box(ng-controller="regionSearchCtrl")
+					md-autocomplete(md-selected-item="selectedItem", md-search-text="searchText", md-selected-item-change="onChange()", md-items="item in getRegions(searchText)", md-item-text="item.name", placeholder="서울", md-autoselect="true", md-select-on-focus="true", md-select-on-match="true")
+						span(md-highlight-text="searchText") {{item.name}}
+					a.btn.btn-primary(href="/regions/{{selectedItem.id}}/restaurants") 찾아가기
+
+append bottom_script
+	script(src="/bower_components/angular/angular.min.js")
+	script(src="/bower_components/angular-animate/angular-animate.min.js")
+	script(src="/bower_components/angular-aria/angular-aria.min.js")
+	script(src="/bower_components/angular-messages/angular-messages.min.js")
+	script(src="/bower_components/angular-material/angular-material.min.js")
+	script(src="/javascripts/etc/restaurants.js")

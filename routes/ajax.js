@@ -8,20 +8,26 @@ var Comment = require('../models/comment.js');
 var User = require('../models/user.js');
 
 router.get('/regions_for_search_dbid', function (req, res) {
-	Region.find().lean().exec(function(err, regions) {
+	Region.find().select('_id name').lean().exec(function(err, regions) {
 		res.json(regions.map(function(region) { return { id: region._id, name: region.name }; }));
 	}); 
 });
 
 router.get('/regions_for_search', function(req, res) {
-	Region.find().lean().exec(function(err, regions) {
+	var query = {};
+	if (req.query.region_name) {
+		console.log(req.query.region_name);
+		query.name = new RegExp(req.query.region_name, "i");
+	}
+	Region.find(query).select('url name').lean().exec(function(err, regions) {
 		res.json(regions.map(function(region) { return { id: region.url, name: region.name }; }));
 	});
 });
 
 
 router.get('/boards_for_search', function(req, res) {
-	Region.find().lean().exec(function(err, regions) { Board.find().lean().exec(function(err, boards) {
+	Region.find().lean().exec(function(err, regions) { 
+		Board.find().lean().exec(function(err, boards) {
 			res.json({ regions: regions, boards: boards });
 		});
 	});

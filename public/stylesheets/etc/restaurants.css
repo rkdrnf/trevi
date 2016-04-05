@@ -1,0 +1,17 @@
+.restaurants .hero {
+  width: 100%;
+  background-image: url("/images/restaurant.jpg");
+  background-repeat: no-repeat;
+  background-position: center center;
+  position: relative;
+  height: 500px; }
+  .restaurants .hero .middle {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%); }
+    .restaurants .hero .middle .title {
+      color: white;
+      text-align: center; }
+    .restaurants .hero .middle .region-select-box md-autocomplete {
+      display: inline-block;
+      width: 150px; }

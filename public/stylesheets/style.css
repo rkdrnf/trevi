@@ -40,15 +40,6 @@
       border: 1px solid rgba(0, 0, 0, 0.1);
       margin: 0px; }
 
-.background {
-  bottom: 0;
-  left: 0;
-  overflow: hidden;
-  position: absolute;
-  right: 0;
-  top: 0;
-  display: block; }
-
 .form-control, .btn, .select {
   border-radius: 0px; }
 
