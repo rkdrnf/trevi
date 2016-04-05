@@ -1,6 +1,23 @@
 extends ../layout.jade
 
+block script
+	link(rel="stylesheet", href="/stylesheets/regions/restaurants.css")
 
+append variables
+	- var angular_app = 'regions.restaurants.index'
 
 block center_content
-	h1 음식점 목록
+	.region-map
+		.testmap
+			ui-gmap-google-map(center="map.center", zoom="map.zoom", pan="false")
+				ui-gmap-markers(models="places", coords="'location'", click="onClickMarker")
+				ui-gmap-window(coords="infoWindow.location", show="infoWindow.show", closeClick="onCloseInfoWindow", templateUrl="'mapPlaceWindow.html'", templateParameter="infoWindow")
+
+
+
+append bottom_script
+	script(src="/bower_components/angular/angular.min.js")
+	script(src="/bower_components/angular-animate/angular-animate.min.js")
+	script(src="/bower_components/angular-aria/angular-aria.min.js")
+	script(src="/bower_components/angular-messages/angular-messages.min.js")
+	script(src="/javascripts/regions/restaurants.js")

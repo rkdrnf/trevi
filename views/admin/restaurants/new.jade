@@ -1,0 +1,17 @@
+extends ../layout
+
+block script
+	link(rel="stylesheet", href="/stylesheets/admin/restaurants.css")
+	script(src="/javascripts/admin/restaurants/new.js")
+
+block content
+	.map-form-wrapper
+		form(action="/admin/places/create?redirect_url=#{encodeURI(redirect_url)}", method="post", enctype="multipart/form-data")
+			.form-group
+				input.form-control(type="text", name="name")
+			.form-group
+				select.form-control(name="region")
+					each region in all_regions
+						option(value="#{region._id}")= region.name
+
+

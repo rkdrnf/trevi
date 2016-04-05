@@ -1,0 +1,44 @@
+mixin edit_place_form(place, type, regions)
+	.map-form-wrapper
+		form(action="/admin/places/update/#{place._id}", method="post", enctype="multipart/form-data")
+			.form-group
+				input.form-control(type="text", name="name", value="#{place.name}")
+			.form-group
+				select.form-control(name="region")
+					each region in regions
+						option(value="#{region._id}", selected=jadeHelper.compareId(place.region._id, region._id) )= region.name
+						
+			.form-group
+				input.form-control(type="text", name="categories", placeholder="카테고리(스페이스로 구분", value="#{place.categories ? place.categories.join(' ') : ''}")
+					
+			.form-group
+				textarea.form-control(name="description", placeholder="설명")= place.description
+
+			if (type === 'Restaurant') 
+				- var menuVal = place.menus.map(function(menu) { return menu.name + '/' + menu.price; }).join(' ');
+				.form-group
+					input.form-control(type="text", name="menus", value="#{menuVal}", placeholder="메뉴/가격(메뉴간 스페이스로 구분)")
+
+			if (type === 'Hotel')
+				- var roomVal = place.rooms.map(function(room) { return room.name + '/' + room.occupancy + '/' + room.price; }).join(' ');
+				.form-group
+					input.form-control(type="text", name="rooms", value="#{roomVal}", placeholder="이름/인원/가격(방간 스페이스로 구분)")
+
+			.form-group
+				input#lngValue.form-control(type="text", name="longitude", value="#{place.longitude}")
+			.form-group
+				input#latValue.form-control(type="text", name="latitude", value="#{place.latitude}")
+			.form-group
+				.photo-col.col-xs-9
+					.photo-input-box
+						input#placePhoto.form-control(type="file", name="photos[]", multiple)
+
+				.photos
+					if (place.photos)
+						each photo in place.photos
+							.photo-item
+								img(src="#{photo.thumbnail.path}")
+
+			button.submit-button.btn.btn-default.btn-block(type="submit", href="/admin/places/index") Submit
+		#map
+

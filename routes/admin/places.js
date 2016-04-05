@@ -7,10 +7,16 @@ var processImages = require('../../helper/modify_and_upload.js');
 
 var Place = require('../../models/place.js');
 var Region = require('../../models/region.js');
+var RouterHelper = require('../../helper/router_helper.js');
+var Restaurant = require('../../models/restaurant.js');
 
 
 router.get('/', function(req, res) {
-	Place.find().populate('region').lean().exec(function(err, places) {
+	var query = {};
+	if (req.query.region_id) {
+		query.region = req.query.region_id;
+	}
+	Place.find(query).populate('region').lean().exec(function(err, places) {
 		if (err) {
 			console.log(err);
 		}
@@ -18,22 +24,18 @@ router.get('/', function(req, res) {
 	});
 });
 
-router.get('/new', function(req, res) {
-	Region.find().lean().exec(function(err, regions) {
-		res.render('admin/places/new', { regions: regions });
-	});
+router.get('/new', RouterHelper.getAllRegions('_id name'), function(req, res) {
+	res.render('admin/places/new', { place_type: 'Plain' });
 });
 
-router.get('/edit/:id', function(req, res) {
+router.get('/edit/:id', RouterHelper.getAllRegions('_id name'), function(req, res) {
 	Place.findOne({ _id: req.params.id }).populate('region photos').lean().exec(function(err, place) {
 		if (err) {
 			console.log(err);
 			throw err;
 		}
 
-		Region.find().lean().exec(function(err, regions) {
-			res.render('admin/places/edit', { place: place, regions: regions, local_data: { place: place }});
-		});
+		res.render('admin/places/edit', { place: place, local_data: { place: place }});
 	});
 });
 
@@ -63,6 +65,22 @@ router.post('/update/:id', upload.array('photos[]'), processImages(function(req)
 		description: req.body.description
 	};
 
+	var placeModel = Place;
+
+	if (req.body.type === 'Restaurant') {
+		var menus = req.body.menus.trim().split(' ').map(function(menu) { return menu.trim(); }).filter(function(menu) { return menu.length > 0; }).map(function(menu) {
+			var splits = menu.split('/');
+			return {
+				name: splits[0],
+				price: splits[1]
+			}
+		});
+
+		createQuery.menus = menus;
+		placeModel = Restaurant;
+	}
+
+
 	if (values.length > 0) {
 		Photo.create(values, function(err, photos) {
 			if (err) {
@@ -70,7 +88,7 @@ router.post('/update/:id', upload.array('photos[]'), processImages(function(req)
 				throw err;
 			} else {
 				updateQuery.photos = photos;
-				Place.update({ _id: req.params.id }, updateQuery, function(err) {
+				placeModel.update({ _id: req.params.id }, updateQuery, function(err) {
 					if (err) {
 						console.log(err);
 						throw err;
@@ -80,7 +98,7 @@ router.post('/update/:id', upload.array('photos[]'), processImages(function(req)
 			}
 		});
 	} else {
-		Place.update({ _id: req.params.id }, updateQuery, function(err) {
+		placeModel.update({ _id: req.params.id }, updateQuery, function(err) {
 			if (err) {
 				console.log(err);
 				throw err;
@@ -106,15 +124,34 @@ router.post('/create', upload.array('photos[]'), processImages(function(req) { r
 	});
 
 	var categories = req.body.categories.split(' ').map(function(category) { return category.trim(); }).filter(function(category) { return category.length > 0; });
-
+	
 	var createQuery = { 
 		name: req.body.name,
 	 	region: req.body.region, 
 		latitude: req.body.latitude,
 		longitude: req.body.longitude,
 		categories: categories,
-		description: req.body.description
+		description: req.body.description,
+		type: req.body.type,
+		menus: req.body.menus
 	};
+
+	var placeModel = Place;
+
+	if (req.body.type === 'Restaurant') {
+		var menus = req.body.menus.trim().split(' ').map(function(menu) { return menu.trim(); }).filter(function(menu) { return menu.length > 0; }).map(function(menu) {
+			var splits = menu.split('/');
+			return {
+				name: splits[0],
+				price: splits[1]
+			}
+		});
+
+		createQuery.menus = menus;
+		placeModel = Restaurant;
+	}
+
+	console.log(values);
 
 	Photo.create(values, function(err, photos) {
 		if (err) {
@@ -122,10 +159,12 @@ router.post('/create', upload.array('photos[]'), processImages(function(req) { r
 			throw err; 
 		}
 
-		var photo_ids = photos.map(function(photo) { return photo._id; });
+		console.log(photos);
+
+		var photo_ids = photos ? photos.map(function(photo) { return photo._id; }) : [];
 		createQuery.photos = photo_ids;
 
-		Place.create(createQuery, function(err, place) {
+		placeModel.create(createQuery, function(err, place) {
 			if (err) {	 
 				console.log(err);
 				throw err;

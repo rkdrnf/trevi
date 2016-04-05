@@ -6,4 +6,6 @@ div#subNav.navbar-collapse.collapse
 			li.nav-item
 				a(href="/train") 기차여행
 			li.nav-item
-				a(href="/restaurants") 맛집
+				- var restaurantsLink = region ? "/regions/" + region.url + "/restaurants" : "/restaurants";
+
+				a(href="#{restaurantsLink}") 맛집
