@@ -5,6 +5,7 @@ var boardsRouter = require('./boards.js');
 var Article = require('../models/article.js');
 var RouterHelper = require('../helper/router_helper.js');
 var photosRouter = require('./photo_articles.js');
+var Restaurant = require('../models/restaurant.js');
 
 router.param('region_name', function(req, res, next, value) {
 	Region.findOne({ url: value }).populate('boards').populate({ path: 'places', populate: { path: 'photos', model: 'Photo' }}).lean().exec(function(err, region) {
@@ -46,6 +47,13 @@ router.get('/:region_name', RouterHelper.setRecPlaces(), RouterHelper.setRecArti
 		res.render('regions/main', { region: req.region, recent_articles: recent_articles, recent_questions: recent_articles, local_data: { location: req.region.location, places: req.region.places } });
 	});
 });
+
+router.get('/:region_name/restaurants', function(req, res) {
+	Restaurant.find({ region: req.region._id }).lean().exec(function(err, restaurants) {
+		res.render('regions/restaurants', { restaurants: restaurants, region: req.region });
+	});
+});
+
 
 router.use('/:region_name/photos', photosRouter);
 

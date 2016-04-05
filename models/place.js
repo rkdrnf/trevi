@@ -19,7 +19,8 @@ var placeSchema = new Schema({
 		}]
 	}
 }, {
-	minimize: false
+	minimize: false,
+	discriminatorKey: 'type'
 });	
 
 placeSchema.statics.isValidName = function(name) {
