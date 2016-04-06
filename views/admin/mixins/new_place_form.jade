@@ -15,6 +15,8 @@ mixin new_place_form(regions, type)
 				if (type === 'Restaurant')
 					.form-group
 						input.form-control(type="text", name="menus", placeholder="메뉴/가격(메뉴간 스페이스로 구분)")
+					.form-group
+						input.form-control(type="text", name="price_level", placeholder="low/middle/high")
 
 				if (type === 'Hotel')
 					.form-group

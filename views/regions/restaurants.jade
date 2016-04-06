@@ -35,27 +35,15 @@ block center_content
 				.col-xs-2.filter-title
 					span 종류
 				.col-xs-10
-					label 음식점
-						input.form-control(type="checkbox", ng-model="filter.category.restaurant")
-					label 디저트
-						input.form-control(type="checkbox", ng-model="filter.category.dessert")
-					label 차/카페
-						input.form-control(type="checkbox", ng-model='filter.category.cafe')
-					label 바/술집
-						input.form-control(type="checkbox", ng-model="filter.category.bar")
+					label(ng-repeat="(category, val) in filter.categories" ng-cloak) {{val.name}}
+						input.form-control(type="checkbox", ng-model="val.checked", ng-change="onChangeCategory()")
+					
 			.row.prices
 				.col-xs-2.filter-title
 					span 가격
 				.col-xs-10
-					label 
-						span 저렴한
-						input.form-control(type="checkbox", ng-model="filter.price.low")
-					label 
-						span 보통
-						input.form-control(type="checkbox", ng-model="filter.price.middle")
-					label 
-						span 고급
-						input.form-control(type="checkbox", ng-model="filter.price.high")
+					label(ng-repeat="(price, val) in filter.prices" ng-cloak) {{val.name}}
+						input.form-control(type="checkbox", ng-model="val.checked", ng-change="onChangePrice")
 		.container-fluid.restaurant-items
 			.row.restaurant(ng-repeat="rest in restaurants")
 				.col-xs-2.photo

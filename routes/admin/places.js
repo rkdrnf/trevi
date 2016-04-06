@@ -66,6 +66,7 @@ router.post('/update/:id', upload.array('photos[]'), processImages(function(req)
 	};
 
 	var placeModel = Place;
+	console.log(req.body.type);
 
 	if (req.body.type === 'Restaurant') {
 		var menus = req.body.menus.trim().split(' ').map(function(menu) { return menu.trim(); }).filter(function(menu) { return menu.length > 0; }).map(function(menu) {
@@ -73,10 +74,12 @@ router.post('/update/:id', upload.array('photos[]'), processImages(function(req)
 			return {
 				name: splits[0],
 				price: splits[1]
-			}
+			};
 		});
 
-		createQuery.menus = menus;
+		updateQuery.menus = menus;
+		console.log(req.body.price_level);
+		updateQuery.price_level = req.body.price_level;
 		placeModel = Restaurant;
 	}
 
@@ -144,22 +147,19 @@ router.post('/create', upload.array('photos[]'), processImages(function(req) { r
 			return {
 				name: splits[0],
 				price: splits[1]
-			}
+			};
 		});
 
 		createQuery.menus = menus;
+		createQuery.price_level = req.body.price_level;
 		placeModel = Restaurant;
 	}
-
-	console.log(values);
 
 	Photo.create(values, function(err, photos) {
 		if (err) {
 			console.log(err);
 			throw err; 
 		}
-
-		console.log(photos);
 
 		var photo_ids = photos ? photos.map(function(photo) { return photo._id; }) : [];
 		createQuery.photos = photo_ids;

@@ -1,6 +1,8 @@
 mixin edit_place_form(place, type, regions)
 	.map-form-wrapper
 		form(action="/admin/places/update/#{place._id}", method="post", enctype="multipart/form-data")
+
+			input(type="hidden", name="type", value="#{type}")
 			.form-group
 				input.form-control(type="text", name="name", value="#{place.name}")
 			.form-group
@@ -18,6 +20,8 @@ mixin edit_place_form(place, type, regions)
 				- var menuVal = place.menus.map(function(menu) { return menu.name + '/' + menu.price; }).join(' ');
 				.form-group
 					input.form-control(type="text", name="menus", value="#{menuVal}", placeholder="메뉴/가격(메뉴간 스페이스로 구분)")
+				.form-group
+					input.form-control(type="text", name="price_level", value="#{place.price_level}", placeholder="low/middle/high")
 
 			if (type === 'Hotel')
 				- var roomVal = place.rooms.map(function(room) { return room.name + '/' + room.occupancy + '/' + room.price; }).join(' ');
