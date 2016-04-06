@@ -1,12 +1,12 @@
 var express = require('express');
-var router = express.Router();
-
+var router = express.Router(); 
 var Region = require('../models/region.js');
 var Board = require('../models/board.js');
 var Tag = require('../models/tag.js');
 var Comment = require('../models/comment.js');
 var User = require('../models/user.js');
 var Restaurant = require('../models/restaurant.js');
+var Place = require('../models/place.js');
 
 router.get('/regions_for_search_dbid', function (req, res) {
 	Region.find().select('_id name').lean().exec(function(err, regions) {
@@ -23,8 +23,7 @@ router.get('/regions_for_search', function(req, res) {
 	Region.find(query).select('url name').lean().exec(function(err, regions) {
 		res.json(regions.map(function(region) { return { id: region.url, name: region.name }; }));
 	});
-});
-
+}); 
 
 router.get('/boards_for_search', function(req, res) {
 	Region.find().lean().exec(function(err, regions) { 
@@ -47,10 +46,6 @@ router.get('/get_place_comments', function(req, res) {
 			return;
 		}
 
-		console.log(req.query.place);
-
-		console.log(comments.length);
-
 		comments.forEach(function(comment) { 
 			if (comment.author) {
 				comment.author.name = User.getName(comment.author);
@@ -67,13 +62,49 @@ router.get('/get_restaurants', function(req, res) {
 		query.region = req.query.region_id;
 	}
 
-	Restaurant.find(query).populate('comments').lean().exec(function(err, rests) {
+	if (req.query.categories && req.query.categories.length > 0) {
+		query.categories = { $in: req.query.categories };
+	}
+
+	if (req.query.prices && req.query.prices.length > 0) {
+		query.price_level = { $in: req.query.prices };
+	}
+
+
+	Restaurant.find(query).populate('comments photos').lean().exec(function(err, rests) {
+		if (err) {
+			console.log(err);
+			res.json({ restaurants: [] });
+			return;
+		}
+
+		if (!rests) {
+			res.json({ restaurants: [] });
+		}
+
 		rests.forEach(function(rest) {
 			rest.famous_comments = rest.comments.slice(0, 2);
 			rest.comments_count = rest.comments.length;
 			delete rest.comments;
 		});
+
+		rests.forEach(function(rest) {
+			rest.main_photo = rest.photos.length > 0 ? rest.photos[0] : null;
+			delete rest.photos;
+		});
 		res.json({ restaurants: rests });
+	});
+});
+
+router.get('/get_place', function(req, res) {
+	Place.findById(req.query.place_id).populate("photos").populate({ path: "comments", populate: { path: "author" }}).lean().exec(function(err, place) {
+		place.comments.forEach(function(comment) { 
+			if (comment.author) {
+				comment.author.name = User.getName(comment.author);
+			}
+		});
+
+		res.json({ place: place });
 	});
 });
 

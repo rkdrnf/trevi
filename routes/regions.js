@@ -48,7 +48,11 @@ router.get('/:region_name', RouterHelper.setRecPlaces(), RouterHelper.setRecArti
 });
 
 router.get('/:region_name/restaurants', function(req, res) {
-	Restaurant.find({ region: req.region._id }).lean().exec(function(err, restaurants) {
+	var query = {
+		region: req.region._id
+	};
+	
+	Restaurant.find(query).lean().exec(function(err, restaurants) {
 		res.render('regions/restaurants', { restaurants: restaurants, region: req.region, local_data: { region_id: req.region._id }});
 	});
 });

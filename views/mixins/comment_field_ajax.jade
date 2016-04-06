@@ -1,5 +1,5 @@
-mixin comment_field_ajax()
-	.container-fluid.comment-field-ajax.reply-form-container(data-ng-controller="CommentFormController")
+mixin comment_field_ajax(initData)
+	.container-fluid.comment-field-ajax.reply-form-container(data-ng-controller="CommentFormController", ng-init="initialize(#{initData})")
 		form#replyForm.reply-form(ng-submit="processForm()")
 			.row
 				.col-xs-12 

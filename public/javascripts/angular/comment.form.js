@@ -1,20 +1,12 @@
 var commentForm = angular.module('comment.form', []);
 
-commentForm.config(['$httpProvider', function ($httpProvider) {
-  //Reset headers to avoid OPTIONS request (aka preflight)
-  $httpProvider.defaults.headers.common = {};
-  $httpProvider.defaults.headers.post = {};
-  $httpProvider.defaults.headers.put = {};
-  $httpProvider.defaults.headers.patch = {};
-}]);
-
-commentForm.controller('CommentFormController', function($scope, $rootScope, $http, CommentFormInitializer) {
+commentForm.controller('CommentFormController', function($scope, $rootScope, $http) {
 	$scope.formData = {};
 	
 	$scope.processForm = function() {
 		$http({
 			method  : 'POST',
-			url     : $scope.action,
+			url     : submitOptions.action,
 			data    : $.param($scope.formData),  
 			headers : { 'Content-Type': 'application/x-www-form-urlencoded' } 
 		}).then(function(res) {
@@ -31,26 +23,10 @@ commentForm.controller('CommentFormController', function($scope, $rootScope, $ht
 		});
 	};
 
-	var data = CommentFormInitializer.getData();
-	
-	$scope.action = data.action;
-	$scope.name = data.name;
-	$scope.model = data.model;
+	var submitOptions = {};
 
-	$scope.formData[$scope.name] = $scope.model._id;
-});
-
-commentForm.service('CommentFormInitializer', function() {
-	var data = {};
-
-	this.initialize = function(actionVal, nameVal, modelVal) {
-		data.action = actionVal;	
-		data.name = nameVal;
-		data.model = modelVal;
+	$scope.initialize = function(data) {
+		submitOptions.action = data.action;
+		$scope.formData[data.name] = data.id;
 	};
-
-	this.getData = function() {
-		return data;
-	};
-
 });

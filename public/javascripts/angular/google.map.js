@@ -45,9 +45,9 @@
 		$scope.initialize($window.local_data);
 	}]);
 
-	mapModule.controller('infoWindowController', ['$scope', '$timeout', 'PlaceModalOpener', function($scope, $timeout,PlaceModalOpener) {
+	mapModule.controller('infoWindowController', ['$scope', '$timeout', 'PlaceModalOpener', function($scope, $timeout, PlaceModalOpener) {
 		$scope.open = function(place) {
-			PlaceModalOpener(place);
+			PlaceModalOpener(place._id);
 		};
 
 		$scope.makeRaty = function() {

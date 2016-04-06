@@ -1,6 +1,9 @@
 div#subNav.navbar-collapse.collapse
 	.container
 		ul.nav.navbar-nav
+			if region
+				li.nav-item
+					a(href="/regions/#{region.url}")= region.name
 			li.nav-item
 				a(href="/events") 이벤트
 			li.nav-item
