@@ -1,8 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var Region = require('../models/region.js');
-var boardsRouter = require('./boards.js');
-var Article = require('../models/article.js');
+var boardsRouter = require('./boards.js'); var Article = require('../models/article.js');
 var RouterHelper = require('../helper/router_helper.js');
 var photosRouter = require('./photo_articles.js');
 var Restaurant = require('../models/restaurant.js');
@@ -50,7 +49,7 @@ router.get('/:region_name', RouterHelper.setRecPlaces(), RouterHelper.setRecArti
 
 router.get('/:region_name/restaurants', function(req, res) {
 	Restaurant.find({ region: req.region._id }).lean().exec(function(err, restaurants) {
-		res.render('regions/restaurants', { restaurants: restaurants, region: req.region });
+		res.render('regions/restaurants', { restaurants: restaurants, region: req.region, local_data: { region_id: req.region._id }});
 	});
 });
 

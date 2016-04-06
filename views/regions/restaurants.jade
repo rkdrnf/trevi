@@ -4,9 +4,79 @@ block script
 	link(rel="stylesheet", href="/stylesheets/regions/restaurants.css")
 
 append variables
-	- var angular_app = 'regions.restaurants.index'
+	- var angular_app = 'regions.restaurants.index';
+
+block script_variables
+	| var local_data = !{JSON.stringify(local_data)};
 
 block center_content
+	.restaurants(ng-controller="restaurantsCtrl")
+		.container-fluid.filters
+			.row.hot-filters-title
+				span 자주 찾는 것들
+			.row.hot-filters
+				.col-xs-3
+					a.item.breakfast
+						.text
+							span 아침식사
+				.col-xs-3
+					a.item.fine-dining
+						.text
+							span 저녁 만찬
+				.col-xs-3
+					a.item.bakery
+						.text
+							span 빵집
+				.col-xs-3
+					a.item.cafe
+						.text
+							span 카페
+			.row.categories
+				.col-xs-2.filter-title
+					span 종류
+				.col-xs-10
+					label 음식점
+						input.form-control(type="checkbox", ng-model="filter.category.restaurant")
+					label 디저트
+						input.form-control(type="checkbox", ng-model="filter.category.dessert")
+					label 차/카페
+						input.form-control(type="checkbox", ng-model='filter.category.cafe')
+					label 바/술집
+						input.form-control(type="checkbox", ng-model="filter.category.bar")
+			.row.prices
+				.col-xs-2.filter-title
+					span 가격
+				.col-xs-10
+					label 
+						span 저렴한
+						input.form-control(type="checkbox", ng-model="filter.price.low")
+					label 
+						span 보통
+						input.form-control(type="checkbox", ng-model="filter.price.middle")
+					label 
+						span 고급
+						input.form-control(type="checkbox", ng-model="filter.price.high")
+		.container-fluid.restaurant-items
+			.row.restaurant(ng-repeat="rest in restaurants")
+				.col-xs-2.photo
+					img(src="/images/sample.png")
+				.col-xs-10
+					.details
+						.name
+							span {{rest.name}}
+						.reviews
+							.star-score
+								span 별점
+							.comments
+								span {{rest.comments_count}}개의 리뷰
+						.review-examples
+							.review-detail(ng-repeat="comment in rest.famous_comments")
+								span "
+								span.review-text {{comment.content}}
+								span "
+						.categories
+							button.btn.btn-default(ng-repeat="category in rest.categories") {{category}}
+
 	.region-map
 		.testmap
 			ui-gmap-google-map(center="map.center", zoom="map.zoom", pan="false")
@@ -16,6 +86,7 @@ block center_content
 
 
 append bottom_script
+	script(src="/bower_components/lodash/dist/lodash.min.js")
 	script(src="/bower_components/angular/angular.min.js")
 	script(src="/bower_components/angular-animate/angular-animate.min.js")
 	script(src="/bower_components/angular-aria/angular-aria.min.js")

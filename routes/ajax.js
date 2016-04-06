@@ -6,6 +6,7 @@ var Board = require('../models/board.js');
 var Tag = require('../models/tag.js');
 var Comment = require('../models/comment.js');
 var User = require('../models/user.js');
+var Restaurant = require('../models/restaurant.js');
 
 router.get('/regions_for_search_dbid', function (req, res) {
 	Region.find().select('_id name').lean().exec(function(err, regions) {
@@ -57,6 +58,22 @@ router.get('/get_place_comments', function(req, res) {
 		});
 
 		res.json({ comments: comments });
+	});
+});
+
+router.get('/get_restaurants', function(req, res) {
+	var query = {};
+	if (req.query.region_id) {
+		query.region = req.query.region_id;
+	}
+
+	Restaurant.find(query).populate('comments').lean().exec(function(err, rests) {
+		rests.forEach(function(rest) {
+			rest.famous_comments = rest.comments.slice(0, 2);
+			rest.comments_count = rest.comments.length;
+			delete rest.comments;
+		});
+		res.json({ restaurants: rests });
 	});
 });
 
