@@ -1,0 +1,28 @@
+extends ../layout
+
+block script
+	link(rel="stylesheet", href="/stylesheets/users/edit_like.css")
+
+block center_content
+	.addInfo-checker
+		form(action="/users/update_like", method="post")
+			.addInfo1-filter
+				.filter-head
+					label.likeGenre-head-label 1.선호하는 여행장르가 뭔가용?
+				.filter-body
+					.filter-node
+						label.likeGenre-label= "혼자여행"
+						input.filter-checkbox.likeGenre-checkbox(type="checkbox", name="likeGenres[]", value="likeGenre01")
+						label.likeGenre-label= "기차여행"
+						input.filter-checkbox.likeGenre-checkbox(type="checkbox", name="likeGenres[]", value="likeGenre02")
+			.addInfo2-filter
+				.filter-head
+					label.likeRegion-head-label 2.선호하는 지역이 오딘가요?
+				.filter-body
+					each region in regions
+						.filter-node
+							label.likeRegion-label= region.name
+							input.filter-checkbox.likeRegion-checkbox(type="checkbox", name="likeRegions[]", value="#{region._id}" )
+
+			.update-button-box
+				button.btn.btn-primary(type="submit") 수정완료

@@ -1,0 +1,23 @@
+.addInfo-checker .addInfo1-filter {
+  text-align: center; }
+
+.addInfo-checker .update-button-box {
+  height: 200px;
+  line-height: 60px;
+  padding: 10px;
+  text-align: center; }
+  .addInfo-checker .update-button-box button {
+    width: 200px; }
+
+.addInfo-checker .addInfo1-filter, .addInfo-checker .addInfo2-filter {
+  padding: 20px;
+  border-bottom: 1px solid #ccc; }
+  .addInfo-checker .addInfo1-filter .filter-head, .addInfo-checker .addInfo2-filter .filter-head {
+    width: 100px;
+    display: inline-block; }
+  .addInfo-checker .addInfo1-filter .filter-body, .addInfo-checker .addInfo2-filter .filter-body {
+    display: inline-block; }
+
+.addInfo-checker .filter-node {
+  padding: 10px;
+  display: inline-block; }

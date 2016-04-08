@@ -26,8 +26,8 @@ var userSchema = new Schema({
 	phone: { type: String, default: "010-1234-5678" },
 
 	additionalInfo	: { 
-		likeGenre				: String,
-		likeRegion 			:	String,
+		likeGenres			: [{ type: String, }],
+		likeRegions			:	[{ type: Schema.Types.ObjectId, ref: 'Region' }],
 		wellknownRegion : String,
 		visitedRegion		: String },
 

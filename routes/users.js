@@ -1,10 +1,12 @@
 var express = require('express');
 var multer = require('multer');
+var Region = require('../models/region.js'); 
 var router = express.Router();
 var routerHelper = require('../helper/router_helper.js');
 var upload = multer({ dest: 'public/images/profile_photos/'});
 var ProfilePhoto = require('../models/profile_photo.js');
 var MAU = require('../helper/modify_and_upload.js');
+var User = require('../models/user.js');
 
 /* GET users listing. */
 router.get('/edit', routerHelper.checkUserLoggedIn, function(req, res) {
@@ -49,6 +51,25 @@ router.post('/update', routerHelper.checkUserLoggedIn, upload.single('profile_ph
 	req.user.save();
 
 	res.redirect('back');
+});
+
+router.get('/edit_like', routerHelper.checkUserLoggedIn, function(req, res){
+	Region.find().lean().exec(function(err, regions) {
+		res.render('users/edit_like', { regions: regions });
+	});
+});
+
+router.post('/update_like', routerHelper.checkUserLoggedIn, function(req, res) {
+	User.update({ _id: req.user._id}, { additionalInfo: {  likeGenres: req.body["likeGenres[]"], likeRegions: req.body["likeRegions[]"] }}, function(err) {
+		if (err) {
+			console.log(err);
+			throw err;
+		}
+
+		res.redirect('/users/edit');
+	});
+	req.user.additionalInfo.wellknownRegion = req.body.wellknownRegion;
+	req.user.additionalInfo.visitedRegion = req.body.visitedRegion;
 });
 
 module.exports = router;
