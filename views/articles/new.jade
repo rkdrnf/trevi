@@ -23,15 +23,23 @@ block script
 	script(src="/javascripts/board_selector.js") 
 	script(src="/javascripts/tag_selector.js")
 
+	link(rel="stylesheet", href="/bower_components/angular/angular-csp.css")
+
+append variables
+	- var angular_app = 'articles.new';
+
+block script_variables 
+	| var local_data = !{JSON.stringify(local_data)};   
+
 block content
 	#content
 		.content-body
-			.write-form-wrapper
+			.write-form-wrapper(ng-controller="newArticleCtrl")
 				form(action="/articles/create?redirect_url=#{redirect_url}", method="post")
 					.form-group
-						input.region-select.form-control(type="text", name="region-select", placeholder="서울")
+						input.region-select.form-control(type="text", name="region-select", placeholder="서울", ng-init="initRegionSelect()")
 					.form-group
-						select.board-select.form-control(name="board")
+						select.board-select.form-control(name="board", ng-init="initBoardSelect()")
 
 					.form-group
 						input.form-control(type="text", name="title", placeholder="제목")
@@ -59,3 +67,8 @@ block content
 					button.btn.btn-primary(type="submit") 글쓰기
 append bottom_script
 	script(src="/plugins/typeahead.js/typeahead.bundle.js")
+	script(src="/bower_components/lodash/dist/lodash.min.js")
+	script(src="/bower_components/angular/angular.min.js")
+	script(src="/bower_components/angular-aria/angular-aria.min.js")
+	script(src="/bower_components/angular-messages/angular-messages.min.js")
+

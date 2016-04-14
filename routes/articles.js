@@ -1,8 +1,6 @@
 var express = require('express');
 var router = express.Router();
 var Article = require('../models/article.js');
-var Region = require('../models/region.js');
-var Board = require('../models/board.js');
 var RouterHelper = require('../helper/router_helper.js');
 var Photo = require('../models/photo.js');
 var ObjectId = require('mongoose').Types.ObjectId;
@@ -11,21 +9,40 @@ var qc = require('../helper/query_checker.js');
 var QueryChecker = new qc();
 
 
-router.get('/new', RouterHelper.checkUserLoggedIn, function(req, res) {
-	Region.find().lean().exec(function(err, regions) {
-		if (err) res.render(500);
-		Board.find().lean().exec(function(err, boards) {
-			if (err) res.render(500);
+QueryChecker.add("/new", [
+	{
+		name: "regions",
+		required: false,
+		type: Array
+	}, {
+		name: "boards",
+		required: false,
+		type: Array,
+		handler: function (query, boards) {
+			if (!query.board && boards.length === 1) {
+				query.board = boards[0];
+			}
+		}
+	}, {
+		name: "board",
+		required: false,
+		type: ObjectId
+	}, {
+		name: "redirect_url",
+		required: false,
+		type: String
+	}
+]);
+router.get('/new', QueryChecker.check("/new"), RouterHelper.checkUserLoggedIn, function(req, res) {
+	var renderParams = {
+		redirect_url: req.query.redirect_url ? encodeURIComponent(req.query.redirect_url) : "",
+		local_data: {
+			regions: req.query.regions,
+			board: req.query.board
+		}
+	};
 
-			var renderParams = {
-				regions: regions, 
-				boards: boards, 
-				redirect_url: req.query.redirect_url ? encodeURIComponent(req.query.redirect_url) : ""
-			};
-
-			res.render('articles/new', renderParams);
-		});
-	});
+	res.render('articles/new', renderParams);
 });
 
 router.post('/create', RouterHelper.checkUserLoggedIn, RouterHelper.processTags(function(req) {
@@ -54,6 +71,11 @@ QueryChecker.add("/", [
 		name: "region",
 		required: false,
 		type: ObjectId,
+		handler: function(query, region) {
+			if (!query.regions) {
+				query.regions = [region];
+			}
+		}
 	},
 	{
 		name: "regions",
@@ -73,12 +95,11 @@ QueryChecker.add("/", [
 ]);
 
 router.get('/', QueryChecker.check("/"), RouterHelper.setRegion("region"), RouterHelper.setRecPlaces(), RouterHelper.setRecArticles(), RouterHelper.setRecQuestions(), RouterHelper.getAllRegions('_id name boards'), RouterHelper.getAllBoards('_id name'), function(req, res) {
-	var query = findArticlesQuery(req.query.regions, req.query.boards);
 	var board_ids = req.query.boards ? req.query.boards : [];
 	var region_ids = req.query.regions ? req.query.regions : [];
-	if (req.region && region_ids.length === 0) {
-		region_ids = [req.region];
-	}
+
+	var query = findArticlesQuery(region_ids, board_ids);
+
 	Article.find(query).populate('author').lean().exec(function(err, articles) {
 		res.render('articles/main', { articles: articles, checked_regions: region_ids, checked_boards: board_ids, region: req.region });
 	});

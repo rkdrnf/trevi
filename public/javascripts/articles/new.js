@@ -126,16 +126,7 @@ $(function() {
 		$('#imageIds').val(ids.join(';'));
 	}
 
-	var boardSelector = $('.board-select').makeBoardSelector();
-	$('.region-select').makeRegionSelector({
-		onAddRegion: function(region) {
-			boardSelector.addRegion(region.id);
-		},
-		onRemoveRegion: function(region) {
-			boardSelector.removeRegion(region.id);
-		}
-	});
-
+	
 	$('.tag-select').makeTagSelector();
 
 	$('input[type="text"]').keydown(function(e) {
@@ -146,3 +137,27 @@ $(function() {
 			}
 	});
 });
+
+(function() {
+	var newArticle = angular.module('articles.new', []);
+	newArticle.controller('newArticleCtrl', function($scope, $window) {
+
+		$scope.boardSelector = null;
+		$scope.regionSelector = null;
+
+		$scope.initRegionSelect = function() {
+			$scope.regionSelector = $('.region-select').makeRegionSelector({
+				onAddRegion: function(region) {
+					$scope.boardSelector.addRegion(region.id);
+				},
+				onRemoveRegion: function(region) {
+					$scope.boardSelector.removeRegion(region.id);
+				}
+			});
+		};
+
+		$scope.initBoardSelect = function() {
+			$scope.boardSelector = $('.board-select').makeBoardSelector();
+		};
+	});
+})();

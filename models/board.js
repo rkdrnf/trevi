@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var board_types = ["Normal", "Photo", "Journal"];
+var board_types = ["Normal", "Photo", "Travel"];
 
 var boardSchema = new Schema({
 	name: String,
