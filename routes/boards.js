@@ -1,11 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var Board = require('../models/board.js');
-var Article = require('../models/article.js');
-var RouterHelper = require('../helper/router_helper.js');
 var url = require('url');
-var qs = require('qs');
-
 
 var qc =  require('../helper/query_checker.js');
 var queryChecker = new qc();
@@ -34,19 +30,18 @@ router.param('board_id', function(req, res, next, value) {
 queryChecker.add("board_id", [
 	{
 		name: "region",
+		required: false,
 		type: ObjectId
 	}
 ]);
 
-router.get('/:board_id', RouterHelper.setRegion("region"), function(req, res) {
-
+router.get('/:board_id', function(req, res) {
 	var query = url.parse(req.url, true).query;
 
-	if (req.region) {
-		query.regions = [req.region]
-	}
+	if (req.query.region)
+		query["regions[]"] = [req.query.region];
 
-	query.boards = [req.board._id.toString()];
+	query["boards[]"] = [req.board._id.toString()];
 
 	var newUrlObj = {
 		pathname: "/articles",

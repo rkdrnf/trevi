@@ -9,10 +9,8 @@ block script
 	link(rel="stylesheet", href="/stylesheets/partials/article_row.css")
 
 block center_content
-	if (region) 
-		include ../partials/region_header.jade
 
-	- var openSearch = !region
+	- var openSearch = true;
 	include ../mixins/article_search.jade
 	+article_search(all_regions, all_boards, checked_regions, checked_boards, openSearch)
 			

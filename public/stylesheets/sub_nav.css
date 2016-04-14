@@ -1,0 +1,9 @@
+#subNav {
+  clear: left;
+  float: left;
+  width: 100%;
+  background-color: #e8aa68; }
+  #subNav a {
+    color: white; }
+  #subNav .region-dropdown-item {
+    color: black; }

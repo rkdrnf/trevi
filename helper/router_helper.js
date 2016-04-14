@@ -120,12 +120,16 @@ routerHelper.setRecArticles = function(options) {
 };
 
 routerHelper.setRegion = function(name) {
-	var query = {};
-	
 	return function(req, res, next) {
+		if (!req.query[name]) {
+			next();
+			return;
+		}
+
 		if (!ObjectId.isValid(req.query[name])) {
 			throw new Error('[setRegion] invalid region query: ' + req.query[name]);
 		}
+
 		Region.findById(req.query[name]).populate('boards').lean().exec(function(err, region) {
 			if (err) {
 				console.log(err);
@@ -136,7 +140,7 @@ routerHelper.setRegion = function(name) {
 			next();
 		});
 	};
-}
+};
 
 routerHelper.setRecQuestions = function(options) {
 	var query = {};

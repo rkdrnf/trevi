@@ -22,8 +22,6 @@ block templates
 	include ../angular/place_modal.jade
 
 block center_content
-	if (region) 
-		include ../partials/region_header.jade
 	.restaurants(ng-controller="restaurantsCtrl")
 		.container-fluid.filters
 			.row.hot-filters-title

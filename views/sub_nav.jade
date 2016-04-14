@@ -12,7 +12,7 @@ div#subNav.navbar-collapse.collapse
 					ul.dropdown-menu(aria-labelledby="regionDropdown")
 						each region in all_regions
 							li
-								a(href="/regions/#{region.url}")= region.name
+								a.region-dropdown-item(href="/regions/#{region.url}")= region.name
 		
 			if (major_boards)
 				each board in major_boards

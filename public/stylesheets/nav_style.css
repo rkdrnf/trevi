@@ -41,10 +41,3 @@ nav.default {
       width: 200px;
       margin: auto;
       z-index: 3; }
-  nav.default #subNav {
-    clear: left;
-    float: left;
-    width: 100%;
-    background-color: #e8aa68; }
-    nav.default #subNav a {
-      color: white; }

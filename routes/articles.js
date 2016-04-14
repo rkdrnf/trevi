@@ -1,6 +1,5 @@
 var express = require('express');
 var router = express.Router();
-//var Board = require('../models/board.js');
 var Article = require('../models/article.js');
 var Region = require('../models/region.js');
 var Board = require('../models/board.js');
@@ -8,18 +7,17 @@ var RouterHelper = require('../helper/router_helper.js');
 var Photo = require('../models/photo.js');
 var ObjectId = require('mongoose').Types.ObjectId;
 
+var qc = require('../helper/query_checker.js');
+var QueryChecker = new qc();
+
 
 router.get('/new', RouterHelper.checkUserLoggedIn, function(req, res) {
-	//	var region_ids = JSON.parse(req.query.regions);
-	//	var board_ids = JSON.parse(req.query.boards);
 	Region.find().lean().exec(function(err, regions) {
 		if (err) res.render(500);
 		Board.find().lean().exec(function(err, boards) {
 			if (err) res.render(500);
 
 			var renderParams = {
-				//				current_region: region_ids,
-				//				current_board: board_ids,
 				regions: regions, 
 				boards: boards, 
 				redirect_url: req.query.redirect_url ? encodeURIComponent(req.query.redirect_url) : ""
@@ -50,7 +48,31 @@ router.post('/create', RouterHelper.checkUserLoggedIn, RouterHelper.processTags(
 	});
 });
 
-router.get('/', RouterHelper.setRegion("region"), RouterHelper.setRecPlaces(), RouterHelper.setRecArticles(), RouterHelper.setRecQuestions(), RouterHelper.getAllRegions('_id name boards'), RouterHelper.getAllBoards('_id name'), function(req, res) {
+
+QueryChecker.add("/", [
+	{
+		name: "region",
+		required: false,
+		type: ObjectId,
+	},
+	{
+		name: "regions",
+		required: false,
+		type: Array,
+		handler: function (query, regions) {
+			if (!query.region && regions.length === 1) {
+				query.region = regions[0];
+			}
+		}
+	},
+	{
+		name: "boards",
+		required: false,
+		type: Array
+	}
+]);
+
+router.get('/', QueryChecker.check("/"), RouterHelper.setRegion("region"), RouterHelper.setRecPlaces(), RouterHelper.setRecArticles(), RouterHelper.setRecQuestions(), RouterHelper.getAllRegions('_id name boards'), RouterHelper.getAllBoards('_id name'), function(req, res) {
 	var query = findArticlesQuery(req.query.regions, req.query.boards);
 	var board_ids = req.query.boards ? req.query.boards : [];
 	var region_ids = req.query.regions ? req.query.regions : [];
