@@ -61,10 +61,5 @@ router.get('/:region_name/restaurants', function(req, res) {
 router.use('/:region_name/photos', photosRouter);
 
 
-
-
-router.use('/:region_name/boards', boardsRouter);
-
-
 module.exports = router;
 

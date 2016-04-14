@@ -1,5 +1,6 @@
 var querystring = require('querystring');
-var qs = require('qs'); var jadeHelper = {};
+var qs = require('qs'); 
+var jadeHelper = {};
 var User = require('../models/user.js');
 
 jadeHelper.tryDefaultImage = function (imagePath, defaultImagePath) {

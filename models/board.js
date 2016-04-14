@@ -5,7 +5,8 @@ var board_types = ["Normal", "Photo", "Journal"];
 
 var boardSchema = new Schema({
 	name: String,
-	type: { type: String, enum: board_types, default: "Normal", required: true}
+	type: { type: String, enum: board_types, default: "Normal", required: true},
+	major: { type: Boolean, default: false, required: true }
 }, {
 	minimize: false
 });

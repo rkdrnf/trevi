@@ -8,6 +8,7 @@ block content
 			th ID
 			th Name
 			th Type
+			th Major
 			th Option
 				if boards
 					each board in boards
@@ -15,6 +16,7 @@ block content
 							td= board._id
 							td= board.name
 							td= board.type
+							td= board.major
 							td
 								a.btn.btn-default(type="button", href="/admin/articles?board_id=#{board._id}") Articles
 								a.btn.btn-default(type="button", href="/admin/boards/edit/#{board._id}?redirect_url=#{jadeHelper.encodeURI(url)}") Edit
