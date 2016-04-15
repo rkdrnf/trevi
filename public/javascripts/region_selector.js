@@ -1,32 +1,24 @@
+/* globals Bloodhound */
 (function($) {
 	var RegionSelector = function(options) {
 		var self = this;
-		self.selectedRegions = [];
 
 		var defaultOption = {};
 		self.options = $.extend({}, defaultOption, options);
+		self.data = options.data;
+
+		self.regions = options.regions;
 	};
 
 	RegionSelector.prototype.init = function($elem) {
 		var self = this;
 
 		self.elem = $elem;
-	
-		self.wrapper = $('<div class=\"region-selector-wrapper"></div>');
-		self.elem.wrap(self.wrapper);
-
-		self.regionsBox = $('<div class=\"regions-box\"></div>');
-		self.elem.after(self.regionsBox);
-
-		self.hiddenInput = $('<input type="hidden" name="regions" >');
-		self.elem.after(self.hiddenInput);
 
 		var regionHound = new Bloodhound({
 			name: "regions",
-			prefetch: {
-				url: "/ajax/regions_for_search_dbid"
-			},
-			identify: function(d) { return d.id; },
+			local: self.regions,
+			identify: function(d) { return d._id; },
 			datumTokenizer: function (d) { return Bloodhound.tokenizers.whitespace(d.name); },
 			queryTokenizer: Bloodhound.tokenizers.whitespace
 		});
@@ -58,34 +50,12 @@
 	RegionSelector.prototype.addSelectedRegion = function(region) {
 		var self = this;
 
-		if (self.selectedRegions.indexOf(region.id) !== -1) return;
+		if (self.data.selected.find(function(r) { return r._id === region._id; })) return;
 
-		self.selectedRegions.push(region.id);
-		self.hiddenInput.val(self.selectedRegions.join(';'));
-
-		var $button = $('<a class="btn btn-default selected-region">' + region.name + '<span class="x-icon">x</span></button>');
-
-		$button.on('click', function() { self.removeSelectedRegion($button, region); });
-		self.regionsBox.append($button);
+		self.data.selected.push(region);
 
 		if (self.options.onAddRegion) {
 			self.options.onAddRegion(region);
-		}
-	};
-
-	RegionSelector.prototype.removeSelectedRegion = function($button, region) {
-		var self = this;
-		$button.remove();
-
-		var index = self.selectedRegions.indexOf(region.id);
-		if (index === -1 ) return;
-
-
-		self.selectedRegions.splice(index, 1);
-		self.hiddenInput.val(self.selectedRegions.join(';'));
-
-		if (self.options.onRemoveRegion) {
-			self.options.onRemoveRegion(region);
 		}
 	};
 

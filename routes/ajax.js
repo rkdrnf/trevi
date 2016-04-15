@@ -108,4 +108,21 @@ router.get('/get_place', function(req, res) {
 	});
 });
 
+router.get('/regions_boards_data', function(req, res) {
+	Region.find({}).select("_id name boards").lean().exec(function(err, regions) {
+		if (err) {
+			console.log(err);
+			throw err;
+		}
+		Board.find({}).select("_id name type").lean().exec(function(err, boards) {
+			if (err) {
+				console.log(err);
+				throw err;
+			}
+
+			res.json({ regions: regions, boards: boards });
+		});
+	});
+});
+
 module.exports = router;
