@@ -13,7 +13,7 @@ $(function() {
 		inline: true,
 		fixed_toolbar_container: ".tinymce-toolbar",
 		toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media fullpage | forecolor backcolor emoticons',
-		file_browser_callback: function(field_name, url, type, win) {
+		file_browser_callback: function(field_name, url, type) {
 			if(type=='image') {
 				var $input = $('#singleImageInput');
 				$input.data('target_field', field_name);
@@ -79,8 +79,7 @@ $(function() {
 		var node = data.context[index];
 
 		if (file.error) {
-			node
-			.append('<br>')
+			node .append('<br>')
 			.append($('<span class="text-danger"/>').text(file.error));
 		}
 	}).on('fileuploaddone', function (e, data) {
@@ -126,16 +125,7 @@ $(function() {
 		$('#imageIds').val(ids.join(';'));
 	}
 
-	var boardSelector = $('.board-select').makeBoardSelector();
-	$('.region-select').makeRegionSelector({
-		onAddRegion: function(region) {
-			boardSelector.addRegion(region.id);
-		},
-		onRemoveRegion: function(region) {
-			boardSelector.removeRegion(region.id);
-		}
-	});
-
+	
 	$('.tag-select').makeTagSelector();
 
 	$('input[type="text"]').keydown(function(e) {
@@ -146,3 +136,82 @@ $(function() {
 			}
 	});
 });
+
+(function() {
+	var newArticle = angular.module('articles.new', []);
+	newArticle.controller('newArticleCtrl', function($scope, $http, $window) {
+
+		$scope.regionSelector = null;
+$scope.regionSelectorData = {
+			selected: []
+		};
+
+		$scope.boardData = {
+			selected: undefined
+		};
+
+		$http.get('/ajax/regions_boards_data')
+		.then(function(res) {
+
+			$scope.regions = res.data.regions;
+			$scope.boards = res.data.boards;
+
+			$scope.regionSelectorData.selected = $scope.regions.filter(function(region) { return $window.local_data.regions.find(function(r) { return r === region._id; }); });
+
+			$scope.setAvailableBoards();
+			$scope.boardData.selected = $scope.availableBoards.find(function(board) { return board._id === $window.local_data.board; });
+
+		}, function(err) {
+			console.log(err);
+			alert(err);
+		});
+
+		$scope.initRegionSelect = function() {
+			$scope.regionSelector = $('.region-select').makeRegionSelector({
+				regions: $scope.regions,
+				data: $scope.regionSelectorData,
+				onAddRegion: function() {
+					$scope.setAvailableBoards();
+					$scope.$apply();
+				}
+			});
+		};
+
+		$scope.getRegionsValue = function(selected) {
+			return selected.map(function(region) { return region._id; }).join(';');
+		};
+
+		$scope.removeSelectedRegion = function(region) {
+			var selected = $scope.regionSelectorData.selected;
+			var index = selected.findIndex(function(r) { return r._id === region._id; });
+			if (index === -1 ) return;
+
+			selected.splice(index, 1);
+			$scope.setAvailableBoards();
+		};
+
+		$scope.setAvailableBoards = function() {
+			if ($scope.regionSelectorData.selected.length === 0) {
+				var noRegion = {
+					_id: -1,
+					name: "지역을 먼저 선택해주세요."
+				};
+				$scope.availableBoards = [noRegion];
+			} else {
+				$scope.availableBoards = $scope.boards.filter(function(board) {
+					var included = true;
+					$scope.regionSelectorData.selected.forEach(function(region) {
+						if (!region.boards.find(function(b) {
+							return b === board._id; }))
+							included = false;
+					});
+					return included;
+				});
+			}
+		
+			if ($scope.availableBoards.indexOf($scope.boardData.selected) === -1) {
+				$scope.boardData.selected = $scope.availableBoards[0];
+			}
+		};
+	});
+})();

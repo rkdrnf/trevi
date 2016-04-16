@@ -1,3 +1,4 @@
+/* globals Set */
 (function($) {
 
 	var BoardSelector = function($elem, options) {
@@ -144,7 +145,7 @@
 
 		self.currentOptions.delete(val);
 
-		var $option = self.elem.children('[value="' + val + '"]').remove();
+		self.elem.children('[value="' + val + '"]').remove();
 	};
 
 	BoardSelector.prototype.clearOption = function() {

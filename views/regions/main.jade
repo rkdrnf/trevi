@@ -33,21 +33,11 @@ block templates
 	include ../angular/place_info_window.jade
 	
 block center_content 
-	.head-sector
-		.background
-			img(src="#{jadeHelper.tryDefaultImage(background_image_path, '/images/background_images/default.jpg')}")
-		.head-content
-			.middle
-				.promotion-box
-					h1= region.name
-					h2= region.promotion_text
-			.bottom-menu
-				.menu-box
-					if (region.boards)
-						each board in region.boards
-							- query = jadeHelper.buildGetQuery({ region: region._id.toString(), regions: [region._id.toString()], boards: [board._id.toString()] })
-							a.btn.btn-default(href="/articles?#{query}")= board.name
-					a.btn.btn-default(href="/regions/#{region.url}/photos/") 한장사진
+	.hero
+		.hot-travels
+			each travel in travels
+				div
+		
 	.body-sector
 		.hot-articles
 			.recent-articles

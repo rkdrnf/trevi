@@ -3,7 +3,7 @@ var Schema = mongoose.Schema;
 
 var placeSchema = new Schema({
 	name: { type: String },
-	type: { type: String, enum: ['Plain', 'Restaurant', 'Hotel'], default: 'Plain'},
+	type: { type: String, enum: ['Plain', 'Restaurant', 'Hotel'], default: 'Plain', required: true },
 	categories: { type: [{ type: String }], default: [] },
 	description: { type: String, default: "" },
 	region: { type: Schema.Types.ObjectId, ref: 'Region' },

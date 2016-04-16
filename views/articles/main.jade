@@ -9,16 +9,20 @@ block script
 	link(rel="stylesheet", href="/stylesheets/partials/article_row.css")
 
 block center_content
-	if (region) 
-		include ../partials/region_header.jade
 
-	- var openSearch = !region
+	- var openSearch = true;
 	include ../mixins/article_search.jade
 	+article_search(all_regions, all_boards, checked_regions, checked_boards, openSearch)
 			
 	.articles-container
 		.menu-box
-			a.btn.btn-default(type="button", href="/articles/new?redirect_url=#{jadeHelper.encodeURI(url)}") 새글쓰기
+			-
+				var query = jadeHelper.buildGetQuery({
+					regions: checked_regions,
+					boards: checked_boards,
+					redirect_url: url
+				});
+			a.btn.btn-default(type="button", href="/articles/new?#{query}") 새글쓰기
 
 		include ../mixins/article_row.jade
 		table.table.articles

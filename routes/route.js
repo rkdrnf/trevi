@@ -8,6 +8,7 @@ var journal = require('./journal.js');
 var images = require('./images.js');
 var uploads = require('./uploads.js');
 var etc = require('./etc.js');
+var boards = require('./boards.js');
 
 var jadeHelper = require('../helper/jade_helper.js');
 var routerHelper = require('../helper/router_helper.js');
@@ -32,12 +33,16 @@ module.exports = function(app, passport) {
 		next();
 	});
 
+	app.use(routerHelper.getAllRegions("_id url name"));
+	app.use(routerHelper.getMajorBoards());
+
 	app.use('/', index);
 	app.use('/', journal);
 	app.use('/', etc);
 	app.use('/users', users);
 	app.use('/admin', admin);
 	app.use('/regions', regions);
+	app.use('/boards', boards);
 	app.use('/articles', articles);
 	app.use('/blogs', blogs);
 	app.use('/images', images);

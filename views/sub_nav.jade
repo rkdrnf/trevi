@@ -3,11 +3,24 @@ div#subNav.navbar-collapse.collapse
 		ul.nav.navbar-nav
 			if region
 				li.nav-item
-					a(href="/regions/#{region.url}")= region.name
+					a.region-name(href="/regions/#{region.url}")= region.name
+						span 의
+			else
+				li.nav-item.dropdown
+					a#regionDropdown.dropdown-toggle(role="button", href="#", data-toggle="dropdown", aria-haspopup="true", aria-expanded="true") 지역 선택
+						span.caret
+					ul.dropdown-menu(aria-labelledby="regionDropdown")
+						each region in all_regions
+							li
+								a.region-dropdown-item(href="/regions/#{region.url}")= region.name
+		
+			if (major_boards)
+				each board in major_boards
+					- var query = region ? jadeHelper.buildGetQuery({ region: region._id.toString() }) : "";
+					li.nav-item
+						a.board-link(href="/boards/#{board._id}?#{query}")= board.name
 			li.nav-item
 				a(href="/events") 이벤트
-			li.nav-item
-				a(href="/train") 기차여행
 			li.nav-item
 				- var restaurantsLink = region ? "/regions/" + region.url + "/restaurants" : "/restaurants";
 

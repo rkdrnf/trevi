@@ -3,7 +3,7 @@ mixin article_search(regions, boards, checked_regions, checked_boards, open)
 		.search-detail
 			a.btn.btn-primary(role="button", data-toggle="collapse", href="#searchBox", aria-expanded="#{open}", aria-controls="searchBox") 상세 검색
 
-		#searchBox.search-box.collapse
+		#searchBox.search-box.collapse(class="#{open ? 'in' : ''}")
 			.well
 				form(action="/articles", method="get")
 					.regions-filter

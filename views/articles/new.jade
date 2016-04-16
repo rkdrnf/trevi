@@ -5,7 +5,6 @@ block script
 	link(rel="stylesheet", href="/stylesheets/articles/new.css")
 	link(rel="stylesheet", href="/plugins/jquery-file-upload/css/jquery.fileupload.css")
 	script(src="/javascripts/tinymce_page.js")
-	script(src="/javascripts/articles/new.js")
 	script(src="/plugins/javascript-load-image/js/load-image.all.min.js")
 	script(src="/plugins/jquery-file-upload/js/vendor/jquery.ui.widget.js")
 	script(src="/plugins/jquery-file-upload/js/jquery.iframe-transport.js")
@@ -23,15 +22,31 @@ block script
 	script(src="/javascripts/board_selector.js") 
 	script(src="/javascripts/tag_selector.js")
 
+	link(rel="stylesheet", href="/bower_components/angular/angular-csp.css")
+
+append variables
+	- var angular_app = 'articles.new';
+
+block script_variables 
+	| var local_data = !{JSON.stringify(local_data)};   
+
 block content
 	#content
 		.content-body
-			.write-form-wrapper
+			.write-form-wrapper(ng-controller="newArticleCtrl")
 				form(action="/articles/create?redirect_url=#{redirect_url}", method="post")
 					.form-group
-						input.region-select.form-control(type="text", name="region-select", placeholder="서울")
+						.region-selector-wrapper
+							input.region-select.form-control(type="text", name="region-select", placeholder="서울", ng-if="regions", ng-init="initRegionSelect()")
+							.regions-box
+								a.btn.btn-default.selected-region(ng-repeat="region in regionSelectorData.selected" ng-click="removeSelectedRegion(region)") {{region.name}} 
+									span.x-icon x
+
+							input(type="hidden", name="regions", value="{{getRegionsValue(regionSelectorData.selected)}}")
 					.form-group
-						select.board-select.form-control(name="board")
+						select.board-select.form-control(ng-if="boards", ng-model="boardData.selected", ng-options="board.name for board in availableBoards")
+						input(type="hidden", name="board", value="{{boardData.selected._id}}")
+
 
 					.form-group
 						input.form-control(type="text", name="title", placeholder="제목")
@@ -59,3 +74,9 @@ block content
 					button.btn.btn-primary(type="submit") 글쓰기
 append bottom_script
 	script(src="/plugins/typeahead.js/typeahead.bundle.js")
+	script(src="/bower_components/lodash/dist/lodash.min.js")
+	script(src="/bower_components/angular/angular.min.js")
+	script(src="/bower_components/angular-aria/angular-aria.min.js")
+	script(src="/bower_components/angular-messages/angular-messages.min.js")
+	script(src="/javascripts/articles/new.js")
+

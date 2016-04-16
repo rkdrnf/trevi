@@ -8,6 +8,8 @@ var Article = require('../models/article.js');
 var Board = require('../models/board.js');
 var Region = require('../models/region.js');
 var Tag = require('../models/tag.js');
+var ObjectId = require('mongoose').Types.ObjectId;
+var qs = require('qs');
 
 routerHelper.checkUserLoggedIn = function (req, res, next) {
 	if (req.user) {
@@ -117,6 +119,29 @@ routerHelper.setRecArticles = function(options) {
 	};
 };
 
+routerHelper.setRegion = function(name) {
+	return function(req, res, next) {
+		if (!req.query[name]) {
+			next();
+			return;
+		}
+
+		if (!ObjectId.isValid(req.query[name])) {
+			throw new Error('[setRegion] invalid region query: ' + req.query[name]);
+		}
+
+		Region.findById(req.query[name]).populate('boards').lean().exec(function(err, region) {
+			if (err) {
+				console.log(err);
+				throw err;
+			}
+
+			req.region = region;
+			next();
+		});
+	};
+};
+
 routerHelper.setRecQuestions = function(options) {
 	var query = {};
 
@@ -132,6 +157,11 @@ routerHelper.setRecQuestions = function(options) {
 
 routerHelper.getAllRegions = function(selects) {
 	return function(req, res, next) {
+		if (res.locals.all_regions) {
+			next();
+			return;
+		}
+
 		Region.find().select(selects).lean().exec(function(err, regions) {
 			if(err)
 				throw err;
@@ -149,6 +179,17 @@ routerHelper.getAllBoards = function(selects) {
 				throw err;
 
 			res.locals.all_boards = boards;
+			next();
+		});
+	};
+};
+
+routerHelper.getMajorBoards = function() {
+	return function(req, res, next) {
+		Board.find({ major: true }).select("_id name").lean().exec(function(err, boards) {
+			if (err) throw err;
+
+			res.locals.major_boards = boards;
 			next();
 		});
 	};
