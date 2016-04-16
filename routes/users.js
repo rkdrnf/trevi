@@ -60,7 +60,7 @@ router.get('/edit_like', routerHelper.checkUserLoggedIn, function(req, res){
 });
 
 router.post('/update_like', routerHelper.checkUserLoggedIn, function(req, res) {
-	User.update({ _id: req.user._id}, { additionalInfo: {  likeGenres: req.body["likeGenres[]"], likeRegions: req.body["likeRegions[]"] }}, function(err) {
+	User.update({ _id: req.user._id}, { additionalInfo: {  like_genres: req.body["like_genres[]"], like_regions: req.body["like_regions[]"], wellknown_regions: req.body["wellknown_regions[]"], visited_regions: req.body["visited_regions[]"] }}, function(err) {
 		if (err) {
 			console.log(err);
 			throw err;
@@ -68,8 +68,8 @@ router.post('/update_like', routerHelper.checkUserLoggedIn, function(req, res) {
 
 		res.redirect('/users/edit');
 	});
-	req.user.additionalInfo.wellknownRegion = req.body.wellknownRegion;
-	req.user.additionalInfo.visitedRegion = req.body.visitedRegion;
+//	req.user.additionalInfo.wellknownRegion = req.body.wellknownRegion;
+//	req.user.additionalInfo.visitedRegion = req.body.visitedRegion;
 });
 
 module.exports = router;

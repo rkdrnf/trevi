@@ -9,13 +9,13 @@
   .addInfo-checker .update-button-box button {
     width: 200px; }
 
-.addInfo-checker .addInfo1-filter, .addInfo-checker .addInfo2-filter {
+.addInfo-checker .addInfo1-filter, .addInfo-checker .addInfo2-filter, .addInfo-checker .addInfo3-filter, .addInfo-checker .addInfo4-filter {
   padding: 20px;
   border-bottom: 1px solid #ccc; }
-  .addInfo-checker .addInfo1-filter .filter-head, .addInfo-checker .addInfo2-filter .filter-head {
+  .addInfo-checker .addInfo1-filter .filter-head, .addInfo-checker .addInfo2-filter .filter-head, .addInfo-checker .addInfo3-filter .filter-head, .addInfo-checker .addInfo4-filter .filter-head {
     width: 100px;
     display: inline-block; }
-  .addInfo-checker .addInfo1-filter .filter-body, .addInfo-checker .addInfo2-filter .filter-body {
+  .addInfo-checker .addInfo1-filter .filter-body, .addInfo-checker .addInfo2-filter .filter-body, .addInfo-checker .addInfo3-filter .filter-body, .addInfo-checker .addInfo4-filter .filter-body {
     display: inline-block; }
 
 .addInfo-checker .filter-node {

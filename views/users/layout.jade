@@ -1,0 +1,15 @@
+extends ../layout
+
+block content
+	#content
+		.side_menu
+			block side_menu
+				.menu-list
+					a.menu-button.btn.btn-default(href="/users/edit_profile")
+						span 내 정보 수정
+					a.menu-button.btn.btn-default(href="/users/edit_like")
+						span 관심리스트
+
+		.center-content
+			block center_content
+	
