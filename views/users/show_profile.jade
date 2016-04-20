@@ -1,0 +1,50 @@
+extends layout
+
+block script
+	link(rel="stylesheet", href="/stylesheets/users/show_profile.css")
+
+block center_content
+	.user-profile-wrapper
+		form(action="/users/edit_profile", method="post", enctype="multipart/form-data")
+			.container
+				.row
+					.label-col.col-xs-3 
+						span 사진
+					.photo-col.col-xs-9 
+						.photo-preview
+							if (user.profile_photo)
+								img.profile-preview(src="#{user.profile_photo.thumbnail.path}")
+				.row
+					.label-col.col-xs-3
+						span 이름
+					.col-xs-9
+						span= user.local.name
+				.row
+					.label-col.col-xs-3
+						span 이메일
+					.col-xs-9
+						span= user.local.email
+				.row
+					.label-col.col-xs-3
+						span 성별
+					.col-xs-9.sex-fields
+						if (user.sex === "Male")
+							span 남자
+						else 
+							span 여자
+				.row
+					.label-col.col-xs-3
+						span 생일
+					.col-xs-9
+						if (user.birth)
+							- birthValue = user.birth.getFullYear() + "-" + (user.birth.getMonth()+1) + "-" + user.birth.getDate();
+						span= birthValue
+				.row
+					.submit-col.col-xs-12
+						button.btn.btn-primary(type="submit") 저장하기
+
+				span= user.additionalInfo.like_genres[0]
+				span= user.additionalInfo.like_regions[0]
+				span= user.additionalInfo.wellknown_regions[0]
+				span= user.additionalInfo.visited_regions[0]
+			
