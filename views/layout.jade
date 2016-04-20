@@ -1,70 +1,28 @@
-block variables
-	- var page_style = 'default'
-	- var nav_style = 'default'
+extends base_layout
 
-doctype html
-html(ng-app=angular_app ? "#{angular_app}" : false)
-	head
-		title= title
-		meta(name='viewport', content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0')
-		link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css", integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7", crossorigin="anonymous")
-		link(rel='stylesheet', href='/stylesheets/style.css')
-		link(rel='stylesheet', href='/stylesheets/nav_style.css')
-		link(rel='stylesheet', href='/stylesheets/sub_nav.css')
-		script(src='http://code.jquery.com/jquery.js')
-		link(rel='stylesheet', href='/stylesheets/partials/article_brief.css')
-
-		if (recommended_places)
-			link(rel='stylesheet', href='/stylesheets/partials/recommended_places.css')
-		if (recommended_articles)
-			link(rel='stylesheet', href='/stylesheets/partials/recommended_articles.css')
-		if (recommended_questions)
-			link(rel='stylesheet', href='/stylesheets/partials/recommended_questions.css')
-
-		if (nav_style === "default")
-			script(src='/javascripts/nav_search.js')
-
-		script(src='/javascripts/users/signup.js')
-		link(rel='stylesheet', href='/stylesheets/signup.css')
-
-		block script
-	body
-		| <script type='text/javascript'>
-		block script_variables
-		| </script>
-
-		block templates
-
-		include ./mixins/common.jade
-
-		div(class="page_wrapper #{page_style}")
-			block header
-				include nav
-			block content
-				#content
-					.left-sidebar
-						block left_sidebar
-							if (recommended_places)
-								include partials/recommended_places
-					.center-content
-						block center_content
-					.right-sidebar
-						block right_sidebar
-							if (recommended_articles)
-								include partials/recommended_articles
-							if (recommended_questions)
-								include partials/recommended_questions
-
-			block footer
-				- if (messages.error)
-					span= messages.error
+append script
+	link(rel='stylesheet', href='/stylesheets/partials/article_brief.css')
+	link(rel="stylesheet", href="/stylesheets/layout.css")
+	
+	if (recommended_places)
+		link(rel='stylesheet', href='/stylesheets/partials/recommended_places.css')
+	if (recommended_articles)
+		link(rel='stylesheet', href='/stylesheets/partials/recommended_articles.css')
+	if (recommended_questions)
+		link(rel='stylesheet', href='/stylesheets/partials/recommended_questions.css')
 
 
-		block modals
-			include ./login_modal.jade
-			include ./signup_modal.jade
-
-		block bottom_script
-			script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous")
-			if (nav_style === 'default')
-				script(src="/javascripts/bootstrap3-typeahead.min.js")
+block content
+	#content
+		.left-sidebar
+			block left_sidebar
+				if (recommended_places)
+					include partials/recommended_places
+		.center-content
+			block center_content
+		.right-sidebar
+			block right_sidebar
+				if (recommended_articles)
+					include partials/recommended_articles
+				if (recommended_questions)
+					include partials/recommended_questions

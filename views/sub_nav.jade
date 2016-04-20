@@ -23,5 +23,9 @@ div#subNav.navbar-collapse.collapse
 				a(href="/events") 이벤트
 			li.nav-item
 				- var restaurantsLink = region ? "/regions/" + region.url + "/restaurants" : "/restaurants";
-
 				a(href="#{restaurantsLink}") 맛집
+			li.nav-item
+				- var photosLink = region?  "/regions/" + region.url + "/photos/" : "#";
+				a(href="#{photosLink}") 한장사진
+				
+

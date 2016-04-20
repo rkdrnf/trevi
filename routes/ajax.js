@@ -8,6 +8,13 @@ var User = require('../models/user.js');
 var Restaurant = require('../models/restaurant.js');
 var Place = require('../models/place.js');
 
+var qc = require('../helper/query_checker.js');
+var QueryChecker = new qc();
+var ObjectId = require('mongoose').Types.ObjectId;
+var Photo = require('../models/photo.js');
+var Article = require('../models/article.js');
+var PhotoArticle = require('../models/photo_article.js');
+
 router.get('/regions_for_search_dbid', function (req, res) {
 	Region.find().select('_id name').lean().exec(function(err, regions) {
 		res.json(regions.map(function(region) { return { id: region._id, name: region.name }; }));
@@ -123,6 +130,46 @@ router.get('/regions_boards_data', function(req, res) {
 			res.json({ regions: regions, boards: boards });
 		});
 	});
+});
+
+QueryChecker.add('/hot_travels', [
+	{
+		name: 'region',
+		type: ObjectId,
+		required: true
+	}
+]);
+router.get('/hot_travels', QueryChecker.check('/hot_travels'), function(req, res) {
+	Board.findOne({ unique_name: "Travel" }, function(err, board) {
+		if (err) throw err;
+		Article.find({ regions: req.query.region, board: board._id }).populate('photos').limit(4).lean().exec(function(err, articles) {
+			if (err) throw err;
+			articles.forEach(function(article) {
+				if (article.photos.length > 0) {
+					article.preview_image = article.photos[0].original.path;
+				} else {
+					article.preview_image = "/images/sample.png";
+				}
+			});
+			res.json({ travels: articles });
+		});
+	});
+});
+
+QueryChecker.add('/hot_photos', [
+	{
+		name: 'region',
+		type: ObjectId,
+		required: true
+	}
+]);
+router.get('/hot_photos', QueryChecker.check('/hot_photos'), function(req, res) {
+	PhotoArticle.find({ region: req.query.region }).populate({ path: 'photo', select: "thumbnail.path"}).select("photo").lean().limit(4).exec(function(err, photos) {
+		if (err) throw err;
+
+		res.json({ photos: photos });
+	});
+
 });
 
 module.exports = router;

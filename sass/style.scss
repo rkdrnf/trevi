@@ -1,3 +1,8 @@
+$main-back-color: #edebe1;
+
+body {
+	background-color: $main-back-color;
+}
 #content {
 	.content-body {
 		padding: 50px;
@@ -64,24 +69,6 @@
 select {
 	-webkit-appearance: none;
 	display: block;
-}
-
-.left-sidebar {
-	vertical-align: top;
-	display: inline-block;
-	width: 25%;
-}
-
-.right-sidebar {
-	vertical-align: top;
-	display: inline-block;
-	width: 25%;
-}
-
-.center-content {
-	vertical-align: top;
-	display: inline-block;
-	width: 50%;
 }
 
 .star-medium {
