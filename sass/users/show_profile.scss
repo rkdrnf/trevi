@@ -1,0 +1,72 @@
+.date-fields select {
+	display: inline-block;
+	margin: 2px;
+	width: 100px;
+}
+
+.sex-fields {
+	input, label { 
+		display: inline-block;
+	}
+
+	label {
+		width: 100px;
+	}
+
+	input {
+		width: 20px;
+	}
+}
+
+.user-profile-wrapper .container {
+	width: 100%;
+
+	input[type="text"] {
+		width: 200px;
+	}
+
+	.row {
+		line-height: 34px;
+	padding: 10px; }
+}
+
+.label-col {
+	text-align: right;
+}
+
+.submit-col {
+	text-align: center;
+}
+
+.photo-col {
+	.photo-preview {
+		width: 100px;
+		height: 100px;
+		display: inline-block;
+
+		.profile-preview {
+			max-width: 100px;
+			max-height: 100px;
+		}
+
+
+	}
+
+	.photo-input-box {
+		width: 200px;
+		height: 100px;
+		overflow: visible;
+		display: inline-block;
+		vertical-align: top;
+		#profilePhoto {
+			position: relative;
+			top: 50%;
+			width: 200px;
+			-webkit-transform: translateY(-50%);
+			-ms-transform: translateY(-50%);
+			transform: translateY(-50%);
+		}
+	}
+}
+
+

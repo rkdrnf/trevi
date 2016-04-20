@@ -3,7 +3,7 @@ var Schema = mongoose.Schema;
 
 var photo = new Schema({ 
 	original: {
-		path: String,				// /images/user_images/file_name
+		path: { type: String, required: true },			// /images/user_images/file_name
 		size: {
 			x: Number,
 			y: Number
@@ -27,7 +27,8 @@ var photo = new Schema({
 	references: { 
 		article: { type: Schema.Types.ObjectId, ref: 'Article' },
 		photo_article: { type: Schema.Types.ObjectId, ref: 'PhotoArticle' },
-		place: { type: Schema.Types.ObjectId, ref: 'Place' }
+		place: { type: Schema.Types.ObjectId, ref: 'Place' },
+		user: { type: Schema.Types.ObjectId, ref: 'User' }
 	}
 });
 
@@ -49,6 +50,9 @@ photo.statics.getImagePath = function(type) {
 		
 		case 'Place':
 			return '/images/place_photos/';
+
+		case 'User':
+			return '/images/profile_photos/';
 	}
 
 	throw new Error('invalid image path type');

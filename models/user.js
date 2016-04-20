@@ -20,7 +20,7 @@ var userSchema = new Schema({
 		email        : String,
 		name         : String },
 
-	profile_photo: { type: Schema.Types.ObjectId, ref: 'ProfilePhoto' },
+	profile_photo: { type: Schema.Types.ObjectId, ref: 'Photo' },
 	sex: { type: String, enum: ['Male', 'Female']},
 	birth: { type: Date, default: new Date() },
 	phone: { type: String, default: "010-1234-5678" },

@@ -4,40 +4,39 @@ var Region = require('../models/region.js');
 var router = express.Router();
 var routerHelper = require('../helper/router_helper.js');
 var upload = multer({ dest: 'public/images/profile_photos/'});
-var ProfilePhoto = require('../models/profile_photo.js');
-var MAU = require('../helper/modify_and_upload.js');
+var Photo = require('../models/photo.js');
+var processImages = require('../helper/modify_and_upload.js');
 var User = require('../models/user.js');
 
 /* GET users listing. */
-router.get('/edit', routerHelper.checkUserLoggedIn, function(req, res) {
-	res.render('users/edit');
+router.get('/edit_profile', routerHelper.checkUserLoggedIn, function(req, res) {
+	res.render('users/edit_profile');
 });
 
-router.post('/update', routerHelper.checkUserLoggedIn, upload.single('profile_photo'), function(req, res) {
-	if (req.file) {
-		var mau = new MAU([req.file], {
-			save_path: 'public/images/profile_photos/',
-			thumbnail_size: { x: 100, y: 100 }
-		}, function(err, result) {
+router.get('/show_profile', routerHelper.checkUserLoggedIn, function(req, res) {
+	res.render('users/show_profile');
+});
+
+
+router.post('/update_profile', routerHelper.checkUserLoggedIn, upload.single('profile_photo'), processImages(function(req) { return req.file ? [req.file] : []; }, { type: 'User', saves: 'thumbnail' }), function(req, res) {
+	console.log('#########################');
+	console.log(req.processedImages);
+	var values = req.processedImages.files.map(function(fileInfo) {
+		return {
+			original: fileInfo.original,
+			thumbnail: fileInfo.thumbnail,
+			owner: req.user._id
+		};
+	});
+
+	if (values[0]) {
+		Photo.create(values[0], function(err, photo) {
 			if (err) {
 				console.log(err);
 			}
-			var values = result.files.map(function(fileInfo) {
-				return {
-					path: ProfilePhoto.userImagePath + fileInfo.filename,
-					thumbnail: ProfilePhoto.thumbnailPath + fileInfo.thumbnailName,
-					owner: req.user._id
-				};
-			});
-
-			ProfilePhoto.create(values[0], function(err, photo) {
-				if (err) {
-					console.log(err);
-				}
-				req.user.profile_photo = photo._id;
-				req.user.save(function (err) {
-					if (err) console.log(err);
-				});
+			req.user.profile_photo = photo._id;
+			req.user.save(function (err) {
+				if (err) console.log(err);
 			});
 		});
 	}
@@ -50,7 +49,7 @@ router.post('/update', routerHelper.checkUserLoggedIn, upload.single('profile_ph
 
 	req.user.save();
 
-	res.redirect('back');
+	res.redirect('/users/show_profile');
 });
 
 router.get('/edit_like', routerHelper.checkUserLoggedIn, function(req, res){
@@ -66,7 +65,7 @@ router.post('/update_like', routerHelper.checkUserLoggedIn, function(req, res) {
 			throw err;
 		}
 
-		res.redirect('/users/edit');
+		res.redirect('/users/show_profile');
 	});
 //	req.user.additionalInfo.wellknownRegion = req.body.wellknownRegion;
 //	req.user.additionalInfo.visitedRegion = req.body.visitedRegion;
