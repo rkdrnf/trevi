@@ -1,4 +1,4 @@
-extends ../layout
+extends layout
 
 append script
 	link(rel="stylesheet", href="/stylesheets/users/edit.css")
@@ -51,3 +51,9 @@ block center_content
 				.row
 					.submit-col.col-xs-12
 						button.btn.btn-primary(type="submit") 저장하기
+
+				span= user.additionalInfo.like_genres[0]
+				span= user.additionalInfo.like_regions[0]
+				span= user.additionalInfo.wellknown_regions[0]
+				span= user.additionalInfo.visited_regions[0]
+			

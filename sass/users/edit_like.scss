@@ -1,0 +1,35 @@
+.addInfo-checker {
+	.addInfo1-filter {
+		text-align: center;
+	}
+	.update-button-box {
+		height: 200px;
+		line-height: 60px;
+		padding: 10px;
+		text-align: center;
+
+		button {
+			width: 200px;
+		}
+	}
+
+	.addInfo1-filter, .addInfo2-filter, .addInfo3-filter, .addInfo4-filter {
+		padding: 20px;
+		border-bottom: 1px solid #ccc;
+
+		.filter-head {
+			width: 100px;
+			display: inline-block;	
+		}
+		.filter-body {
+			display: inline-block;
+		}
+
+	}
+
+	.filter-node {
+		padding: 10px;
+		display: inline-block;
+	}
+
+}

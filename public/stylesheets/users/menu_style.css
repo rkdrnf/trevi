@@ -1,0 +1,14 @@
+.side_menu {
+  vertical-align: top;
+  display: inline-block;
+  width: 25%; }
+
+.menu-list {
+  display: inline-block;
+  width: 10%;
+  height: 300px; }
+  .menu-list .menu-button {
+    vertical-align: top;
+    display: block;
+    width: 200px;
+    height: 100px; }
