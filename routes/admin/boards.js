@@ -15,7 +15,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/create', function(req, res, next) {
-	Board.create({ region: req.body.region, name: req.body.name, type: req.body.type, major: req.body.major, unique_name: req.body.unique_name }, function(err) { 
+	Board.create({ region: req.body.region, name: req.body.name, type: req.body.type, major: req.body.major ? true : false, unique_name: req.body.unique_name }, function(err) { 
 		if (err) {
 			console.log(err);
 			return handleError(err);
@@ -38,7 +38,7 @@ router.get('/edit/:id', function(req, res, next) {
 });
 
 router.post('/update/:id', function(req, res, next) {
-	Board.update({ _id: req.params.id }, { region: req.body.region, name: req.body.name, type: req.body.type, major: req.body.major, unique_name: req.body.unique_name }, function(err) { 
+	Board.update({ _id: req.params.id }, { region: req.body.region, name: req.body.name, type: req.body.type, major: req.body.major ? true : false, unique_name: req.body.unique_name }, function(err) { 
 		if (err) { 
 			console.log(err);
 			return handleError(err);
