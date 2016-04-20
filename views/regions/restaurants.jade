@@ -1,6 +1,6 @@
-extends ../layout.jade
+extends ../wide_layout.jade
 
-block script
+append script
 	link(rel="stylesheet", href="/stylesheets/regions/restaurants.css")
 	link(rel="stylesheet", href="/bower_components/angular/angular-csp.css")
 	link(rel="stylesheet", href="/stylesheets/partials/region_header.css")
@@ -15,10 +15,7 @@ block script
 append variables
 	- var angular_app = 'regions.restaurants.index';
 
-block script_variables
-	| var local_data = !{JSON.stringify(local_data)};
-
-block templates
+append templates
 	include ../angular/place_modal.jade
 
 block center_content

@@ -1,0 +1,14 @@
+.left-sidebar {
+  vertical-align: top;
+  display: inline-block;
+  width: 25%; }
+
+.right-sidebar {
+  vertical-align: top;
+  display: inline-block;
+  width: 25%; }
+
+.center-content {
+  vertical-align: top;
+  display: inline-block;
+  width: 50%; }

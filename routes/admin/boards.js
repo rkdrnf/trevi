@@ -10,12 +10,12 @@ router.get('/', function(req, res, next) {
 	}
 
 	Board.find(query_condition).populate('region').lean().exec(function (err, boards) {
-		res.render('admin/boards/index', { boards: boards, board_types: Board.getTypes() });
+		res.render('admin/boards/index', { boards: boards, board_types: Board.getTypes(), board_names: Board.getUniqueNames() });
 	});
 });
 
 router.post('/create', function(req, res, next) {
-	Board.create({ region: req.body.region, name: req.body.name, type: req.body.type, major: req.body.major }, function(err) { 
+	Board.create({ region: req.body.region, name: req.body.name, type: req.body.type, major: req.body.major, unique_name: req.body.unique_name }, function(err) { 
 		if (err) {
 			console.log(err);
 			return handleError(err);
@@ -32,13 +32,13 @@ router.get('/edit/:id', function(req, res, next) {
 			return handleError(err);
 		}
 
-		res.render('admin/boards/edit', { board: board, board_types: Board.getTypes(), redirect_url: encodeURIComponent(req.query.redirect_url) });
+		res.render('admin/boards/edit', { board: board, board_types: Board.getTypes(), board_names: Board.getUniqueNames(), redirect_url: encodeURIComponent(req.query.redirect_url) });
 
 	});
 });
 
 router.post('/update/:id', function(req, res, next) {
-	Board.update({ _id: req.params.id }, { region: req.body.region, name: req.body.name, type: req.body.type, major: req.body.major }, function(err) { 
+	Board.update({ _id: req.params.id }, { region: req.body.region, name: req.body.name, type: req.body.type, major: req.body.major, unique_name: req.body.unique_name }, function(err) { 
 		if (err) { 
 			console.log(err);
 			return handleError(err);

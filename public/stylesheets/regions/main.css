@@ -59,13 +59,16 @@
 
 .hot-courses {
   width: 100%;
+  padding: 10px;
+  background-color: #f4f4f4;
+  border: 1px solid #ccc;
   height: 400px; }
   .hot-courses .region-map {
     vertical-align: top;
     display: inline-block;
     height: 100%;
     width: 70%; }
-    .hot-courses .region-map #map {
+    .hot-courses .region-map .testmap {
       height: 100%; }
   .hot-courses .places {
     vertical-align: top;
@@ -88,4 +91,140 @@
   display: block; }
 
 .angular-google-map-container {
-  height: 300px; }
+  height: 380px; }
+
+.hero {
+  padding: 10px; }
+  .hero .hot-travels {
+    background-color: #f4f4f4;
+    width: 700px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    height: 350px; }
+    .hero .hot-travels .row {
+      margin-left: 0px;
+      margin-right: 0px; }
+    .hero .hot-travels .col {
+      padding-left: 0px;
+      padding-right: 0px; }
+    .hero .hot-travels .fake-image {
+      width: 100%;
+      height: 100%;
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-size: cover;
+      position: relative; }
+    .hero .hot-travels .preview-item {
+      height: 310px;
+      overflow: hidden; }
+      .hero .hot-travels .preview-item a {
+        display: block;
+        width: 100%;
+        height: 100%; }
+        .hero .hot-travels .preview-item a .title {
+          position: absolute;
+          background-color: rgba(0, 0, 0, 0.5);
+          width: 100%;
+          box-sizing: border-box;
+          padding: 15px;
+          bottom: 0px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          color: white;
+          font-size: 20px;
+          font-weight: bold; }
+    .hero .hot-travels .side-items {
+      overflow: hidden;
+      height: 100%; }
+      .hero .hot-travels .side-items .side-item {
+        margin-bottom: 10px; }
+        .hero .hot-travels .side-items .side-item .image-wrapper {
+          display: inline-block;
+          vertical-align: top;
+          width: 80px;
+          height: 65px;
+          overflow: hidden; }
+        .hero .hot-travels .side-items .side-item .title {
+          display: inline-block;
+          vertical-align: top;
+          width: 150px;
+          padding: 15px;
+          font-size: 15px;
+          font-weight: bold; }
+
+.hero .hot-photos {
+  padding: 20px;
+  background-color: #f4f4f4;
+  border: 1px solid #ccc;
+  width: 250px;
+  height: 350px;
+  overflow: hidden; }
+
+.hero .hot-travels {
+  float: left; }
+
+.hero .hot-photos {
+  float: left;
+  margin-left: 20px; }
+
+.hero:after {
+  clear: both;
+  content: "";
+  display: block; }
+
+.body-sector {
+  padding: 10px; }
+
+.body-sector:after {
+  clear: both;
+  content: "";
+  display: block; }
+
+.boards {
+  margin-bottom: 20px; }
+
+.boards:after {
+  clear: both;
+  content: "";
+  display: block; }
+
+.board-block .category-header {
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  color: #43c4be; }
+
+.board-block .articles {
+  width: 100%;
+  background-color: #f4f4f4;
+  border: 1px solid #ccc;
+  padding: 20px; }
+  .board-block .articles .article-item {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 5px;
+    border-bottom: 1px solid #ccc; }
+    .board-block .articles .article-item a {
+      color: black; }
+  .board-block .articles .article-item:last-child {
+    border-bottom: none; }
+
+.recent-articles, .recent-travels, .recent-questions {
+  width: 350px;
+  max-height: 500px;
+  float: left; }
+
+.recent-travels {
+  margin-left: 20px; }
+
+.recent-questions {
+  margin-left: 20px; }
+
+.hot-photos .photo-item {
+  width: 100px;
+  height: 60px; }
+  .hot-photos .photo-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; }

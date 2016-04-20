@@ -11,7 +11,13 @@ block content
 				span type
 				select.form-control(name="type")
 					each type in board_types
-						option(value="#{type}")= type
+						option(value="#{type}", selected=(type === board.type))= type
+			.form-group
+				span unique_name 
+				select.form-control(name="unique_name")
+					each name in board_names 
+						option(value="#{name}", selected=(name === board.unique_name))= name 
+
 			.form-group
 				span major
 				input.form-control(type="checkbox", name="major", value="true", checked=board.major)

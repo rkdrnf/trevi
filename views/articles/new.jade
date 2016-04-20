@@ -1,5 +1,5 @@
 extends ../layout 
-block script
+append script
 	script(src="/plugins/tinymce/tinymce.min.js")
 	link(rel="stylesheet", href="/stylesheets/tinymce.css")
 	link(rel="stylesheet", href="/stylesheets/articles/new.css")
@@ -26,9 +26,6 @@ block script
 
 append variables
 	- var angular_app = 'articles.new';
-
-block script_variables 
-	| var local_data = !{JSON.stringify(local_data)};   
 
 block content
 	#content

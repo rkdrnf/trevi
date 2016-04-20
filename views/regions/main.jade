@@ -1,6 +1,6 @@
-extends ../layout
+extends ../wide_layout
 
-block script
+append script
 	link(rel = "stylesheet", href="/stylesheets/regions/main.css")
 	script(src="/javascripts/map_manager.js")
 	script(src="/javascripts/regions/main.js") 
@@ -34,24 +34,49 @@ block templates
 	
 block center_content 
 	.hero
-		.hot-travels
-			each travel in travels
-				div
-		
+		.hot-travels(ng-controller="hotTravelCtrl")
+			.container-fluid
+				.row
+					.preview-item.col.col-md-7
+						a(ng-href="/articles/{{mainTravel._id}}")
+							.fake-image(ng-style="{'background-image': 'url(' + mainTravel.preview_image + ')'}")
+								.title(ng-cloak)
+									{{mainTravel.title}}
+					.side-items.col.col-md-5
+						.container-fluid
+							.row
+								.side-item.col.col-md-12.col-xs-3(ng-repeat="travel in travels", ng-mouseover="onOverSideItem(travel)")
+									.image-wrapper
+										a(ng-href="/articles/{{travel._id}}")
+											.fake-image(ng-style="{'background-image': 'url(' + travel.preview_image + ')'}")
+									.title
+										a(ng-href="/articles/{{travel._id}}")
+											span {{travel.title}}
+		.hot-photos(ng-controller="hotPhotosCtrl")
+			.photo-item(ng-repeat="photo in photos")
+				a(ng-href="/regions/{{region.url}}/photos/{{photo._id}}")
+					img(ng-src="{{photo.photo.thumbnail.path}}")
 	.body-sector
-		.hot-articles
-			.recent-articles
+		.boards
+			.board-block.recent-articles
 				h4.category-header 새로운 글들
-				each article in recent_articles
-					include ../partials/article_brief.jade
-			.hot-travels
-				h4.category-header 인기있는 여행기 
-				each article in recent_articles
-					include ../partials/article_brief.jade
-			.questions
-				h4.category-header 도움이 필요해요
-				each article in recent_questions
-					include ../partials/article_brief.jade
+				.articles
+					each article in recent_articles
+						div.article-item
+							a(href="/articles/#{article._id}")= article.title
+			.board-block.recent-travels
+				h4.category-header 새로운 여행기들
+				.articles
+					each article in recent_articles
+						div.article-item
+							a(href="/articles/#{article._id}")= article.title
+
+			.board-block.recent-questions
+				h4.category-header 새로운 질문들
+				.articles
+					each article in recent_articles
+						div.article-item
+							a(href="/articles/#{article._id}")= article.title
 
 		.hot-courses(ng-controller="googleMapController as gMapController")
 			.region-map

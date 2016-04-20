@@ -1,0 +1,50 @@
+block variables
+	- var page_style = 'default'
+	- var nav_style = 'default'
+
+doctype html
+html(ng-app=angular_app ? "#{angular_app}" : false)
+	head
+		title= title
+		meta(name='viewport', content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0')
+		link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css", integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7", crossorigin="anonymous")
+		link(rel='stylesheet', href='/stylesheets/style.css')
+		link(rel='stylesheet', href='/stylesheets/nav_style.css')
+		link(rel='stylesheet', href='/stylesheets/sub_nav.css')
+		script(src='http://code.jquery.com/jquery.js')
+
+		if (nav_style === "default")
+			script(src='/javascripts/nav_search.js')
+
+		script(src='/javascripts/users/signup.js')
+		link(rel='stylesheet', href='/stylesheets/signup.css')
+
+		block script
+	body
+		| <script type='text/javascript'>
+		block script_variables
+			| var local_data = !{JSON.stringify(local_data ? local_data : {})};   
+		| </script>
+
+		block templates
+
+		include ./mixins/common.jade
+
+		div(class="page_wrapper #{page_style}")
+			block header
+				include nav
+			block content
+
+			block footer
+				- if (messages.error)
+					span= messages.error
+
+
+		block modals
+			include ./login_modal.jade
+			include ./signup_modal.jade
+
+		block bottom_script
+			script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous")
+			if (nav_style === 'default')
+				script(src="/javascripts/bootstrap3-typeahead.min.js")

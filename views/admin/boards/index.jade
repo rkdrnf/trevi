@@ -7,6 +7,7 @@ block content
 		tr
 			th ID
 			th Name
+			th UniqueName 
 			th Type
 			th Major
 			th Option
@@ -14,6 +15,7 @@ block content
 					each board in boards
 						tr
 							td= board._id
+							td= board.unique_name
 							td= board.name
 							td= board.type
 							td= board.major
