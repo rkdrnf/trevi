@@ -3,11 +3,13 @@ mixin article_link(article, region, search_regions, search_boards, options)
 	- if (region) queryObj.region = region._id.toString();
 	- if (search_regions) queryObj.regions = search_regions;
 	- if (search_boards) queryObj.boards = search_boards;
+	
 	- var query = jadeHelper.buildGetQuery(queryObj)
+		
 	a(href="/articles/#{article._id}?#{query}")
 		span= article.title
-		&nbsp;
-		span.comments-count #{_.isEmpty(article.comments) ? '' : '[' + article.comments.length + ']'}
+	&nbsp
+	span.comments-count #{_.isEmpty(article.comments) ? '' : '[' + article.comments.length + ']'}
 
 mixin user_link(user)
 	a(href="#")= jadeHelper.user.getName(user)

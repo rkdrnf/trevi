@@ -1,6 +1,26 @@
 mixin article_row(article, region, search_regions, search_boards)
+	- var showBoard = false;
+	- if (search_boards && search_boards.length > 1) showBoard = true;
+	- var showRegion = false;
+	- if (search_regions && search_regions.length > 1) showRegion = true;
+
 	tr.article-row
 		td.title
+			if (showRegion)
+				span.regionTagOpener [
+				each region in article.regions
+					a.regionTag(href="/regions/#{region.url}")= region.name
+				span.regionTagCloser ]
+				&nbsp
+			if (showBoard) 
+				- var queryObj = {};
+				if (checked_regions)
+					- queryObj.regions = checked_regions;
+				- var query = jadeHelper.buildGetQuery(queryObj);
+
+				a.boardTag(href="/boards/#{article.board._id}?#{query}") [#{article.board.name}]
+				&nbsp
+
 			+star-box(false, article.star, "small")
 			+article_link(article, region, search_regions, search_boards)
 		td.date

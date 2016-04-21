@@ -98,7 +98,7 @@ router.get('/', QueryChecker.check("/"), RouterHelper.setRegion("region"), Route
 
 	var query = findArticlesQuery(region_ids, board_ids);
 
-	Article.find(query).populate('author').lean().exec(function(err, articles) {
+	Article.find(query).populate('author board regions').lean().exec(function(err, articles) {
 		res.render('articles/main', { articles: articles, checked_regions: region_ids, checked_boards: board_ids, region: req.region });
 	});
 });

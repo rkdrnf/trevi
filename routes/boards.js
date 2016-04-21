@@ -31,17 +31,31 @@ queryChecker.add("board_id", [
 	{
 		name: "region",
 		required: false,
-		type: ObjectId
+		type: ObjectId,
+		handler: function(query, region) {
+			if (!query.regions) {
+				query.regions = [region];
+			}
+		}
+	},
+	{
+		name: "regions",
+		required: false,
+		type: Array,
+		handler: function(query, regions) {
+			if (regions.length == 1) {
+				query.region = regions[0];
+			}
+		}
 	}
 ]);
 
-router.get('/:board_id', function(req, res) {
+router.get('/:board_id', queryChecker.check("board_id"), function(req, res) {
 	var query = url.parse(req.url, true).query;
 
-	if (req.query.region)
-		query["regions[]"] = [req.query.region];
-
 	query["boards[]"] = [req.board._id.toString()];
+
+	console.log(query);
 
 	var newUrlObj = {
 		pathname: "/articles",

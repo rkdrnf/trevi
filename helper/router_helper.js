@@ -90,6 +90,7 @@ routerHelper.setRecPlaces = function(options) {
 		return function (req, res, next) { 
 			var query = {};
 				if (!_.isEmpty(req.query.regions)) {
+					console.log(req.query);
 					query.region = { $in: req.query.regions };
 				}
 
