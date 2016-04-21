@@ -12,8 +12,7 @@ var QueryChecker = new qc();
 QueryChecker.add("/new", [
 	{
 		name: "regions",
-		required: false,
-		type: Array
+		required: false, type: Array
 	}, {
 		name: "boards",
 		required: false,
@@ -80,8 +79,7 @@ QueryChecker.add("/", [
 	{
 		name: "regions",
 		required: false,
-		type: Array,
-		handler: function (query, regions) {
+		type: Array, handler: function (query, regions) {
 			if (!query.region && regions.length === 1) {
 				query.region = regions[0];
 			}
@@ -117,13 +115,49 @@ router.post('/addStar', RouterHelper.checkUserLoggedInAjax(function(req, res) {
 	});
 });
 
-router.get('/:article_id', RouterHelper.setRegion("region"), RouterHelper.setRecPlaces(), RouterHelper.setRecArticles(), RouterHelper.setRecQuestions(), function(req, res) {
-	var query = findArticlesQuery(req.query.regions, req.query.boards);
-	Article.find(query).populate('author').lean().exec(function(err, other_articles) {
-		Article.findOne({ _id: req.params.article_id }).populate('author regions board photos').populate({ path: 'comments', populate: { path: 'author' }}).lean().exec(function (err, article) {
-			res.render('articles/show', { article: article, region: req.region, other_articles: other_articles, regions: req.query.regions, boards: req.query.boards });
-		});
 
+
+QueryChecker.add("/article_id", [
+	{
+		name: "region",
+		type: ObjectId,
+		required: false,
+		handler: function(query, region) {
+			if (!query.regions) {
+				query.regions = [region];
+			}
+		}
+	}
+]);
+router.get('/:article_id', QueryChecker.check("/article_id"), RouterHelper.setRegion("region"), RouterHelper.setRecPlaces(), RouterHelper.setRecArticles(), RouterHelper.setRecQuestions(), function(req, res) {
+	Article.findOne({ _id: req.params.article_id }).populate('author regions board photos').populate({ path: 'comments', populate: { path: 'author' }}).lean().exec(function (err, article) {
+
+		var query = findArticlesQuery(req.query.regions, [article.board] );
+		Article.find(query, 'title star author createdAt', { sort: "-_id"}).populate('author').lean().exec(function(err, other_articles) {
+
+			var nextQuery = {
+				board: article.board,
+			  _id: { $gt: article._id }
+			};
+
+			var prevQuery = {
+				board: article.board,
+				_id: { $lt: article._id }
+			};
+
+			if (req.query.region) {
+				nextQuery.regions = req.query.region;
+				prevQuery.regions = req.query.region;
+			}
+
+			Article.findOne(nextQuery, "title star author createdAt", { sort: "_id" }).populate('author').limit(1).lean().exec(function(err, nextArticle) {
+				if (err) throw err;
+				Article.findOne(prevQuery, "title star author createdAt", { sort: "-_id" }).populate('author').limit(1).lean().exec(function(err, prevArticle) {
+					if (err) throw err;
+					res.render('articles/show', { article: article, region: req.region, other_articles: other_articles, regions: req.query.regions, boards: req.query.boards, next_article: nextArticle, prev_article: prevArticle });
+				});
+			});
+		});
 	});
 });
 

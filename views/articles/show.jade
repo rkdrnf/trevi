@@ -62,7 +62,7 @@ block center_content
 						.row.recommend-row
 							.col-xs-12
 								.star-row
-									+star-box(comment.star, "large")
+									+star-box(false, comment.star, "large")
 								+star-button("/comments/addStar", comment._id)
 
 						.row.option-row
@@ -76,6 +76,24 @@ block center_content
 			+comment_field("/comments/create", "article", article._id, url)
 
 			
+		.prev-next-article
+			if (next_article)
+				.next-article
+					.header
+						span ▲ 다음글(N)
+					.title
+						+star-box(false, next_article.star, "small")
+						+article_link(next_article, region)
+
+			if (prev_article)
+				.prev-article
+					.header
+						span ▼ 이전글(P)
+					.title
+						+star-box(false, prev_article.star, "small")
+						+article_link(prev_article, region)
+
+
 		if (other_articles)
 			include ../mixins/article_row.jade
 			.other-articles
