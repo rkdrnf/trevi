@@ -10,14 +10,11 @@ append script
 	script(rel="javascript", src="/javascripts/star_button.js")
 	script(rel="javascript", src="/javascripts/articles/show.js")
 block center_content
-		if (region)
-			include ../partials/region_header.jade
-
 		.article-wrapper
 			.container
 				.row.title-row
 					.col-xs-12
-						+star-box(article.star, "large")
+						+star-box(false, article.star, "large")
 						span.title= article.title
 				.row.date-row
 					.col-xs-12
@@ -35,7 +32,7 @@ block center_content
 				.row.recommend-row
 					.col-xs-12
 						.star-row
-							+star-box(article.star, "large")
+							+star-box(false, article.star, "large")
 						+star-button("/articles/addStar", article._id)
 				.row.option-row
 					.col-xs-6.reply-button-row

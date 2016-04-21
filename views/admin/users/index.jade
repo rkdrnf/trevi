@@ -18,7 +18,7 @@ block content
 							td= user.local ? user.local.email : ""
 							td= user.facebook ? user.facebook.name : ""
 							td= user.facebook ? user.facebook.email : ""
-							td= user.additionalInfo.likeRegions
+							td= user.additionalInfo ? user.additionalInfo.likeRegions : ""
 							td
 								a.btn.btn-default(type="button", href="/admin/users/delete/#{user._id}") Delete
 								

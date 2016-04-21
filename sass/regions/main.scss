@@ -222,6 +222,8 @@
 }
 
 .hero {
+	width: 1200px;
+	margin: auto;
 	.hot-travels {
 		float: left;
 	}
@@ -240,6 +242,8 @@
 
 .body-sector {
 	padding: 10px;
+	width: 1200px;
+	margin: auto;
 }
 
 .body-sector:after {
@@ -259,7 +263,11 @@
 
 }
 
+.board-block:first-child {
+	margin-left: 0px;
+}
 .board-block {
+	margin-left: 20px;
 	.category-header {
 		font-size: 20px;
 		font-weight: bold;

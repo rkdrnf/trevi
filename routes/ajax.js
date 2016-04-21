@@ -11,10 +11,9 @@ var Place = require('../models/place.js');
 var qc = require('../helper/query_checker.js');
 var QueryChecker = new qc();
 var ObjectId = require('mongoose').Types.ObjectId;
-var Photo = require('../models/photo.js');
+//var Photo = require('../models/photo.js');
 var Article = require('../models/article.js');
 var PhotoArticle = require('../models/photo_article.js');
-
 router.get('/regions_for_search_dbid', function (req, res) {
 	Region.find().select('_id name').lean().exec(function(err, regions) {
 		res.json(regions.map(function(region) { return { id: region._id, name: region.name }; }));
@@ -171,5 +170,76 @@ router.get('/hot_photos', QueryChecker.check('/hot_photos'), function(req, res) 
 	});
 
 });
+
+QueryChecker.add('/get_articles', [
+	{
+		name: 'region',
+		type: ObjectId,
+		required: true
+	}
+]);
+
+function getArticles(boardName, req ,res) {
+	Board.findOne({ unique_name: boardName }, '_id').lean().exec(function(err, board) {
+		if (err) throw err;
+
+		Article.find({ regions: req.query.region, board: board._id }, 'title comments star', { sort: '-createdAt' }).lean().limit(10).exec(function(err, articles) {
+			if (err) throw err;
+
+			articles.map(function(article) {
+				article.comments_count = article.comments ? article.comments.length : 0;
+			});
+
+			res.json({ articles: articles });
+		});
+	});
+}
+
+router.get('/new_articles', QueryChecker.check('/get_articles'), function(req, res) {
+	getArticles('Freeboard', req, res);
+});
+
+router.get('/new_travels', QueryChecker.check('/get_articles'), function(req, res) {
+	getArticles('Travel', req, res);
+});
+
+router.get('/new_questions', QueryChecker.check('/get_articles'), function(req, res) {
+	getArticles('Question', req, res);
+});
+
+router.get('/best_articles', QueryChecker.check('/get_articles'), function(req, res) {
+	Board.findOne({ unique_name: 'Travel' }, '_id').lean().exec(function(err, board) {
+		if (err) throw err;
+
+		Article.find({ regions: req.query.region, board: { $ne: board._id }, star: { $gte: 100 } }, 'title star comments', { sort: '-createdAt' }).lean().limit(10).exec(function(err, articles) {
+			if (err) throw err;
+
+			articles.map(function(article) {
+				article.comments_count = article.comments ? article.comments.length : 0;
+			});
+
+			res.json({ articles: articles });
+		});
+	});
+});
+
+router.get('/best_travels', QueryChecker.check('/get_articles'), function(req, res) {
+	Board.findOne({ unique_name: 'Question' }, '_id').lean().exec(function(err, board) {
+		if (err) throw err;
+
+		Article.find({ regions: req.query.region, board: board._id, star: { $gte: 100 }}, 'title star comments', { sort: '-createdAt' }).lean().limit(10).exec(function(err, articles) {
+			if (err) throw err;
+
+			articles.map(function(article) {
+				article.comments_count = article.comments ? article.comments.length : 0;
+			});
+
+			res.json({ articles: articles });
+		});
+	});
+});
+
+
+
 
 module.exports = router;

@@ -1,7 +1,7 @@
 mixin article_row(article, region, search_regions, search_boards)
 	tr.article-row
 		td.title
-			+star-box(article.star, "small")
+			+star-box(false, article.star, "small")
 			+article_link(article, region, search_regions, search_boards)
 		td.date
 			span= article.createdAt.prettify()

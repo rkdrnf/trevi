@@ -13,10 +13,18 @@ mixin user_link(user)
 	a(href="#")= jadeHelper.user.getName(user)
 
 
-mixin star-box(star, size)
-	.star-box(class="#{size}")
-		span.star-text= star
-		img.star-image(src="/images/star.png")
+mixin star-box(is_angular, star, size)
+	if (is_angular)
+		.star-box(ng-if="#{star} > 0", class="#{size}")
+			span.star-text {{#{star}}}
+			img.star-image(src="/images/star.png")
+	else
+		if (star > 0)
+			.star-box(class="#{size}")
+				span.star-text= star
+				img.star-image(src="/images/star.png")
+
+
 
 mixin star-button(action, id)
 	button.star-button.btn.btn-primary(type="button", data-action="#{action}", data-id="#{id}")

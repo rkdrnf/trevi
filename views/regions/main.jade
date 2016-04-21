@@ -57,26 +57,27 @@ block center_content
 				a(ng-href="/regions/{{region.url}}/photos/{{photo._id}}")
 					img(ng-src="{{photo.photo.thumbnail.path}}")
 	.body-sector
-		.boards
-			.board-block.recent-articles
-				h4.category-header 새로운 글들
+		mixin board-block(ctrl, category)
+			.board-block.recent-articles(ng-controller="#{ctrl}")
+				h4.category-header= category 
 				.articles
-					each article in recent_articles
-						div.article-item
-							a(href="/articles/#{article._id}")= article.title
-			.board-block.recent-travels
-				h4.category-header 새로운 여행기들
-				.articles
-					each article in recent_articles
-						div.article-item
-							a(href="/articles/#{article._id}")= article.title
+					div.article-item(ng-repeat="article in articles")
+						+star-box(true, "article.star", "small")
+						a(ng-href="/articles/{{article._id}}?region={{region._id}}") {{article.title}} 
+						a.comment_count(ng-if="article.comments_count > 0", href="/comments/article/{{article._id}}") [{{article.comments_count}}]
 
-			.board-block.recent-questions
-				h4.category-header 새로운 질문들
-				.articles
-					each article in recent_articles
-						div.article-item
-							a(href="/articles/#{article._id}")= article.title
+		.boards
+			+board-block("newArticlesCtrl", "새로운 글들")
+									
+			+board-block("newTravelsCtrl", "새로운 여행기들")
+	
+			+board-block("newQuestionsCtrl", "새로운 질문들")
+		
+		.boards
+			+board-block("bestArticlesCtrl", "베스트 게시물")
+			
+			+board-block("bestTravelsCtrl", "베스트 여행기")
+				
 
 		.hot-courses(ng-controller="googleMapController as gMapController")
 			.region-map

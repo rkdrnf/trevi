@@ -21,7 +21,7 @@ block content
 								if (article.regions)
 									each region in article.regions
 										span=region.name
-							td= article.board.name
+							td= article.board ? article.board.name : ""
 							td= article.title
 							td= article.content
 							td= article.photos 

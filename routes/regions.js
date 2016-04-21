@@ -40,7 +40,6 @@ router.get('/goto_region', function(req, res) {
 	});
 
 });
-
 router.get('/:region_name', function(req, res) {
 	Article.find({ regions: req.region._id }).limit(3).lean().exec(function(err, recent_articles) {
 		res.render('regions/main', { region: req.region, recent_articles: recent_articles, recent_questions: recent_articles, hot_travels: req.hot_travels, local_data: { location: req.region.location, places: req.region.places, region: req.region } });

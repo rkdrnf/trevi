@@ -161,12 +161,14 @@
   height: 350px;
   overflow: hidden; }
 
-.hero .hot-travels {
-  float: left; }
-
-.hero .hot-photos {
-  float: left;
-  margin-left: 20px; }
+.hero {
+  width: 1200px;
+  margin: auto; }
+  .hero .hot-travels {
+    float: left; }
+  .hero .hot-photos {
+    float: left;
+    margin-left: 20px; }
 
 .hero:after {
   clear: both;
@@ -174,7 +176,9 @@
   display: block; }
 
 .body-sector {
-  padding: 10px; }
+  padding: 10px;
+  width: 1200px;
+  margin: auto; }
 
 .body-sector:after {
   clear: both;
@@ -189,26 +193,30 @@
   content: "";
   display: block; }
 
-.board-block .category-header {
-  font-size: 20px;
-  font-weight: bold;
-  text-align: center;
-  color: #43c4be; }
+.board-block:first-child {
+  margin-left: 0px; }
 
-.board-block .articles {
-  width: 100%;
-  background-color: #f4f4f4;
-  border: 1px solid #ccc;
-  padding: 20px; }
-  .board-block .articles .article-item {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    padding: 5px;
-    border-bottom: 1px solid #ccc; }
-    .board-block .articles .article-item a {
-      color: black; }
-  .board-block .articles .article-item:last-child {
-    border-bottom: none; }
+.board-block {
+  margin-left: 20px; }
+  .board-block .category-header {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    color: #43c4be; }
+  .board-block .articles {
+    width: 100%;
+    background-color: #f4f4f4;
+    border: 1px solid #ccc;
+    padding: 20px; }
+    .board-block .articles .article-item {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      padding: 5px;
+      border-bottom: 1px solid #ccc; }
+      .board-block .articles .article-item a {
+        color: black; }
+    .board-block .articles .article-item:last-child {
+      border-bottom: none; }
 
 .recent-articles, .recent-travels, .recent-questions {
   width: 350px;
